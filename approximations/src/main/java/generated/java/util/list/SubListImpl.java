@@ -50,7 +50,7 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
     }
 
     public SubListImpl(AbstractListImpl<E> list, int fromIndex, int toIndex) {
-        this(list, null, fromIndex, toIndex - fromIndex, 0);
+        this(list, null, fromIndex, toIndex - fromIndex, list._getModCount());
     }
 
     public SymbolicList<E> _getStorage() {

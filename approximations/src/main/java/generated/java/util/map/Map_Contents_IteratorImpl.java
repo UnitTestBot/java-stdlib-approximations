@@ -47,23 +47,19 @@ public class Map_Contents_IteratorImpl<K, V, Content> extends AbstractIteratorIm
     }
 
     private boolean _isEmpty() {
-        // TODO: make via 'contains(unseen.anyKey) == false'
-        return this.unseen.size() == 0;
+        return !this.unseen.hasKey(this.unseen.anyKey());
     }
 
     public void forEachRemaining(Consumer<? super Content> userAction) {
         if (userAction == null)
             throw new NullPointerException();
 
-        int size = this.unseen.size();
-        Engine.assume(size >= 0);
         Map_ContentsImpl<K, V, Content> contents = _getContents();
-        while (size > 0) {
+        while (!_isEmpty()) {
             _checkForModification();
             K curKey = this.unseen.anyKey();
             userAction.accept(contents._contentByKey(this.unseen, curKey));
             this.unseen.remove(curKey);
-            size--;
         }
     }
 

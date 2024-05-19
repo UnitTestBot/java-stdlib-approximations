@@ -293,6 +293,10 @@ public class StringImpl implements Serializable {
     }
 
     public static boolean latin1Equals(byte[] value, byte[] other) {
+        Boolean arrayEquals = Engine.arrayEquals(value, other);
+        if (arrayEquals != null)
+            return arrayEquals;
+
         if (value.length == other.length) {
             for(int i = 0; i < value.length; ++i) {
                 if (value[i] != other[i]) {
@@ -313,11 +317,17 @@ public class StringImpl implements Serializable {
         } else {
             if (anObject instanceof StringImpl) {
                 StringImpl aString = (StringImpl)anObject;
+                Engine.assume(aString.value != value);
                 _assumeInvariants(aString);
                 return (!COMPACT_STRINGS || this.coder == aString.coder) && latin1Equals(this.value, aString.value);
             }
 
             return false;
         }
+    }
+
+    public boolean isEmpty() {
+        _assumeInvariants();
+        return value.length == 0;
     }
 }

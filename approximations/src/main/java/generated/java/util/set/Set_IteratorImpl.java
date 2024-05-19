@@ -44,21 +44,18 @@ public final class Set_IteratorImpl<E> extends AbstractIteratorImpl<E> {
     }
 
     private boolean _isEmpty() {
-        return this.unseen.size() == 0;
+        return !this.unseen.hasKey(this.unseen.anyKey());
     }
 
     public void forEachRemaining(Consumer<? super E> userAction) {
         if (userAction == null)
             throw new NullPointerException();
 
-        int size = this.unseen.size();
-        Engine.assume(size >= 0);
-        while (size > 0) {
+        while (!_isEmpty()) {
             _checkForModification();
             E curKey = this.unseen.anyKey();
             userAction.accept(curKey);
             this.unseen.remove(curKey);
-            size--;
         }
     }
 
