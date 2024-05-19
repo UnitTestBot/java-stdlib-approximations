@@ -10,9 +10,8 @@ import java.util.ArrayList;
 public class ArrayList_Encoder implements ObjectEncoder {
 
     @Override
-    public Object encode(Object list) {
-        ArrayListImpl<Object> result = new ArrayListImpl<>();
-        result.addAll(((ArrayList<?>) list).stream().toList());
-        return result;
+    public Object encode(Object object) {
+        ArrayList<?> list = (ArrayList<?>) object;
+        return new ArrayListImpl<>(list);
     }
 }

@@ -17,30 +17,24 @@ import jdk.internal.misc.VM;
 import org.jacodb.approximation.annotation.Approximate;
 import org.usvm.api.Engine;
 import runtime.LibSLRuntime;
+import stub.java.lang.SystemHelpers;
 
 @SuppressWarnings({"unused", "removal"})
 @Approximate(java.lang.System.class)
 public final class SystemImpl {
-    private static final LibSLRuntime.Map<String, String> propsMap = new LibSLRuntime.Map<>(new LibSLRuntime.HashMapContainer<>());
+
+    private static Properties props;
 
     private static volatile SecurityManager security = null;
 
-    private static Properties props = null;
-
     @SuppressWarnings("FieldMayBeFinal")
-    private static Console console = null;
+    private static Console cons = null;
 
     public static InputStream in = null;
 
     public static PrintStream out = null;
 
     public static PrintStream err = null;
-
-    private static final long NANOTIME_BEGINNING_OF_TIME = 1000L;
-
-    private static final long NANOTIME_WARP_MAX = 1000L;
-
-    private static final LibSLRuntime.Map<Object, Integer> identityHashCodeMap = new LibSLRuntime.Map<>(new LibSLRuntime.IdentityMapContainer<>());
 
     static {
         initPhase1();
@@ -50,71 +44,88 @@ public final class SystemImpl {
 
     private SystemImpl() { }
 
+    private static void _initProperty(LibSLRuntime.Map<String, String> pm, Properties properties, String key, String value) {
+        pm.set(key, value);
+        switch (key) {
+            // Do not add private system properties to the Properties
+            case "sun.nio.MaxDirectMemorySize":
+            case "sun.nio.PageAlignDirectMemory":
+                // used by java.lang.Integer.IntegerCache
+            case "java.lang.Integer.IntegerCache.high":
+                // used by sun.launcher.LauncherHelper
+            case "sun.java.launcher.diag":
+                // used by jdk.internal.loader.ClassLoaders
+            case "jdk.boot.class.path.append":
+                break;
+            default:
+                properties.put(key, value);
+        }
+    }
+
     private static void _initProperties() {
-        LibSLRuntime.Map<String, String> pm = propsMap;
+        props = new Properties();
         int javaVersion = 8;
         String userName = "Admin";
-        pm.set("file.encoding", "Cp1251");
-        pm.set("sun.io.unicode.encoding", "UnicodeLittle");
-        pm.set("sun.jnu.encoding", "Cp1251");
-        pm.set("sun.stderr.encoding", "cp866");
-        pm.set("sun.stdout.encoding", "cp866");
+        props.setProperty("file.encoding", "Cp1251");
+        props.setProperty("sun.io.unicode.encoding", "UnicodeLittle");
+        props.setProperty("sun.jnu.encoding", "Cp1251");
+        props.setProperty("sun.stderr.encoding", "cp866");
+        props.setProperty("sun.stdout.encoding", "cp866");
         String[] versionStrings = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
         String versionString = versionStrings[javaVersion];
-        pm.set("java.specification.name", "Java Platform API Specification");
-        pm.set("java.specification.vendor", "Oracle Corporation");
-        pm.set("java.specification.version", versionString);
-        pm.set("java.vm.info", "mixed mode");
-        pm.set("java.vm.name", "OpenJDK 64-Bit Server VM");
-        pm.set("java.vm.specification.name", "Java Virtual Machine Specification");
-        pm.set("java.vm.specification.vendor", "Oracle Corporation");
-        pm.set("java.vm.specification.version", versionString);
-        pm.set("java.vm.vendor", "Eclipse Adoptium");
-        pm.set("java.vm.version", versionString.concat(".0.362+9"));
-        pm.set("java.library.path", "C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.362.9-hotspot\\bin;C:\\Windows\\Sun\\Java\\bin;C:\\Windows\\system32;.");
-        pm.set("java.home", "C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.362.9-hotspot");
-        pm.set("sun.boot.library.path", "C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.362.9-hotspot\\bin");
-        pm.set("java.io.tmpdir", "T:\\Temp\\");
-        pm.set("java.class.path", ".");
+        props.setProperty("java.specification.name", "Java Platform API Specification");
+        props.setProperty("java.specification.vendor", "Oracle Corporation");
+        props.setProperty("java.specification.version", versionString);
+        props.setProperty("java.vm.info", "mixed mode");
+        props.setProperty("java.vm.name", "OpenJDK 64-Bit Server VM");
+        props.setProperty("java.vm.specification.name", "Java Virtual Machine Specification");
+        props.setProperty("java.vm.specification.vendor", "Oracle Corporation");
+        props.setProperty("java.vm.specification.version", versionString);
+        props.setProperty("java.vm.vendor", "Eclipse Adoptium");
+        props.setProperty("java.vm.version", versionString.concat(".0.362+9"));
+        props.setProperty("java.library.path", "C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.362.9-hotspot\\bin;C:\\Windows\\Sun\\Java\\bin;C:\\Windows\\system32;.");
+        props.setProperty("java.home", "C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.362.9-hotspot");
+        props.setProperty("sun.boot.library.path", "C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.362.9-hotspot\\bin");
+        props.setProperty("java.io.tmpdir", "T:\\Temp\\");
+        props.setProperty("java.class.path", ".");
         if (LibSLGlobals.SYSTEM_IS_WINDOWS) {
-            pm.set("file.separator", "\\");
-            pm.set("line.separator", "\r\n");
-            pm.set("path.separator", ";");
+            props.setProperty( "file.separator", "\\");
+            props.setProperty("line.separator", "\r\n");
+            props.setProperty( "path.separator", ";");
         } else {
-            pm.set("file.separator", "/");
-            pm.set("line.separator", "\n");
-            pm.set("path.separator", ":");
+            props.setProperty("file.separator", "/");
+            props.setProperty("line.separator", "\n");
+            props.setProperty("path.separator", ":");
         }
-        pm.set("user.country", "RU");
-        pm.set("user.country.format", "US");
-        pm.set("user.language", "ru");
+        props.setProperty("user.country", "RU");
+        props.setProperty("user.country.format", "US");
+        props.setProperty("user.language", "ru");
         String[] bytecodeVersions = { "?", "?", "?", "?", "?", "49.0", "50.0", "51.0", "52.0", "53.0", "54.0", "55.0", "?", "?", "?", "?" };
-        pm.set("java.class.version", bytecodeVersions[javaVersion]);
-        pm.set("os.arch", "amd64");
-        pm.set("os.name", "Windows 10");
-        pm.set("os.version", "10.0");
-        pm.set("sun.arch.data.model", "64");
-        pm.set("sun.cpu.endian", "little");
-        pm.set("sun.cpu.isalist", "amd64");
-        pm.set("sun.desktop", "windows");
-        pm.set("user.dir", "D:\\Company\\Prod\\Service");
-        pm.set("user.home", "C:\\Users\\".concat(userName));
-        pm.set("user.name", userName);
-        pm.set("user.script", "");
-        pm.set("user.timezone", "");
-        pm.set("user.variant", "");
-        pm.set("sun.java.command", "org.example.MainClass");
-        pm.set("awt.toolkit", "sun.awt.windows.WToolkit");
-        pm.set("java.awt.graphicsenv", "sun.awt.Win32GraphicsEnvironment");
-        pm.set("java.awt.printerjob", "sun.awt.windows.WPrinterJob");
-        pm.set("sun.java.launcher", "SUN_STANDARD");
-        pm.set("sun.management.compiler", "HotSpot 64-Bit Tiered Compilers");
-        pm.set("sun.nio.MaxDirectMemorySize", "-1");
-        pm.set("sun.os.patch.level", "");
-        pm.set("java.vm.compressedOopsMode", "Zero based");
-        pm.set("jdk.boot.class.path.append", "");
-        pm.set("jdk.debug", "release");
-        props = null;
+        props.setProperty("java.class.version", bytecodeVersions[javaVersion]);
+        props.setProperty("os.arch", "amd64");
+        props.setProperty("os.name", "Windows 10");
+        props.setProperty("os.version", "10.0");
+        props.setProperty("sun.arch.data.model", "64");
+        props.setProperty("sun.cpu.endian", "little");
+        props.setProperty("sun.cpu.isalist", "amd64");
+        props.setProperty("sun.desktop", "windows");
+        props.setProperty("user.dir", "D:\\Company\\Prod\\Service");
+        props.setProperty("user.home", "C:\\Users\\".concat(userName));
+        props.setProperty("user.name", userName);
+        props.setProperty("user.script", "");
+        props.setProperty("user.timezone", "");
+        props.setProperty("user.variant", "");
+        props.setProperty("sun.java.command", "org.example.MainClass");
+        props.setProperty("awt.toolkit", "sun.awt.windows.WToolkit");
+        props.setProperty("java.awt.graphicsenv", "sun.awt.Win32GraphicsEnvironment");
+        props.setProperty("java.awt.printerjob", "sun.awt.windows.WPrinterJob");
+        props.setProperty("sun.java.launcher", "SUN_STANDARD");
+        props.setProperty("sun.management.compiler", "HotSpot 64-Bit Tiered Compilers");
+        props.setProperty("sun.nio.MaxDirectMemorySize", "-1");
+        props.setProperty("sun.os.patch.level", "");
+        props.setProperty("java.vm.compressedOopsMode", "Zero based");
+        props.setProperty("jdk.boot.class.path.append", "");
+        props.setProperty("jdk.debug", "release");
     }
 
     @SuppressWarnings("DataFlowIssue")
@@ -150,17 +161,16 @@ public final class SystemImpl {
         SecurityManager sm = security;
         if (sm != null)
             sm.checkPermission(new java.util.PropertyPermission(key, "write"));
-        LibSLRuntime.Map<String, String> pm = propsMap;
-        if (!pm.hasKey(key))
+        if (!props.containsKey(key))
             return null;
 
-        String result = pm.get(key);
-        pm.remove(key);
+        String result = props.getProperty(key);
+        props.remove(key);
         return result;
     }
 
     public static Console console() {
-        return console;
+        return cons;
     }
 
     public static void exit(int status) {
@@ -181,11 +191,7 @@ public final class SystemImpl {
         SecurityManager sm = security;
         if (sm != null)
             sm.checkPropertyAccess(key);
-        LibSLRuntime.Map<String, String> pm = propsMap;
-        if (!pm.hasKey(key))
-            return null;
-
-        return pm.get(key);
+        return props.getProperty(key);
     }
 
     public static String getProperty(String key, String def) {
@@ -194,9 +200,8 @@ public final class SystemImpl {
         if (sm != null) {
             sm.checkPropertyAccess(key);
         }
-        LibSLRuntime.Map<String, String> pm = propsMap;
-        if (pm.hasKey(key))
-            return pm.get(key);
+        if (props.containsKey(key))
+            return props.getProperty(key);
 
         return def;
     }
@@ -223,19 +228,19 @@ public final class SystemImpl {
         if (x == null)
             return 0;
 
-        if (identityHashCodeMap.hasKey(x)) {
-            Integer value = identityHashCodeMap.get(x);
+        if (SystemHelpersImpl.identityHashCodeMap.hasKey(x)) {
+            Integer value = SystemHelpersImpl.identityHashCodeMap.get(x);
             Engine.assume(value != null);
             return value;
         }
 
-        int result = identityHashCodeMap.size();
-        identityHashCodeMap.set(x, result);
+        int result = SystemHelpersImpl.identityHashCodeMap.size();
+        SystemHelpersImpl.identityHashCodeMap.set(x, result);
         return result;
     }
 
     public static String lineSeparator() {
-        return propsMap.get("line.separator");
+        return props.getProperty("line.separator");
     }
 
     @SuppressWarnings({"DuplicateCondition", "ConstantValue"})
@@ -310,15 +315,7 @@ public final class SystemImpl {
             throw new NullPointerException("key can't be empty");
         if (security != null)
             security.checkPermission(new java.util.PropertyPermission(key, "write"));
-        LibSLRuntime.Map<String, String> pm = propsMap;
-        String result;
-        if (pm.hasKey(key)) {
-            result = pm.get(key);
-        } else {
-            result = null;
-        }
-        pm.set(key, value);
-        return result;
+        return (String)props.setProperty(key, value);
     }
 
     public static void setSecurityManager(SecurityManager s) {

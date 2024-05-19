@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.usvm.api.decoder.DecoderUtils.findStorageField;
+
 @SuppressWarnings("ForLoopReplaceableByForEach")
 @DecoderFor(ArrayList.class)
 public class ArrayList_Decoder implements ObjectDecoder {
@@ -46,7 +48,6 @@ public class ArrayList_Decoder implements ObjectDecoder {
 
                         List<JcParameter> params = m.getParameters();
                         if (params.size() != 1) continue;
-                        if (!"java.lang.Object".equals(params.get(0).getType().getTypeName())) continue;
 
                         cached_ArrayList_add = m_add = m;
                     }
@@ -68,14 +69,7 @@ public class ArrayList_Decoder implements ObjectDecoder {
         JcField f_storage = cached_ArrayList_storage;
         // TODO: add synchronization if needed
         if (f_storage == null) {
-            final List<JcField> fields = approx.getDeclaredFields();
-            for (int i = 0, c = fields.size(); i < c; i++) {
-                JcField f = fields.get(i);
-                if ("storage".equals(f.getName())) {
-                    cached_ArrayList_storage = f_storage = f;
-                    break;
-                }
-            }
+            cached_ArrayList_storage = f_storage = findStorageField(approx);
         }
 
         if (approxData.getObjectField(f_storage) == null)
