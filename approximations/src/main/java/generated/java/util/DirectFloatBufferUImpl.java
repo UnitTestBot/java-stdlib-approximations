@@ -1,10 +1,12 @@
 package generated.java.util;
 
 import jdk.internal.ref.Cleaner;
+import org.jacodb.approximation.annotation.Approximate;
 import sun.nio.ch.DirectBuffer;
 
 import java.nio.ByteOrder;
 
+@Approximate(stub.java.util.DirectFloatBufferU.class)
 public class DirectFloatBufferUImpl extends FloatBufferImpl implements DirectBuffer {
     private final Object att;
 

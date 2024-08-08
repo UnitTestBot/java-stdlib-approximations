@@ -1,6 +1,7 @@
 package generated.java.util;
 
 import org.jacodb.approximation.annotation.Approximate;
+import org.usvm.api.Engine;
 import runtime.LibSLRuntime;
 
 import java.nio.*;
@@ -37,9 +38,8 @@ public class HeapIntBufferImpl extends IntBufferImpl {
     }
 
     public IntBufferImpl asReadOnlyBuffer() {
-        /*return new HeapIntBufferRImpl(storage, this.markValue(), this.position(), this.limit(), this.capacity(),
-                offset);*/
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new HeapIntBufferRImpl(storage, this.markValue(), this.position(), this.limit(), this.capacity(),
+                offset);
     }
 
     public int get() {
@@ -55,6 +55,8 @@ public class HeapIntBufferImpl extends IntBufferImpl {
         int pos = position();
         if (length > limit() - pos)
             throw new BufferUnderflowException();
+        int indexWithOffset = applyOffset(pos);
+        Engine.assume(indexWithOffset + length < storage.length);
         LibSLRuntime.ArrayActions.copy(storage, applyOffset(pos), dst, offset, length);
         position(pos + length);
         return this;
@@ -85,7 +87,9 @@ public class HeapIntBufferImpl extends IntBufferImpl {
         int pos = position();
         if (length > limit() - pos)
             throw new BufferOverflowException();
-        LibSLRuntime.ArrayActions.copy(src, offset, storage, applyOffset(pos), length);
+        int indexWithOffset = applyOffset(pos);
+        Engine.assume(indexWithOffset + length < storage.length);
+        LibSLRuntime.ArrayActions.copy(src, offset, storage, indexWithOffset, length);
         position(pos + length);
         return this;
     }
@@ -103,6 +107,8 @@ public class HeapIntBufferImpl extends IntBufferImpl {
     public IntBufferImpl put(int index, int[] src, int offset, int length) {
         checkFromIndexSize(index, length, limit());
         checkFromIndexSize(offset, length, src.length);
+        int indexWithOffset = applyOffset(index);
+        Engine.assume(indexWithOffset + length < storage.length);
         LibSLRuntime.ArrayActions.copy(src, offset, storage, applyOffset(index), length);
         return this;
     }

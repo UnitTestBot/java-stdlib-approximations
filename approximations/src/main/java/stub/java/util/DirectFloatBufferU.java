@@ -1,18 +1,23 @@
 package stub.java.util;
 
+import jdk.internal.ref.Cleaner;
+import sun.nio.ch.DirectBuffer;
+
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-public class HeapFloatBuffer {
-    HeapFloatBuffer(int cap, int lim) {
+public class DirectFloatBufferU {
+    public Object attachment() {
         throw new LinkageError();
     }
 
-    HeapFloatBuffer(float[] buf, int off, int len) {
+    public Cleaner cleaner() { throw new LinkageError(); }
+
+    DirectFloatBufferU(DirectBuffer db, int mark, int pos, int lim, int cap, int off, float[] segment) {
         throw new LinkageError();
     }
 
-    protected HeapFloatBuffer(float[] buf, int mark, int pos, int lim, int cap, int off) {
+    Object base() {
         throw new LinkageError();
     }
 
@@ -32,6 +37,10 @@ public class HeapFloatBuffer {
         throw new LinkageError();
     }
 
+    public long address() {
+        throw new LinkageError();
+    }
+
     public float get() {
         throw new LinkageError();
     }
@@ -48,23 +57,11 @@ public class HeapFloatBuffer {
         throw new LinkageError();
     }
 
-    public boolean isDirect() {
-        throw new LinkageError();
-    }
-
-    public boolean isReadOnly() {
-        throw new LinkageError();
-    }
-
     public FloatBuffer put(float x) {
         throw new LinkageError();
     }
 
     public FloatBuffer put(int i, float x) {
-        throw new LinkageError();
-    }
-
-    public FloatBuffer put(float[] src, int offset, int length) {
         throw new LinkageError();
     }
 
@@ -76,11 +73,23 @@ public class HeapFloatBuffer {
         throw new LinkageError();
     }
 
+    public FloatBuffer put(float[] src, int offset, int length) {
+        throw new LinkageError();
+    }
+
     public FloatBuffer put(int index, float[] src, int offset, int length) {
         throw new LinkageError();
     }
 
     public FloatBuffer compact() {
+        throw new LinkageError();
+    }
+
+    public boolean isDirect() {
+        throw new LinkageError();
+    }
+
+    public boolean isReadOnly() {
         throw new LinkageError();
     }
 

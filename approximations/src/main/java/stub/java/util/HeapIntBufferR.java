@@ -3,16 +3,16 @@ package stub.java.util;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
-public class HeapIntBuffer {
-    HeapIntBuffer(int cap, int lim) {
+public class HeapIntBufferR {
+    HeapIntBufferR(int cap, int lim) {
         throw new LinkageError();
     }
 
-    HeapIntBuffer(int[] buf, int off, int len) {
+    HeapIntBufferR(int[] buf, int off, int len) {
         throw new LinkageError();
     }
 
-    protected HeapIntBuffer(int[] buf, int mark, int pos, int lim, int cap, int off) {
+    protected HeapIntBufferR(int[] buf, int mark, int pos, int lim, int cap, int off) {
         throw new LinkageError();
     }
 
@@ -29,26 +29,6 @@ public class HeapIntBuffer {
     }
 
     public IntBuffer asReadOnlyBuffer() {
-        throw new LinkageError();
-    }
-
-    public int get() {
-        throw new LinkageError();
-    }
-
-    public int get(int i) {
-        throw new LinkageError();
-    }
-
-    public IntBuffer get(int[] dst, int offset, int length) {
-        throw new LinkageError();
-    }
-
-    public IntBuffer get(int index, int[] dst, int offset, int length) {
-        throw new LinkageError();
-    }
-
-    public boolean isDirect() {
         throw new LinkageError();
     }
 

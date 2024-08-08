@@ -1,5 +1,6 @@
 package generated.java.util;
 
+import org.usvm.api.Engine;
 import runtime.LibSLRuntime;
 
 import java.nio.*;
@@ -30,19 +31,17 @@ public abstract class FloatBufferImpl extends BufferImpl implements Comparable<F
     }
 
     public static FloatBufferImpl allocate(int capacity) {
-        /*if (capacity < 0)
+        if (capacity < 0)
             throw createCapacityException(capacity);
-        return new HeapFloatBuffer(capacity, capacity, null);*/
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new HeapFloatBufferImpl(capacity, capacity);
     }
 
     public static FloatBufferImpl wrap(float[] array, int offset, int length) {
-        /*try {
-            return new HeapFloatBuffer(array, offset, length, null);
+        try {
+            return new HeapFloatBufferImpl(array, offset, length);
         } catch (IllegalArgumentException x) {
             throw new IndexOutOfBoundsException();
-        }*/
-        throw new UnsupportedOperationException("Not implemented yet");
+        }
     }
 
     public static FloatBufferImpl wrap(float[] array) {
@@ -61,20 +60,28 @@ public abstract class FloatBufferImpl extends BufferImpl implements Comparable<F
     public abstract FloatBufferImpl asReadOnlyBuffer();
 
     public float get() {
-        return storage[applyOffset(nextGetIndex())];
+        int indexWithOffset = applyOffset(nextGetIndex());
+        Engine.assume(indexWithOffset < storage.length);
+        return storage[indexWithOffset];
     }
 
     public FloatBufferImpl put(float f) {
-        storage[applyOffset(nextPutIndex())] = f;
+        int indexWithOffset = applyOffset(nextPutIndex());
+        Engine.assume(indexWithOffset < storage.length);
+        storage[indexWithOffset] = f;
         return this;
     }
 
     public float get(int index) {
-        return storage[applyOffset(checkIndex(index))];
+        int indexWithOffset = applyOffset(checkIndex(index));
+        Engine.assume(indexWithOffset < storage.length);
+        return storage[indexWithOffset];
     }
 
     public FloatBufferImpl put(int index, float f) {
-        storage[applyOffset(checkIndex(index))] = f;
+        int indexWithOffset = applyOffset(checkIndex(index));
+        Engine.assume(indexWithOffset < storage.length);
+        storage[indexWithOffset] = f;
         return this;
     }
 
@@ -82,7 +89,9 @@ public abstract class FloatBufferImpl extends BufferImpl implements Comparable<F
         checkFromIndexSize(offset, length, dst.length);
         if (length > remaining())
             throw new BufferUnderflowException();
-        LibSLRuntime.ArrayActions.copy(storage, applyOffset(nextGetIndex(length)), dst, offset, length);
+        int indexWithOffset = applyOffset(nextGetIndex(length));
+        Engine.assume(indexWithOffset + length < storage.length);
+        LibSLRuntime.ArrayActions.copy(storage, indexWithOffset, dst, offset, length);
         return this;
     }
 
@@ -93,7 +102,9 @@ public abstract class FloatBufferImpl extends BufferImpl implements Comparable<F
     public FloatBufferImpl get(int index, float[] dst, int offset, int length) {
         checkFromIndexSize(index, length, limit());
         checkFromIndexSize(offset, length, dst.length);
-        LibSLRuntime.ArrayActions.copy(storage, applyOffset(index), dst, offset, length);
+        int indexWithOffset = applyOffset(nextGetIndex(length));
+        Engine.assume(indexWithOffset + length < storage.length);
+        LibSLRuntime.ArrayActions.copy(storage, indexWithOffset, dst, offset, length);
         return this;
     }
 
@@ -141,14 +152,20 @@ public abstract class FloatBufferImpl extends BufferImpl implements Comparable<F
         assert srcBase != null || src.isDirect();
         Object base = base();
         assert base != null || isDirect();
-        LibSLRuntime.ArrayActions.copy(src.storage, src.applyOffset(srcPos), storage, applyOffset(pos), n);
+        int indexWithOffset = applyOffset(pos);
+        int srcIndexWithOffset = src.applyOffset(srcPos);
+        Engine.assume(indexWithOffset + n < storage.length);
+        Engine.assume(srcIndexWithOffset + n < src.storage.length);
+        LibSLRuntime.ArrayActions.copy(src.storage, srcIndexWithOffset, storage, indexWithOffset, n);
     }
 
     public FloatBufferImpl put(float[] src, int offset, int length) {
         checkFromIndexSize(offset, length, src.length);
         if (length > remaining())
             throw new BufferOverflowException();
-        LibSLRuntime.ArrayActions.copy(src, offset, storage, applyOffset(nextPutIndex(length)), length);
+        int indexWithOffset = applyOffset(nextPutIndex(length));
+        Engine.assume(indexWithOffset + length < storage.length);
+        LibSLRuntime.ArrayActions.copy(src, offset, storage, indexWithOffset, length);
         return this;
     }
 
@@ -161,7 +178,9 @@ public abstract class FloatBufferImpl extends BufferImpl implements Comparable<F
             throw new ReadOnlyBufferException();
         checkFromIndexSize(index, length, limit());
         checkFromIndexSize(offset, length, src.length);
-        LibSLRuntime.ArrayActions.copy(src, offset, storage, applyOffset(index), length);
+        int indexWithOffset = applyOffset(index);
+        Engine.assume(indexWithOffset + length < storage.length);
+        LibSLRuntime.ArrayActions.copy(src, offset, storage, indexWithOffset, length);
         return this;
     }
 
@@ -236,7 +255,11 @@ public abstract class FloatBufferImpl extends BufferImpl implements Comparable<F
         int lim = limit();
         assert (pos <= lim);
         int rem = lim - pos;
-        LibSLRuntime.ArrayActions.copy(storage, applyOffset(pos), storage, applyOffset(0), rem);
+        int srcIndexWithOffset = applyOffset(pos);
+        int dstIndexWithOffset = applyOffset(0);
+        Engine.assume(srcIndexWithOffset + rem < storage.length);
+        Engine.assume(dstIndexWithOffset + rem < storage.length);
+        LibSLRuntime.ArrayActions.copy(storage, srcIndexWithOffset, storage, dstIndexWithOffset, rem);
         position(rem);
         limit(capacity());
         discardMark();

@@ -74,18 +74,6 @@ public class HeapCharBufferRImpl extends HeapCharBufferImpl {
     }
 
     public CharBufferImpl put(String src, int start, int end) {
-        /*int length = end - start;
-        checkFromIndexSize(start, length, src.length());
-        if (isReadOnly())
-            throw new ReadOnlyBufferException();
-        int pos = position();
-        int lim = limit();
-        int rem = (pos <= lim) ? lim - pos : 0;
-        if (length > rem)
-            throw new BufferOverflowException();
-        src.getChars(start, end, storage, ix(pos));
-        position(pos + length);
-        return this;*/
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
@@ -94,11 +82,6 @@ public class HeapCharBufferRImpl extends HeapCharBufferImpl {
     }
 
     String toString(int start, int end) {
-        /*try {
-            return new String(storage, start + offset, end - start);
-        } catch (StringIndexOutOfBoundsException x) {
-            throw new IndexOutOfBoundsException();
-        }*/
         throw new UnsupportedOperationException("Not implemented yet");
     }
 

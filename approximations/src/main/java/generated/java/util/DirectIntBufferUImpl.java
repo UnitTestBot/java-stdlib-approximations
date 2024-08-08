@@ -2,11 +2,12 @@ package generated.java.util;
 
 import jdk.internal.ref.Cleaner;
 import org.jacodb.approximation.annotation.Approximate;
+import stub.java.util.DirectIntBufferU;
 import sun.nio.ch.DirectBuffer;
 
 import java.nio.*;
 
-@Approximate(stub.java.util.DirectIntBuffer.class)
+@Approximate(DirectIntBufferU.class)
 public class DirectIntBufferUImpl extends IntBufferImpl implements DirectBuffer {
     private final Object att;
 
@@ -49,7 +50,8 @@ public class DirectIntBufferUImpl extends IntBufferImpl implements DirectBuffer 
     }
 
     public IntBufferImpl asReadOnlyBuffer() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new DirectIntBufferRUImpl(this, this.markValue(), this.position(), this.limit(), this.capacity(),
+                0, storage);
     }
 
     public long address() {

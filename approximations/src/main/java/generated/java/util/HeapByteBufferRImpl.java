@@ -90,23 +90,7 @@ public class HeapByteBufferRImpl extends HeapByteBufferImpl {
     }
 
     public CharBuffer asCharBuffer() {
-        /*int pos = position();
-        int size = (limit() - pos) >> 1;
-        long addr = address + pos;
-        return (bigEndian
-                ? (CharBuffer)(new ByteBufferAsCharBufferRB(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment))
-                : (CharBuffer)(new ByteBufferAsCharBufferRL(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment)));*/
-        throw new UnsupportedOperationException("Not implemented yet");
+       throw new UnsupportedOperationException("Not implemented yet");
     }
 
     public ByteBufferImpl putShort(short x) {
@@ -118,22 +102,6 @@ public class HeapByteBufferRImpl extends HeapByteBufferImpl {
     }
 
     public ShortBuffer asShortBuffer() {
-        /*int pos = position();
-        int size = (limit() - pos) >> 1;
-        long addr = address + pos;
-        return (bigEndian
-                ? (ShortBuffer)(new ByteBufferAsShortBufferRB(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment))
-                : (ShortBuffer)(new ByteBufferAsShortBufferRL(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment)));*/
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
@@ -146,22 +114,6 @@ public class HeapByteBufferRImpl extends HeapByteBufferImpl {
     }
 
     public IntBuffer asIntBuffer() {
-        /*int pos = position();
-        int size = (limit() - pos) >> 2;
-        long addr = address + pos;
-        return (bigEndian
-                ? (IntBuffer)(new ByteBufferAsIntBufferRB(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment))
-                : (IntBuffer)(new ByteBufferAsIntBufferRL(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment)));*/
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
@@ -174,22 +126,6 @@ public class HeapByteBufferRImpl extends HeapByteBufferImpl {
     }
 
     public LongBuffer asLongBuffer() {
-        /*int pos = position();
-        int size = (limit() - pos) >> 3;
-        long addr = address + pos;
-        return (bigEndian
-                ? (LongBuffer)(new ByteBufferAsLongBufferRB(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment))
-                : (LongBuffer)(new ByteBufferAsLongBufferRL(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment)));*/
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
@@ -202,22 +138,6 @@ public class HeapByteBufferRImpl extends HeapByteBufferImpl {
     }
 
     public FloatBuffer asFloatBuffer() {
-        /*int pos = position();
-        int size = (limit() - pos) >> 2;
-        long addr = address + pos;
-        return (bigEndian
-                ? (FloatBuffer)(new ByteBufferAsFloatBufferRB(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment))
-                : (FloatBuffer)(new ByteBufferAsFloatBufferRL(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment)));*/
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
@@ -230,22 +150,6 @@ public class HeapByteBufferRImpl extends HeapByteBufferImpl {
     }
 
     public DoubleBuffer asDoubleBuffer() {
-        /*int pos = position();
-        int size = (limit() - pos) >> 3;
-        long addr = address + pos;
-        return (bigEndian
-                ? (DoubleBuffer)(new ByteBufferAsDoubleBufferRB(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment))
-                : (DoubleBuffer)(new ByteBufferAsDoubleBufferRL(this,
-                -1,
-                0,
-                size,
-                size,
-                addr, segment)));*/
         throw new UnsupportedOperationException("Not implemented yet");
     }
 }

@@ -38,7 +38,7 @@ public abstract class BufferImpl {
         bufferAssume();
     }
 
-    void bufferAssume() {
+    protected void bufferAssume() {
         Engine.assume(0 <= position);
         Engine.assume(position <= limit);
         Engine.assume(limit <= capacity);
@@ -57,14 +57,17 @@ public abstract class BufferImpl {
     }
 
     protected int applyOffset(int i) {
+        Engine.assume(offset >= 0);
         return i + offset;
     }
 
     public final int capacity() {
+        bufferAssume();
         return capacity;
     }
 
     public final int position() {
+        bufferAssume();
         return position;
     }
 
@@ -253,13 +256,13 @@ public abstract class BufferImpl {
         mark = -1;
     }
 
-    int checkFromIndexSize(int fromIndex, int size, int length) {
+    protected int checkFromIndexSize(int fromIndex, int size, int length) {
         if ((length | fromIndex | size) < 0 || size > length - fromIndex)
             throw new IndexOutOfBoundsException();
         return fromIndex;
     }
 
-    int checkFromToIndex(int fromIndex, int toIndex, int length) {
+    protected int checkFromToIndex(int fromIndex, int toIndex, int length) {
         if (fromIndex < 0 || fromIndex > toIndex || toIndex > length)
             throw new IndexOutOfBoundsException();
         return fromIndex;

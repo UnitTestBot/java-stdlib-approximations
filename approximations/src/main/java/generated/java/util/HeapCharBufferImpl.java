@@ -1,6 +1,7 @@
 package generated.java.util;
 
 import org.jacodb.approximation.annotation.Approximate;
+import org.usvm.api.Engine;
 import runtime.LibSLRuntime;
 
 import java.nio.*;
@@ -37,7 +38,6 @@ public class HeapCharBufferImpl extends CharBufferImpl {
     }
 
     public CharBufferImpl asReadOnlyBuffer() {
-        //return new HeapCharBufferR(storage, this.markValue(), this.position(), this.limit(), this.capacity(), offset);
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
@@ -58,6 +58,8 @@ public class HeapCharBufferImpl extends CharBufferImpl {
         int pos = position();
         if (length > limit() - pos)
             throw new BufferUnderflowException();
+        int indexWithOffset = applyOffset(pos);
+        Engine.assume(indexWithOffset + length < storage.length);
         LibSLRuntime.ArrayActions.copy(storage, applyOffset(pos), dst, offset, length);
         position(pos + length);
         return this;
@@ -88,7 +90,9 @@ public class HeapCharBufferImpl extends CharBufferImpl {
         int pos = position();
         if (length > limit() - pos)
             throw new BufferOverflowException();
-        LibSLRuntime.ArrayActions.copy(src, offset, storage, applyOffset(pos), length);
+        int indexWithOffset = applyOffset(pos);
+        Engine.assume(indexWithOffset + length < storage.length);
+        LibSLRuntime.ArrayActions.copy(src, offset, storage, indexWithOffset, length);
         position(pos + length);
         return this;
     }
@@ -106,23 +110,13 @@ public class HeapCharBufferImpl extends CharBufferImpl {
     public CharBufferImpl put(int index, char[] src, int offset, int length) {
         checkFromIndexSize(index, length, limit());
         checkFromIndexSize(offset, length, src.length);
+        int indexWithOffset = applyOffset(index);
+        Engine.assume(indexWithOffset + length < storage.length);
         LibSLRuntime.ArrayActions.copy(src, offset, storage, applyOffset(index), length);
         return this;
     }
 
     public CharBufferImpl put(String src, int start, int end) {
-        /*int length = end - start;
-        checkFromIndexSize(start, length, src.length());
-        if (isReadOnly())
-            throw new ReadOnlyBufferException();
-        int pos = position();
-        int lim = limit();
-        int rem = (pos <= lim) ? lim - pos : 0;
-        if (length > rem)
-            throw new BufferOverflowException();
-        src.getChars(start, end, storage, ix(pos));
-        position(pos + length);
-        return this;*/
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
@@ -131,11 +125,6 @@ public class HeapCharBufferImpl extends CharBufferImpl {
     }
 
     String toString(int start, int end) {
-        /*try {
-            return new String(storage, start + offset, end - start);
-        } catch (StringIndexOutOfBoundsException x) {
-            throw new IndexOutOfBoundsException();
-        }*/
         throw new UnsupportedOperationException("Not implemented yet");
     }
 

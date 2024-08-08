@@ -1,6 +1,7 @@
 package generated.java.util;
 
 import org.jacodb.approximation.annotation.Approximate;
+import org.usvm.api.Engine;
 import runtime.LibSLRuntime;
 
 import java.nio.*;
@@ -69,20 +70,28 @@ public abstract class ByteBufferImpl extends BufferImpl implements Comparable<By
     public abstract ByteBufferImpl asReadOnlyBuffer();
 
     public byte get() {
-        return storage[applyOffset(nextGetIndex())];
+        int indexWithOffset = applyOffset(nextGetIndex());
+        Engine.assume(indexWithOffset < storage.length);
+        return storage[indexWithOffset];
     }
 
     public ByteBufferImpl put(byte b) {
-        storage[applyOffset(nextPutIndex())] = b;
+        int indexWithOffset = applyOffset(nextPutIndex());
+        Engine.assume(indexWithOffset < storage.length);
+        storage[indexWithOffset] = b;
         return this;
     }
 
     public byte get(int index) {
-        return storage[applyOffset(checkIndex(index))];
+        int indexWithOffset = applyOffset(checkIndex(index));
+        Engine.assume(indexWithOffset < storage.length);
+        return storage[indexWithOffset];
     }
 
     public ByteBufferImpl put(int index, byte b) {
-        storage[applyOffset(checkIndex(index))] = b;
+        int indexWithOffset = applyOffset(checkIndex(index));
+        Engine.assume(indexWithOffset < storage.length);
+        storage[indexWithOffset] = b;
         return this;
     }
 
@@ -90,7 +99,9 @@ public abstract class ByteBufferImpl extends BufferImpl implements Comparable<By
         checkFromIndexSize(offset, length, dst.length);
         if (length > remaining())
             throw new BufferUnderflowException();
-        LibSLRuntime.ArrayActions.copy(storage, applyOffset(nextGetIndex(length)), dst, offset, length);
+        int indexWithOffset = applyOffset(nextGetIndex(length));
+        Engine.assume(indexWithOffset + length < storage.length);
+        LibSLRuntime.ArrayActions.copy(storage, indexWithOffset, dst, offset, length);
         return this;
     }
 
@@ -101,7 +112,9 @@ public abstract class ByteBufferImpl extends BufferImpl implements Comparable<By
     public ByteBufferImpl get(int index, byte[] dst, int offset, int length) {
         checkFromIndexSize(index, length, limit());
         checkFromIndexSize(offset, length, dst.length);
-        LibSLRuntime.ArrayActions.copy(storage, applyOffset(index), dst, offset, length);
+        int indexWithOffset = applyOffset(nextGetIndex(length));
+        Engine.assume(indexWithOffset + length < storage.length);
+        LibSLRuntime.ArrayActions.copy(storage, indexWithOffset, dst, offset, length);
         return this;
     }
 
@@ -149,14 +162,20 @@ public abstract class ByteBufferImpl extends BufferImpl implements Comparable<By
         assert srcBase != null || src.isDirect();
         Object base = base();
         assert base != null || isDirect();
-        LibSLRuntime.ArrayActions.copy(src.storage, src.applyOffset(srcPos), storage, applyOffset(pos), n);
+        int indexWithOffset = applyOffset(pos);
+        int srcIndexWithOffset = src.applyOffset(srcPos);
+        Engine.assume(indexWithOffset + n < storage.length);
+        Engine.assume(srcIndexWithOffset + n < src.storage.length);
+        LibSLRuntime.ArrayActions.copy(src.storage, srcIndexWithOffset, storage, indexWithOffset, n);
     }
 
     public ByteBufferImpl put(byte[] src, int offset, int length) {
         checkFromIndexSize(offset, length, src.length);
         if (length > remaining())
             throw new BufferOverflowException();
-        LibSLRuntime.ArrayActions.copy(src, offset, storage, applyOffset(nextPutIndex(length)), length);
+        int indexWithOffset = applyOffset(nextPutIndex(length));
+        Engine.assume(indexWithOffset + length < storage.length);
+        LibSLRuntime.ArrayActions.copy(src, offset, storage, indexWithOffset, length);
         return this;
     }
 
@@ -169,7 +188,9 @@ public abstract class ByteBufferImpl extends BufferImpl implements Comparable<By
             throw new ReadOnlyBufferException();
         checkFromIndexSize(index, length, limit());
         checkFromIndexSize(offset, length, src.length);
-        LibSLRuntime.ArrayActions.copy(src, offset, storage, applyOffset(index), length);
+        int indexWithOffset = applyOffset(index);
+        Engine.assume(indexWithOffset + length < storage.length);
+        LibSLRuntime.ArrayActions.copy(src, offset, storage, indexWithOffset, length);
         return this;
     }
 
@@ -244,7 +265,11 @@ public abstract class ByteBufferImpl extends BufferImpl implements Comparable<By
         int lim = limit();
         assert (pos <= lim);
         int rem = lim - pos;
-        LibSLRuntime.ArrayActions.copy(storage, applyOffset(pos), storage, applyOffset(0), rem);
+        int srcIndexWithOffset = applyOffset(pos);
+        int dstIndexWithOffset = applyOffset(0);
+        Engine.assume(srcIndexWithOffset + rem < storage.length);
+        Engine.assume(dstIndexWithOffset + rem < storage.length);
+        LibSLRuntime.ArrayActions.copy(storage, srcIndexWithOffset, storage, dstIndexWithOffset, rem);
         position(rem);
         limit(capacity());
         discardMark();
