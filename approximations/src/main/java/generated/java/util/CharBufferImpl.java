@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 @Approximate(java.nio.CharBuffer.class)
 public abstract class CharBufferImpl
         extends BufferImpl
-        implements Comparable<CharBufferImpl>, Appendable, CharSequence, Readable {
+        implements Comparable<CharBufferImpl>, Appendable, CharSequence, ReadableImpl {
     final char[] storage;
     boolean isReadOnly;
 
