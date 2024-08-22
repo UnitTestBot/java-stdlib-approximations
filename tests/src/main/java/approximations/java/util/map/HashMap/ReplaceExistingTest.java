@@ -15,7 +15,11 @@ public class ReplaceExistingTest {
     public static int test_ReplaceExisting (int execution) {
         for (int i = 0; i <= ENTRIES; i++) {
             HashMap<Integer,Integer> hm = prepHashMap();
-            testItr(hm, i);
+            try {
+                testItr(hm, i);
+            } catch (Throwable t) {
+                return -1;
+            }
         }
         return execution;
     }

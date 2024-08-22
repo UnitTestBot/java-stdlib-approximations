@@ -17,26 +17,22 @@ public class SubListModCoundTest {
         try {
             subList.size();
             failures++;
-            System.out.println("Accessing subList");
         } catch (ConcurrentModificationException expected) {
         }
         List<Integer> subSubList = subList.subList(0, 0);
         try {
             subSubList.size();
             failures++;
-            System.out.println("Accessing subList.subList");
         } catch (ConcurrentModificationException expected) {
         }
         try {
             subSubList.add(42);
             failures++;
-            System.out.println("Modifying subList.subList");
         } catch (ConcurrentModificationException expected) {
         }
         try {
             subList.size();
             failures++;
-            System.out.println("Accessing subList again");
         } catch (ConcurrentModificationException expected) {
         }
         if (failures > 0) {

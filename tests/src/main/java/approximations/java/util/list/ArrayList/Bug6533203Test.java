@@ -23,17 +23,15 @@ public class Bug6533203Test {
     volatile int passed = 0;
     volatile int failed = 0;
     void pass() {passed++;}
-    void fail() {failed++; Thread.dumpStack();}
-    void fail(String msg) {System.out.println(msg); fail();}
-    void unexpected(Throwable t) {failed++; t.printStackTrace();}
-    void check(boolean cond) {if (cond) pass(); else fail();}
+    void fail() {failed++;}
+    void unexpected() {failed++;}
     void equal(Object x, Object y) {
         if (x == null ? y == null : x.equals(y)) pass();
-        else fail(x + " not equal to " + y);}
+        else fail();}
 
     @Test
     public int test_bug6533203(int execution) {
-        try {test();} catch (Throwable t) {unexpected(t);}
+        try {test();} catch (Throwable t) {unexpected();}
         if (failed > 0) {
             return -1;
         } else {
@@ -44,8 +42,8 @@ public class Bug6533203Test {
     abstract class F {abstract void f() throws Throwable;}
     void THROWS(Class<? extends Throwable> k, F... fs) {
         for (F f : fs)
-            try {f.f(); fail("Expected " + k.getName() + " not thrown");}
+            try {f.f(); fail();}
             catch (Throwable t) {
                 if (k.isAssignableFrom(t.getClass())) pass();
-                else unexpected(t);}}
+                else unexpected();}}
 }

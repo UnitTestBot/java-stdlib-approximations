@@ -72,7 +72,6 @@ public class TreeBinAssertTest {
     @Test(executionMax = 1)
     public int test_Map (int execution) {
         if (!HashMap.class.desiredAssertionStatus()) {
-            System.out.println("*** Superficial test run.  Test should be run with -esa ***\n");
             return execution;
         }
 
@@ -88,10 +87,18 @@ public class TreeBinAssertTest {
 
         Map<Key,Integer> map = new HashMap<>(size);
 
-        doTest(map, hashes,
-                (c,k) -> { ((Map<Key,Integer>)c).put(k,0); },
-                (c)   -> { return ((Map<Key,Integer>)c).keySet().iterator(); }
-        );
+        try {
+            doTest(map, hashes,
+                    (c, k) -> {
+                        ((Map<Key, Integer>) c).put(k, 0);
+                    },
+                    (c) -> {
+                        return ((Map<Key, Integer>) c).keySet().iterator();
+                    }
+            );
+        } catch (Throwable t) {
+            return -1;
+        }
 
         return execution;
     }
@@ -99,7 +106,6 @@ public class TreeBinAssertTest {
     @Test(executionMax = 1)
     public int test_Set(int execution) {
         if (!HashMap.class.desiredAssertionStatus()) {
-            System.out.println("*** Superficial test run.  Test should be run with -esa ***\n");
             return execution;
         }
 
@@ -115,10 +121,18 @@ public class TreeBinAssertTest {
 
         Set<Key> set = new LinkedHashSet<>(size);
 
-        doTest(set, hashes,
-                (c,k) -> { ((Set<Key>)c).add(k); },
-                (c)   -> { return ((Set<Key>)c).iterator(); }
-        );
+        try {
+            doTest(set, hashes,
+                    (c, k) -> {
+                        ((Set<Key>) c).add(k);
+                    },
+                    (c) -> {
+                        return ((Set<Key>) c).iterator();
+                    }
+            );
+        } catch (Throwable t) {
+            return -1;
+        }
         return execution;
     }
 

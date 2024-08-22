@@ -6,7 +6,7 @@ import java.util.*;
 
 @Test
 public class EqualsTest {
-    @Test(disabled = true)
+    @Test
     public static int test_equalsTest(int execution) {
         Map m = new HashMap();
         m.put(null, "");

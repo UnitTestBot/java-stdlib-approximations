@@ -23,7 +23,6 @@ public class NullKeyAtResizeTest {
             new_order.remove(adding);
             if(!old_order.equals(new_order)) {
                 // we resized and didn't crash.
-                System.out.println("Encountered resize after " + (number / 100) + " iterations");
                 break;
             }
             // remember this order for the next time around.

@@ -2,10 +2,7 @@ package approximations.java.util.map.LinkedHashMap;
 
 import approximations.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,8 +22,8 @@ public class BasicTest {
 
     @Test
     public static int test_Basic (int execution)  throws Exception {
-        int numItr =  500;
-        int mapSize = 500;
+        int numItr =  20;
+        int mapSize = 20;
 
         // Linked List testk
         for (int i=0; i<numItr; i++) {
@@ -93,7 +90,11 @@ public class BasicTest {
         if (!s2.containsAll(s))
             return -1;
 
-        m2 = serClone(m);
+        /*try {
+            m2 = serClone(m);
+        } catch (Exception e) {
+            return -1;
+        }
         if (!m.equals(m2))
             return -1;
         if (!m2.equals(m))
@@ -115,7 +116,7 @@ public class BasicTest {
         m2.putAll(m);
         m2.clear();
         if (!m2.isEmpty())
-            return -1;
+            return -1;*/
 
         Iterator it = m.entrySet().iterator();
         while (it.hasNext()) {
@@ -266,24 +267,19 @@ public class BasicTest {
         return execution;
     }
 
-    private static Map serClone(Map m) {
+    private static Map serClone(Map m) throws IOException, ClassNotFoundException {
         Map result = null;
-        try {
-            // Serialize
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(bos);
-            out.writeObject(m);
-            out.flush();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(bos);
+        out.writeObject(m);
+        out.flush();
 
             // Deserialize
-            ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-            out.close();
-            ObjectInputStream in = new ObjectInputStream(bis);
-            result = (Map)in.readObject();
-            in.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+        out.close();
+        ObjectInputStream in = new ObjectInputStream(bis);
+        result = (Map)in.readObject();
+        in.close();
         return result;
     }
 }

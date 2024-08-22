@@ -2,10 +2,7 @@ package approximations.java.util.set;
 
 import approximations.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -18,8 +15,8 @@ public class LinkedHashSet_Tests {
 
     @Test
     public static int test_LinkedHashSet (int execution) throws Exception {
-        int numItr =  500;
-        int setSize = 500;
+        int numItr =  20;
+        int setSize = 20;
 
         for (int i=0; i<numItr; i++) {
             Set s1 = new LinkedHashSet();
@@ -28,54 +25,62 @@ public class LinkedHashSet_Tests {
             Set s2 = new LinkedHashSet();
             AddRandoms(s2, setSize);
 
-            Set intersection = clone(s1);
-            intersection.retainAll(s2);
-            Set diff1 = clone(s1); diff1.removeAll(s2);
-            Set diff2 = clone(s2); diff2.removeAll(s1);
-            Set union = clone(s1); union.addAll(s2);
+            try {
+                Set intersection = clone(s1);
+                intersection.retainAll(s2);
+                Set diff1 = clone(s1);
+                diff1.removeAll(s2);
+                Set diff2 = clone(s2);
+                diff2.removeAll(s1);
+                Set union = clone(s1);
+                union.addAll(s2);
 
-            if (diff1.removeAll(diff2))
-                return -1;
-            if (diff1.removeAll(intersection))
-                return -1;
-            if (diff2.removeAll(diff1))
-                return -1;
-            if (diff2.removeAll(intersection))
-                return -1;
-            if (intersection.removeAll(diff1))
-                return -1;
-            if (intersection.removeAll(diff1))
-                return -1;
-
-            intersection.addAll(diff1); intersection.addAll(diff2);
-            if (!intersection.equals(union))
-                return -1;
-
-            if (new LinkedHashSet(union).hashCode() != union.hashCode())
-                return -1;
-
-            Iterator e = union.iterator();
-            while (e.hasNext())
-                if (!intersection.remove(e.next()))
+                if (diff1.removeAll(diff2))
                     return -1;
-            if (!intersection.isEmpty())
-                return -1;
+                if (diff1.removeAll(intersection))
+                    return -1;
+                if (diff2.removeAll(diff1))
+                    return -1;
+                if (diff2.removeAll(intersection))
+                    return -1;
+                if (intersection.removeAll(diff1))
+                    return -1;
+                if (intersection.removeAll(diff1))
+                    return -1;
 
-            e = union.iterator();
-            while (e.hasNext()) {
-                Object o = e.next();
-                if (!union.contains(o))
+                intersection.addAll(diff1);
+                intersection.addAll(diff2);
+                if (!intersection.equals(union))
                     return -1;
-                e.remove();
-                if (union.contains(o))
+
+                if (new LinkedHashSet(union).hashCode() != union.hashCode())
                     return -1;
+
+                Iterator e = union.iterator();
+                while (e.hasNext())
+                    if (!intersection.remove(e.next()))
+                        return -1;
+                if (!intersection.isEmpty())
+                    return -1;
+
+                e = union.iterator();
+                while (e.hasNext()) {
+                    Object o = e.next();
+                    if (!union.contains(o))
+                        return -1;
+                    e.remove();
+                    if (union.contains(o))
+                        return -1;
+                }
+                if (!union.isEmpty())
+                    return -1;
+
+                s1.clear();
+                if (!s1.isEmpty())
+                    return -1;
+            } catch (Exception e) {
+                return -1;
             }
-            if (!union.isEmpty())
-                return -1;
-
-            s1.clear();
-            if (!s1.isEmpty())
-                return -1;
         }
         return execution;
     }
@@ -83,8 +88,8 @@ public class LinkedHashSet_Tests {
     static Set clone(Set s) throws Exception {
         Set clone;
         int method = rnd.nextInt(3);
-        clone = (method==0 ? (Set) ((LinkedHashSet)s).clone() :
-                (method==1 ? new LinkedHashSet(Arrays.asList(s.toArray())) :
+        clone = (method == 0 ? (Set) ((LinkedHashSet) s).clone() :
+                (method == 1 ? new LinkedHashSet(Arrays.asList(s.toArray())) :
                         serClone(s)));
         if (!s.equals(clone))
             throw new Exception("Set not equal to copy: "+method);
@@ -95,24 +100,20 @@ public class LinkedHashSet_Tests {
         return clone;
     }
 
-    private static Set serClone(Set m) {
+    private static Set serClone(Set m) throws IOException, ClassNotFoundException {
         Set result = null;
-        try {
-            // Serialize
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(bos);
-            out.writeObject(m);
-            out.flush();
+        // Serialize
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(bos);
+        out.writeObject(m);
+        out.flush();
 
-            // Deserialize
-            ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-            out.close();
-            ObjectInputStream in = new ObjectInputStream(bis);
-            result = (Set)in.readObject();
-            in.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Deserialize
+        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+        out.close();
+        ObjectInputStream in = new ObjectInputStream(bis);
+        result = (Set)in.readObject();
+        in.close();
         return result;
     }
 

@@ -31,14 +31,18 @@ public class OverrideIsEmptyTest {
 
     @Test
     public static int test_OverrideIsEmpty (int execution) {
-        NotEmptyHashMap<Object, Object> map = new NotEmptyHashMap<>();
-        Object key = new Object();
-        Object value = new Object();
-        map.get(key);
-        map.remove(key);
-        map.replace(key, value, null);
-        map.replace(key, value);
-        map.computeIfPresent(key, (key1, oldValue) -> oldValue);
+        try {
+            NotEmptyHashMap<Object, Object> map = new NotEmptyHashMap<>();
+            Object key = new Object();
+            Object value = new Object();
+            map.get(key);
+            map.remove(key);
+            map.replace(key, value, null);
+            map.replace(key, value);
+            map.computeIfPresent(key, (key1, oldValue) -> oldValue);
+        } catch (Throwable t) {
+            return -1;
+        }
         return execution;
     }
 }

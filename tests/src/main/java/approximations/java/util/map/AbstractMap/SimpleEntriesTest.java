@@ -13,7 +13,7 @@ public class SimpleEntriesTest {
     private static void realMain() {
         testEntry(new AbstractMap.SimpleEntry<>(k, v));
         testEntry(new AbstractMap.SimpleImmutableEntry<>(k, v));
-        //testEntry(Map.entry(k,v));
+        testEntry(new AbstractMap.SimpleEntry(k,v));
         //testEntry(Map.Entry.copyOf(Map.entry(k,v)));
         //testEntry(new NullableKeyValueHolder(k,v));
         testNullEntry(new AbstractMap.SimpleEntry<>(null, null));
@@ -38,7 +38,7 @@ public class SimpleEntriesTest {
         } else {
             try { e.setValue(v2); fail(); }
             catch (UnsupportedOperationException t) {}
-            catch (Throwable t) { unexpected(t); }
+            catch (Throwable t) { unexpected(); }
         }
     }
 
@@ -55,26 +55,25 @@ public class SimpleEntriesTest {
         } else {
             try { e.setValue(null); fail(); }
             catch (UnsupportedOperationException t) {}
-            catch (Throwable t) { unexpected(t); }
+            catch (Throwable t) { unexpected(); }
         }
     }
 
     //--------------------- Infrastructure ---------------------------
     static volatile int passed = 0, failed = 0;
     static void pass() {passed++;}
-    static void fail() {failed++; Thread.dumpStack();}
-    static void fail(String msg) {System.out.println(msg); fail();}
-    static void unexpected(Throwable t) {failed++; t.printStackTrace();}
+    static void fail() {failed++;}
+    static void unexpected() {failed++;}
     static void check(boolean cond) {if (cond) pass(); else fail();}
     static void equal(Object x, Object y) {
         if (x == null ? y == null : x.equals(y)) pass();
-        else fail(x + " not equal to " + y);}
+        else fail();}
     @Test
     public static int test_SimpleEntries(int execution) {
         try {
             realMain();
         } catch (Throwable t) {
-            unexpected(t);
+            unexpected();
         }
         if (failed > 0) {
             return -1;

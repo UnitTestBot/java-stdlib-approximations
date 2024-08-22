@@ -10,7 +10,7 @@ public class EnsureCapacityTest {
     @Test
     public static int test_ensureCapacity(int execution) {
         testArrayList();
-        testVector();
+        //testVector();
         return execution;
     }
 

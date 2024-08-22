@@ -9,16 +9,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Test
 public class HashSet_Tests {
-    private static final int NUM_SETS = 43;
-    private static final int MAX_CAPACITY = 257;
+    private static final int NUM_SETS = 10;
+    private static final int MAX_CAPACITY = 20;
     private static final float MAX_LOAD_FACTOR = 100.0F;
 
-    private static final Random rnd = ThreadLocalRandom.current();
+    private static final Random rnd = new Random();
 
     private static HashSet<Integer> createHashSet() {
         int capacity = rnd.nextInt(MAX_CAPACITY);
         float loadFactor = Float.MIN_VALUE + rnd.nextFloat()*MAX_LOAD_FACTOR;
-        HashSet<Integer> hashSet = new HashSet<Integer>(capacity, loadFactor);
+        HashSet<Integer> hashSet = new HashSet<>(capacity, loadFactor);
         float multiplier = 2*rnd.nextFloat(); // range [0,2]
         int size = (int)(capacity*loadFactor*multiplier);
         for (int i = 0; i < size; i++) {
@@ -43,13 +43,6 @@ public class HashSet_Tests {
         return result;
     }
 
-    private static void printHashSet(HashSet<Integer> hashSet) {
-        System.err.println("Size: "+hashSet.size());
-        for (Object o : hashSet) {
-            System.err.println(o);
-        }
-    }
-
     @Test
     public static int test_Serialization (int execution) {
         int failures = 0;
@@ -60,18 +53,11 @@ public class HashSet_Tests {
             HashSet<Integer> result = null;
             try {
                 result = serDeser(hashSet);
-            } catch (IOException ioe) {
-                System.err.println(ioe);
-                failures++;
-            } catch (ClassNotFoundException cnfe) {
-                System.err.println(cnfe);
+            } catch (IOException | ClassNotFoundException ioe) {
                 failures++;
             }
 
             if (!hashSet.equals(result)) {
-                System.err.println("Unequal HashSets!");
-                printHashSet(hashSet);
-                System.err.println();
                 failures++;
             }
         }

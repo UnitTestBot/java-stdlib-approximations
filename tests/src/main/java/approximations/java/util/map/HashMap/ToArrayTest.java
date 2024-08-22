@@ -2,25 +2,64 @@ package approximations.java.util.map.HashMap;
 
 import approximations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.LongStream;
 
 @Test
 public class ToArrayTest {
-    /*@Test
-    public static int test_ToArray (int execution) { // gotta implement Arrays.mismatch
-        checkMap(false);
-        checkMap(true);
-        checkSet(false);
-        checkSet(true);
+    public static int mismatch(Object[] a, Object[] b) {
+        int length = Math.min(a.length, b.length); // Check null array refs
+        if (a == b)
+            return -1;
+
+        for (int i = 0; i < length; i++) {
+            if (!Objects.equals(a[i], b[i]))
+                return i;
+        }
+
+        return a.length != b.length ? length : -1;
+    }
+
+    public static int mismatch(
+            Object[] a, int aFromIndex, int aToIndex,
+            Object[] b, int bFromIndex, int bToIndex) {
+        rangeCheck(a.length, aFromIndex, aToIndex);
+        rangeCheck(b.length, bFromIndex, bToIndex);
+
+        int aLength = aToIndex - aFromIndex;
+        int bLength = bToIndex - bFromIndex;
+        int length = Math.min(aLength, bLength);
+        for (int i = 0; i < length; i++) {
+            if (!Objects.equals(a[aFromIndex++], b[bFromIndex++]))
+                return i;
+        }
+
+        return aLength != bLength ? length : -1;
+    }
+
+    static void rangeCheck(int arrayLength, int fromIndex, int toIndex) {
+        if (fromIndex > toIndex) {
+            throw new IllegalArgumentException(
+                    "fromIndex(" + fromIndex + ") > toIndex(" + toIndex + ")");
+        }
+        if (fromIndex < 0) {
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        }
+        if (toIndex > arrayLength) {
+            throw new ArrayIndexOutOfBoundsException(toIndex);
+        }
+    }
+
+    @Test
+    public static int test_ToArray (int execution) {
+        try {
+            checkMap(false);
+            checkMap(true);
+            checkSet(false);
+            checkSet(true);
+        } catch (Throwable t) {
+            return -1;
+        }
         return execution;
     }
 
@@ -60,7 +99,7 @@ public class ToArrayTest {
                         Arrays.toString(res));
             }
         } else {
-            int mismatch = Arrays.mismatch(expected, res);
+            int mismatch = mismatch(expected, res);
             if (mismatch != expected.length) {
                 throw new AssertionError(message + ": mismatch at " + mismatch);
             }
@@ -68,8 +107,7 @@ public class ToArrayTest {
                 throw new AssertionError(message + ": no null at position " + expected.length);
             }
             // The tail of bigger array after expected.length position must be untouched
-            mismatch = Arrays
-                    .mismatch(expected, 1, expected.length, res, expected.length + 1, res.length);
+            mismatch = mismatch(expected, 1, expected.length, res, expected.length + 1, res.length);
             if (mismatch != -1) {
                 throw new AssertionError(message + ": mismatch at " + mismatch);
             }
@@ -85,7 +123,7 @@ public class ToArrayTest {
         if (ignoreOrder) {
             Arrays.sort(objects);
         }
-        int mismatch = Arrays.mismatch(expected, objects);
+        int mismatch = mismatch(expected, objects);
         if (mismatch != -1) {
             throw new AssertionError(message + ": mismatch at " + mismatch);
         }
@@ -130,5 +168,5 @@ public class ToArrayTest {
         }
         checkToArray("Collisions", LongStream.range(0, 100).mapToObj(x -> x | (x << 32))
                 .toArray(Long[]::new), longSet, !ordered);
-    }*/
+    }
 }

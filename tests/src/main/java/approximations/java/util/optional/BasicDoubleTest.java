@@ -2,9 +2,12 @@ package approximations.java.util.optional;
 
 import approximations.Test;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.OptionalDouble;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.DoubleStream;
 
 @Test
 public class BasicDoubleTest {
@@ -14,6 +17,15 @@ public class BasicDoubleTest {
     /**
      * Checks a block of assertions over an empty OptionalDouble.
      */
+
+    public DoubleStream OptionalDouble_stream(OptionalDouble optional) {
+        if (optional.isPresent()) {
+            return DoubleStream.of(optional.getAsDouble());
+        } else {
+            return DoubleStream.empty();
+        }
+    }
+
     int checkEmpty (OptionalDouble empty, int execution) {
         if (!empty.equals(OptionalDouble.empty())) {
             return -1;
@@ -160,15 +172,19 @@ public class BasicDoubleTest {
         return checkPresent(OptionalDouble.of(DOUBLEVAL), DOUBLEVAL, execution);
     }
 
-    @Test(disabled = true)
+    @Test
     public int test_StreamEmpty (int execution) {
-        //assertEquals(OptionalDouble.empty().stream().toArray(), new double[] { });
+        if (!Arrays.equals(OptionalDouble_stream(OptionalDouble.empty()).toArray(), new double[]{})) {
+            return -1;
+        }
         return execution;
     }
 
-    @Test(disabled = true)
+    @Test
     public int test_StreamPresent (int execution) {
-        //assertEquals(OptionalDouble.of(DOUBLEVAL).stream().toArray(), new double[] { DOUBLEVAL });
+        if (!Arrays.equals(OptionalDouble_stream(OptionalDouble.of(DOUBLEVAL)).toArray(), new double[]{DOUBLEVAL})) {
+            return -1;
+        }
         return execution;
     }
 }

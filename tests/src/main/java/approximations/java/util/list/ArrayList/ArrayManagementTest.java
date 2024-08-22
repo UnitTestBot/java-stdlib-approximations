@@ -10,7 +10,7 @@ public class ArrayManagementTest {
     static final int DEFAULT_CAPACITY = 10;
     static final Field ELEMENT_DATA;
     static final Field MODCOUNT;
-    static final SplittableRandom rnd = new SplittableRandom();
+    static final Random rnd = new Random();
 
     static {
         try {
@@ -102,162 +102,200 @@ public class ArrayManagementTest {
 
     @Test
     public int test_defaultCapacity(int execution) {
-        ArrayList<Object> list = new ArrayList<>();
-        if (capacity(new ArrayList<>()) != 0) {
-            failAssert();
-        }
-        for (int i = 0; i < DEFAULT_CAPACITY; i++) {
-            addOneElement(list);
-            if (capacity(list) != DEFAULT_CAPACITY) {
+        try {
+            ArrayList<Object> list = new ArrayList<>();
+            if (capacity(new ArrayList<>()) != 0) {
                 failAssert();
             }
-        }
-        addOneElement(list);
-        if (capacity(list) != newCapacity(DEFAULT_CAPACITY)) {
-            failAssert();
+            for (int i = 0; i < DEFAULT_CAPACITY; i++) {
+                addOneElement(list);
+                if (capacity(list) != DEFAULT_CAPACITY) {
+                    failAssert();
+                }
+            }
+            addOneElement(list);
+            if (capacity(list) != newCapacity(DEFAULT_CAPACITY)) {
+                failAssert();
+            }
+        } catch (Throwable t) {
+            return -1;
         }
         return execution;
     }
 
     @Test
     public int test_defaultCapacityEnsureCapacity(int execution) {
-        ArrayList<Object> list = new ArrayList<>();
-        for (int i = 0; i <= DEFAULT_CAPACITY; i++) {
-            ensureCapacity(list, i);     // no-op!
-            if (capacity(list) != 0) {
-                failAssert();
+        try {
+            ArrayList<Object> list = new ArrayList<>();
+            for (int i = 0; i <= DEFAULT_CAPACITY; i++) {
+                ensureCapacity(list, i);     // no-op!
+                if (capacity(list) != 0) {
+                    failAssert();
+                }
             }
-        }
-        for (int i = 0; i < DEFAULT_CAPACITY; i++) {
+            for (int i = 0; i < DEFAULT_CAPACITY; i++) {
+                addOneElement(list);
+                if (capacity(list) != DEFAULT_CAPACITY) {
+                    failAssert();
+                }
+            }
             addOneElement(list);
-            if (capacity(list) != DEFAULT_CAPACITY) {
-                failAssert();
+            if (capacity(list) != newCapacity(DEFAULT_CAPACITY)) {
+                return -1;
             }
+            {
+                int capacity = capacity(list);
+                ensureCapacity(list, capacity + 1);
+                if (capacity(list) != newCapacity(capacity)) {
+                    return -1;
+                }
+            }
+            {
+                int capacity = capacity(list);
+                ensureCapacity(list, 3 * capacity);
+                if (capacity(list) != 3 * capacity) {
+                    return -1;
+                }
+            }
+        } catch (Throwable t) {
+            return -1;
         }
-        addOneElement(list);
-        /*assertEquals(capacity(list), newCapacity(DEFAULT_CAPACITY)); // i'm not quite sure what to do about this lambda
-        {
-            int capacity = capacity(list);
-            ensureCapacity(list, capacity + 1);
-            assertEquals(capacity(list), newCapacity(capacity));
-        }
-        {
-            int capacity = capacity(list);
-            ensureCapacity(list, 3 * capacity);
-            assertEquals(capacity(list), 3 * capacity);
-        }*/
         return execution;
     }
 
     @Test
     public int test_ensureCapacityBeyondDefaultCapacity(int execution) {
-        ArrayList<Object> list = new ArrayList<>();
-        list.ensureCapacity(DEFAULT_CAPACITY + 1);
-        if (capacity(list) != DEFAULT_CAPACITY + 1) {
-            failAssert();
-        }
-        for (int i = 0; i < DEFAULT_CAPACITY + 1; i++) {
-            addOneElement(list);
+        try {
+            ArrayList<Object> list = new ArrayList<>();
+            list.ensureCapacity(DEFAULT_CAPACITY + 1);
             if (capacity(list) != DEFAULT_CAPACITY + 1) {
                 failAssert();
             }
-        }
-        addOneElement(list);
-        if (capacity(list) != newCapacity(DEFAULT_CAPACITY + 1)) {
-            failAssert();
+            for (int i = 0; i < DEFAULT_CAPACITY + 1; i++) {
+                addOneElement(list);
+                if (capacity(list) != DEFAULT_CAPACITY + 1) {
+                    failAssert();
+                }
+            }
+            addOneElement(list);
+            if (capacity(list) != newCapacity(DEFAULT_CAPACITY + 1)) {
+                failAssert();
+            }
+        } catch (Throwable t) {
+            return -1;
         }
         return execution;
     }
 
     @Test
     public int test_explicitZeroCapacity(int execution) {
-        ArrayList<Object> list = new ArrayList<>(0);
-        if (capacity(list) != 0) {
-            failAssert();
-        }
-        addOneElement(list);
-        if (capacity(list) != 1) {
-            failAssert();
-        }
-        addOneElement(list);
-        if (capacity(list) != 2) {
-            failAssert();
-        }
-        addOneElement(list);
-        if (capacity(list) != 3) {
-            failAssert();
-        }
-        addOneElement(list);
-        if (capacity(list) != 4) {
-            failAssert();
-        }
-        addOneElement(list);
-        if (capacity(list) != 6) {
-            failAssert();
-        }
-        addOneElement(list);
-        if (capacity(list) != 6) {
-            failAssert();
-        }
-        addOneElement(list);
-        if (capacity(list) != 9) {
-            failAssert();
-        }
-        list.clear();
-        if (capacity(list) != 9) {
-            failAssert();
+        try {
+            ArrayList<Object> list = new ArrayList<>(0);
+            if (capacity(list) != 0) {
+                failAssert();
+            }
+            addOneElement(list);
+            if (capacity(list) != 1) {
+                failAssert();
+            }
+            addOneElement(list);
+            if (capacity(list) != 2) {
+                failAssert();
+            }
+            addOneElement(list);
+            if (capacity(list) != 3) {
+                failAssert();
+            }
+            addOneElement(list);
+            if (capacity(list) != 4) {
+                failAssert();
+            }
+            addOneElement(list);
+            if (capacity(list) != 6) {
+                failAssert();
+            }
+            addOneElement(list);
+            if (capacity(list) != 6) {
+                failAssert();
+            }
+            addOneElement(list);
+            if (capacity(list) != 9) {
+                failAssert();
+            }
+            list.clear();
+            if (capacity(list) != 9) {
+                failAssert();
+            }
+        } catch (Throwable t) {
+            return -1;
         }
         return execution;
     }
 
     @Test
     public int test_explicitLargeCapacity(int execution) {
-        int n = DEFAULT_CAPACITY * 3;
-        ArrayList<Object> list = new ArrayList<>(n);
-        if (capacity(list) != n) {
-            failAssert();
-        }
-        ensureCapacity(list, 0);
-        ensureCapacity(list, n);
-        for (int i = 0; i < n; i++) addOneElement(list);
-        if (capacity(list) != n) {
-            failAssert();
-        }
+        try {
+            int n = DEFAULT_CAPACITY * 3;
+            ArrayList<Object> list = new ArrayList<>(n);
+            if (capacity(list) != n) {
+                failAssert();
+            }
+            ensureCapacity(list, 0);
+            ensureCapacity(list, n);
+            for (int i = 0; i < n; i++) addOneElement(list);
+            if (capacity(list) != n) {
+                failAssert();
+            }
 
-        addOneElement(list);
-        if (capacity(list) != newCapacity(n)) {
-            failAssert();
+            addOneElement(list);
+            if (capacity(list) != newCapacity(n)) {
+                failAssert();
+            }
+        } catch (Throwable t) {
+            return -1;
         }
         return execution;
     }
 
     @Test
     public int test_emptyArraysAreShared(int execution) {
-        if (elementData(new ArrayList<>()) != elementData(new ArrayList<>())) {
-            failAssert();
-        }
-        if (elementData(new ArrayList<>(0)) != elementData(new ArrayList<>(0))) {
-            failAssert();
+        try {
+            if (elementData(new ArrayList<>()) != elementData(new ArrayList<>())) {
+                failAssert();
+            }
+            if (elementData(new ArrayList<>(0)) != elementData(new ArrayList<>(0))) {
+                failAssert();
+            }
+        } catch (Throwable t) {
+            return -1;
         }
         return execution;
     }
 
     @Test
     public int test_emptyArraysDifferBetweenDefaultAndExplicit(int execution) {
-        if (elementData(new ArrayList<>()) == elementData(new ArrayList<>(0))) {
-            failAssert();
+        try {
+            if (elementData(new ArrayList<>()) == elementData(new ArrayList<>(0))) {
+                failAssert();
+            }
+        } catch (Throwable t) {
+            return -1;
         }
         return execution;
     }
 
     @Test
     public int test_negativeCapacity(int execution) {
-        for (int capacity : new int[] { -1, Integer.MIN_VALUE }) {
-            try {
-                new ArrayList<>(capacity);
-                return -1;
-            } catch (IllegalArgumentException success) {
+        try {
+            for (int capacity : new int[]{-1, Integer.MIN_VALUE}) {
+                try {
+                    new ArrayList<>(capacity);
+                    return -1;
+                } catch (IllegalArgumentException success) {
+                }
             }
+        } catch (Throwable t) {
+            return -1;
         }
         return execution;
     }

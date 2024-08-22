@@ -9,15 +9,19 @@ import java.util.Iterator;
 @Test
 public class EmptyMapIteratorTest {
     @Test
-    public static int test_EmptyMapIterator (int execution) throws Exception {
-        HashMap map = new HashMap();
-        Iterator iter = map.entrySet().iterator();
-        map.put("key", "value");
-
+    public static int test_EmptyMapIterator (int execution) {
         try {
-            iter.next();
+            HashMap map = new HashMap();
+            Iterator iter = map.entrySet().iterator();
+            map.put("key", "value");
+
+            try {
+                iter.next();
+                return -1;
+            } catch (ConcurrentModificationException e) {
+            }
+        } catch (Throwable t) {
             return -1;
-        } catch (ConcurrentModificationException e) {
         }
         return execution;
     }

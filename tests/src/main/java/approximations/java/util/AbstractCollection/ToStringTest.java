@@ -20,7 +20,6 @@ public class ToStringTest {
     }
 
     private static void testCollection(Collection<Object> c) {
-        System.out.println(c.getClass());
         equal(c.toString(), "[]");
         check(c.add("x"));
         equal(c.toString(), "[x]");
@@ -37,17 +36,16 @@ public class ToStringTest {
     //--------------------- Infrastructure ---------------------------
     static volatile int passed = 0, failed = 0;
     static void pass() { passed++; }
-    static void fail() { failed++; Thread.dumpStack(); }
-    static void fail(String msg) { System.out.println(msg); fail(); }
-    static void unexpected(Throwable t) { failed++; t.printStackTrace(); }
+    static void fail() { failed++; }
+    static void unexpected() { failed++; }
     static void check(boolean cond) { if (cond) pass(); else fail(); }
     static void equal(Object x, Object y) {
         if (x == null ? y == null : x.equals(y)) pass();
-        else {System.out.println(x + " not equal to " + y); fail(); }}
+        else { fail(); }}
 
-    @Test
+    @Test(executionMax = 0)
     public static int test_toString(int execution) {
-        try { realMain(); } catch (Throwable t) { unexpected(t); }
+        try { realMain(); } catch (Throwable t) { unexpected(); }
 
         if (failed > 0) {
             return -1;

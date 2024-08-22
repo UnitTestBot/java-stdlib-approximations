@@ -2,9 +2,10 @@ package approximations.java.util.optional;
 
 import approximations.Test;
 
-import java.util.NoSuchElementException;
-import java.util.OptionalInt;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
 
 @Test
 public class BasicIntTest {
@@ -14,6 +15,15 @@ public class BasicIntTest {
     /**
      * Checks a block of assertions over an empty OptionalInt.
      */
+
+    public IntStream OptionalInt_stream(OptionalInt optional) {
+        if (optional.isPresent()) {
+            return IntStream.of(optional.getAsInt());
+        } else {
+            return IntStream.empty();
+        }
+    }
+
     int checkEmpty (OptionalInt empty, int execution) {
         if (!empty.equals(OptionalInt.empty())) {
             return -1;
@@ -160,15 +170,19 @@ public class BasicIntTest {
         return checkPresent(OptionalInt.of(INTVAL), INTVAL, execution);
     }
 
-    @Test(disabled = true)
+    @Test
     public int test_StreamEmpty (int execution) {
-        //assertEquals(OptionalInt.empty().stream().toArray(), new int[] { });
+        if (!Arrays.equals(OptionalInt_stream(OptionalInt.empty()).toArray(), new int[]{})) {
+            return -1;
+        }
         return execution;
     }
 
-    @Test(disabled = true)
+    @Test
     public int test_StreamPresent (int execution) {
-        //assertEquals(OptionalInt.of(INTVAL).stream().toArray(), new int[] { INTVAL });
+        if (!Arrays.equals(OptionalInt_stream(OptionalInt.of(INTVAL)).toArray(), new int[]{INTVAL})) {
+            return -1;
+        }
         return execution;
     }
 }

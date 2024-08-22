@@ -2,9 +2,10 @@ package approximations.java.util.optional;
 
 import approximations.Test;
 
-import java.util.NoSuchElementException;
-import java.util.OptionalLong;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 public class BasicLongTest {
     static final long LONGVAL = 2_305_843_008_139_952_128L;
@@ -13,6 +14,15 @@ public class BasicLongTest {
     /**
      * Checks a block of assertions over an empty OptionalLong.
      */
+
+    public LongStream OptionalLong_stream(OptionalLong optional) {
+        if (optional.isPresent()) {
+            return LongStream.of(optional.getAsLong());
+        } else {
+            return LongStream.empty();
+        }
+    }
+
     int checkEmpty(OptionalLong empty, int execution) {
         if (!empty.equals(OptionalLong.empty())) {
             return -1;
@@ -159,15 +169,19 @@ public class BasicLongTest {
         return checkPresent(OptionalLong.of(LONGVAL), LONGVAL, execution);
     }
 
-    @Test(disabled = true)
+    @Test
     public int test_StreamEmpty (int execution) {
-        //assertEquals(OptionalLong.empty().stream().toArray(), new long[] { });
+        if (!Arrays.equals(OptionalLong_stream(OptionalLong.empty()).toArray(), new long[]{})) {
+            return -1;
+        }
         return execution;
     }
 
-    @Test(disabled = true)
+    @Test
     public int test_StreamPresent (int execution) {
-        //assertEquals(OptionalLong.of(LONGVAL).stream().toArray(), new long[] { LONGVAL });
+        if (!Arrays.equals(OptionalLong_stream(OptionalLong.of(LONGVAL)).toArray(), new long[]{LONGVAL})) {
+            return -1;
+        }
         return execution;
     }
 }

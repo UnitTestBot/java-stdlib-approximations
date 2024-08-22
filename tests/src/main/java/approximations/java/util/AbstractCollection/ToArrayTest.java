@@ -58,7 +58,7 @@ public class ToArrayTest {
     }
 
     static final Object[] OBJECTS = { new Object(), new Object(), new Object() };
-    static final TestCollection<?> CANDIDATE = new TestCollection<Object>(OBJECTS);
+    static final TestCollection<?> CANDIDATE = new TestCollection<>(OBJECTS);
     static final int CAP = OBJECTS.length; // capacity of the CANDIDATE
     static final int LAST = CAP - 1; // last possible array index
     Object[] a;
@@ -143,7 +143,7 @@ public class ToArrayTest {
     /*
      * Major target of this testcase, bug 7121314.
      */
-    protected void test_7121314() throws Throwable {
+    protected void test_7121314() {
         // Check equal elements as a.length, but less than expected
         a = new Object[CAP - 1]; // appears too small
         CANDIDATE.setSizeSequence(CAP, CAP - 1);
@@ -160,13 +160,13 @@ public class ToArrayTest {
 
     }
 
-    @Test
+    @Test(executionMax = 0)
     public static int test_toArray(int execution) {
         ToArrayTest testcase = new ToArrayTest();
         try {
             testcase.test();
         } catch (Throwable t) {
-            unexpected(t);
+            unexpected();
         }
         if (failed > 0) {
             return -1;
@@ -178,12 +178,11 @@ public class ToArrayTest {
     //--------------------- Infrastructure ---------------------------
     static volatile int passed = 0, failed = 0;
     static void pass() { passed++; }
-    static void fail() { failed++; Thread.dumpStack(); }
-    static void fail(String msg) { System.out.println(msg); fail(); }
-    static void unexpected(Throwable t) { failed++; t.printStackTrace(); }
+    static void fail() { failed++; }
+    static void unexpected() { failed++; }
     static void check(boolean cond) { if (cond) pass(); else fail(); }
     static void equal(Object x, Object y) {
         if (x == null ? y == null : x.equals(y)) pass();
-        else {System.out.println(x + " not equal to " + y); fail(); }
+        else { fail(); }
     }
 }

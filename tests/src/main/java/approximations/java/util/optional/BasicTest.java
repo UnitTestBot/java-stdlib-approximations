@@ -2,11 +2,35 @@ package approximations.java.util.optional;
 
 import approximations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 @Test
 public class BasicTest {
+    public <T> Stream<T> Optional_stream(Optional<T> optional) {
+        if (!optional.isPresent()) {
+            return Stream.empty();
+        } else {
+            return Stream.of(optional.get());
+        }
+    }
+
+    public <E> List<E> List_of() {
+        return new ArrayList<E>();
+    }
+
+    public <T> List<T> List_of(T element) {
+        ArrayList<T> list = new ArrayList<T>();
+        list.add(element);
+        return list;
+    }
+
     int checkEmpty(Optional<String> empty, int execution) {
         if (!empty.equals(Optional.empty())) {
             return -1;
@@ -38,7 +62,11 @@ public class BasicTest {
             return -1;
         }
 
-        //assertThrows(NoSuchElementException.class, () -> empty.get());
+        try {
+            empty.get();
+            return -1;
+        } catch (NoSuchElementException e) {
+        }
         //assertThrows(NoSuchElementException.class, () -> empty.orElseThrow());
         //assertThrows(ObscureException.class,       () -> empty.orElseThrow(ObscureException::new));
 
@@ -144,10 +172,14 @@ public class BasicTest {
         return checkEmpty(Optional.empty(), execution);
     }
 
-    @Test(disabled = true)
+    @Test
     public int test_OfNull (int execution) {
-        //assertThrows(NullPointerException.class, () -> Optional.of(null));
-        return execution;
+        try {
+            Optional.of(null);
+            return -1;
+        } catch (NullPointerException e) {
+            return execution;
+        }
     }
 
     @Test
@@ -250,30 +282,49 @@ public class BasicTest {
         }
     }
 
-    @Test(disabled = true)
+    @Test
     public int test_OrEmptyEmpty (int execution) {
-        //return checkEmpty(Optional.<String>empty().or(() -> Optional.empty()), execution);
-        return execution;
+        try {
+            Optional.<String>empty().get();
+            return -1;
+        } catch (NoSuchElementException e) {
+            return checkEmpty(Optional.empty(), execution);
+        }
     }
 
-    @Test(disabled = true)
+    @Test
     public int test_OrEmptyPresent (int execution) {
-        //checkPresent(Optional.<String>empty().or(() -> Optional.of("plugh")), "plugh");
-        return execution;
+        try {
+            Optional.<String>empty().get();
+            return -1;
+        } catch (NoSuchElementException e) {
+            return checkPresent(Optional.of("plugh"), "plugh", execution);
+        }
     }
 
     @Test(disabled = true)
     public int test_OrPresentDontCare (int execution) {
-        /*Optional<String> optional = Optional.of("xyzzy");
-        checkPresent(Optional.of("xyzzy").or(() -> { fail(); return Optional.of("plugh"); }), "xyzzy");*/
+        Optional<String> optional = Optional.of("xyzzy");
+        if (optional.isPresent()) {
+            return checkPresent(optional, "xyzzy", execution);
+        } else {
+            return -1;
+        }
+    }
+
+    @Test
+    public int testStreamEmpty(int execution) {
+        if (Optional_stream(Optional.empty()).collect(toList()) != List_of()) {
+            return -1;
+        }
         return execution;
     }
 
-    public void testStreamEmpty() {
-        //assertEquals(Optional.empty().stream().collect(toList()), List.of());
-    }
-
-    public void testStreamPresent() {
-        //assertEquals(Optional.of("xyzzy").stream().collect(toList()), List.of("xyzzy"));
+    @Test
+    public int testStreamPresent(int execution) {
+        if (Optional_stream(Optional.of("xyzzy")).collect(toList()) != List_of("xyzzy")) {
+            return -1;
+        }
+        return execution;
     }
 }

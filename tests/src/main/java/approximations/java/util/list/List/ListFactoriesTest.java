@@ -17,8 +17,16 @@ import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
 
-public class ListFactoriesTest { // all these factory methods are not a thing on current Java version
-    /*static final int NUM_STRINGS = 20; // should be larger than the largest fixed-arg overload
+public class ListFactoriesTest {
+    public <T> List<T> List_of() {
+        return new ArrayList<>();
+    }
+
+    public <T> List<T> List_of(T[] elements) {
+        return new ArrayList<>(asList(elements));
+    }
+
+    static final int NUM_STRINGS = 20; // should be larger than the largest fixed-arg overload
     static final String[] stringArray;
     static {
         String[] sa = new String[NUM_STRINGS];
@@ -36,14 +44,14 @@ public class ListFactoriesTest { // all these factory methods are not a thing on
     @DataProvider(name="empty")
     public Iterator<Object[]> empty() {
         return Collections.singletonList(
-                a(List.of(), asList())
+                a(List_of(), asList())
         ).iterator();
     }
 
     @DataProvider(name="nonempty")
     public Iterator<Object[]> nonempty() {
         return asList(
-                a(List.of("a"),
+                a(List_of(new String[] { "a" } ),
                         asList("a")),
                 a(List.of("a", "b"),
                         asList("a", "b")),
@@ -71,7 +79,7 @@ public class ListFactoriesTest { // all these factory methods are not a thing on
     @DataProvider(name="sublists")
     public Iterator<Object[]> sublists() {
         return asList(
-                a(List.<String>of().subList(0,0),
+                a((List_of() as List<String>).subList(0,0),
                         asList()),
                 a(List.of("a").subList(0,0),
                         asList("a").subList(0,0)),
@@ -343,5 +351,5 @@ public class ListFactoriesTest { // all these factory methods are not a thing on
             ((ListIterator<Integer>) it).previous();
             fail("ListIterator operation succeeded on Iterator");
         } catch (ClassCastException|UnsupportedOperationException ignore) { }
-    }*/
+    }
 }
