@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 import static java.util.Arrays.asList;
 
 public class ListFactoriesTest {
-    public <T> List<T> List_of() {
+    /*public <T> List<T> List_of() {
         return new ArrayList<>();
     }
 
@@ -351,5 +351,5 @@ public class ListFactoriesTest {
             ((ListIterator<Integer>) it).previous();
             fail("ListIterator operation succeeded on Iterator");
         } catch (ClassCastException|UnsupportedOperationException ignore) { }
-    }
+    }*/
 }

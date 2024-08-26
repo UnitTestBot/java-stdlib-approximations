@@ -160,7 +160,7 @@ public class ToArrayTest {
 
     }
 
-    @Test(executionMax = 0)
+    @Test
     public static int test_toArray(int execution) {
         ToArrayTest testcase = new ToArrayTest();
         try {
