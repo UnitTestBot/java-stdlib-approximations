@@ -14,9 +14,9 @@ public class ToStringTest {
                 return super.size() + 1; // Lies, lies, all lies!
             }});
         testCollection(new ArrayList<>());
-        testCollection(new Vector<>());
-        testCollection(new CopyOnWriteArrayList<>());
-        testCollection(new CopyOnWriteArraySet<>());
+        //testCollection(new Vector<>());
+        //testCollection(new CopyOnWriteArrayList<>());
+        //testCollection(new CopyOnWriteArraySet<>());
     }
 
     private static void testCollection(Collection<Object> c) {

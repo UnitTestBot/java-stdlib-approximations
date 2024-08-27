@@ -1,5 +1,6 @@
 package decoders.java.util;
 
+import decoders.Helpers;
 import org.jacodb.api.jvm.JcClassOrInterface;
 import org.jacodb.api.jvm.JcField;
 import org.jacodb.api.jvm.JcMethod;
@@ -46,7 +47,7 @@ public class ArrayList_Decoder implements ObjectDecoder {
 
                         List<JcParameter> params = m.getParameters();
                         if (params.size() != 1) continue;
-                        if (!"java.lang.Object".equals(params.get(0).getType().getTypeName())) continue;
+                        //if (!"java.lang.Object".equals(params.get(0).getType().getTypeName())) continue;
 
                         cached_ArrayList_add = m_add = m;
                     }
@@ -68,7 +69,8 @@ public class ArrayList_Decoder implements ObjectDecoder {
         JcField f_storage = cached_ArrayList_storage;
         // TODO: add synchronization if needed
         if (f_storage == null) {
-            final List<JcField> fields = approx.getDeclaredFields();
+            //final List<JcField> fields = approx.getDeclaredFields();
+            final List<JcField> fields = Helpers.getAllFields(approx);
             for (int i = 0, c = fields.size(); i < c; i++) {
                 JcField f = fields.get(i);
                 if ("storage".equals(f.getName())) {

@@ -4,29 +4,14 @@ import approximations.Test;
 
 import java.util.*;
 
-class MyList extends AbstractList<String> {
-
-    private static final int SIZE = 2;
-
-    public String get(int i) {
-        if (i >= 0 && i < SIZE) {
-            return "x";
-        } else {
-            throw new IndexOutOfBoundsException();
-        }
-    }
-
-    public int size() {
-        return SIZE;
-    }
-}
-
 @Test
 public class CheckForIndexOutOfBoundsExceptionTest { // instead of returning execution, original class was checking if exception message was right
-    List<String> list = new MyList();
+    List<String> list = new ArrayList<>(2);
 
     @Test
     public int checkIteratorNext(int execution) {
+        list.add("x");
+        list.add("x");
         Iterator<String> iterator = list.iterator(); // position at start
         try {
             for (int i = 0; i <= list.size(); i++) {

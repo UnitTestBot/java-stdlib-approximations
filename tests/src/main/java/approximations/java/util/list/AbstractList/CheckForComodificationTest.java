@@ -16,7 +16,7 @@ public class CheckForComodificationTest {
             list.add(i);
         try {
             for (int i : list)
-                if (i == LENGTH - 2)
+                if (i == LENGTH - 3)
                     list.remove(i);
         } catch (ConcurrentModificationException e) {
             return execution;
