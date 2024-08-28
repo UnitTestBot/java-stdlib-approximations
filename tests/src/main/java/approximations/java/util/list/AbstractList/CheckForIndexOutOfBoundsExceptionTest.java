@@ -9,7 +9,8 @@ public class CheckForIndexOutOfBoundsExceptionTest { // instead of returning exe
     List<String> list = new ArrayList<>(2);
 
     @Test
-    public int checkIteratorNext(int execution) {
+    public int checkIteratorNext1(int execution) { // for whatever reason, results of 1st and 2nd versions may differ
+        List<String> list = new ArrayList<>(2);
         list.add("x");
         list.add("x");
         Iterator<String> iterator = list.iterator(); // position at start
@@ -21,6 +22,26 @@ public class CheckForIndexOutOfBoundsExceptionTest { // instead of returning exe
         } catch (NoSuchElementException e) {
             return execution;
         }
+    }
+
+    @Test
+    public int checkIteratorNext2(int execution) {
+        List<String> list = new ArrayList<>(2);
+        list.add("x");
+        list.add("x");
+        Iterator<String> iterator = list.iterator(); // position at start
+        for (int i = 0; i <= list.size(); i++) {
+            try {
+                iterator.next();
+            } catch (NoSuchElementException e) {
+                if (i == list.size()) {
+                    return execution;
+                } else {
+                    return -1;
+                }
+            }
+        }
+        return -1;
     }
 
     @Test

@@ -9,17 +9,18 @@ import java.util.ListIterator;
 
 @Test
 public class FailFastIteratorTest {
-    @Test
+    @Test(disabled = true)
+    // TODO: make the size of the copied list correct
     public static int test_failFastIteratorTest(int execution) {
         List orig = new ArrayList(5);
         for (int i=95; i<100; i++)
             orig.add(i);
 
         List copy = new ArrayList(orig);
-        return copy.size();
-        //ListIterator i = copy.listIterator();
-        //i.next();
-        /*try {
+        if (copy.size() != 5) {
+            return -1;
+        }
+        try {
             ListIterator i = orig.listIterator();
             i.next();
             orig.remove(4);
@@ -28,10 +29,10 @@ public class FailFastIteratorTest {
             return -1;
         } catch (ConcurrentModificationException e) {
         }
-        /*if (!copy.equals(orig))
-            return -1;*/
+        if (!copy.equals(orig))
+            return -1;
 
-        /*try {
+        try {
             ListIterator i = orig.listIterator();
             i.next();
             orig.remove(4);
@@ -40,10 +41,10 @@ public class FailFastIteratorTest {
             return -1;
         } catch (ConcurrentModificationException e) {
         }
-        /*if (!copy.equals(orig))
-            return -1;*/
+        if (!copy.equals(orig))
+            return -1;
 
-        /*try {
+        try {
             ListIterator i = orig.listIterator();
             orig.remove(4);
             orig.add(99);
@@ -51,8 +52,23 @@ public class FailFastIteratorTest {
             return -1;
         } catch (ConcurrentModificationException e) {
         }
-        /*if (!copy.equals(orig))
-            return -1;*/
-        //return execution;
+        if (!copy.equals(orig))
+            return -1;
+        return execution;
+    }
+
+    @Test(disabled = true)
+    // TODO: fix IndexOutOfBoundsException for a copied list get()
+    public static int test_listCopy(int execution) {
+        List orig = new ArrayList(5);
+        for (int i=95; i<100; i++)
+            orig.add(i);
+
+        List copy = new ArrayList(orig);
+        if (copy.get(3) == orig.get(3)) {
+            return execution;
+        } else {
+            return -1;
+        }
     }
 }

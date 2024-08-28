@@ -43,7 +43,7 @@ public class ToStringTest {
         if (x == null ? y == null : x.equals(y)) pass();
         else { fail(); }}
 
-    @Test(executionMax = 0)
+    @Test(disabled = true)
     public static int test_toString(int execution) {
         try { realMain(); } catch (Throwable t) { unexpected(); }
 

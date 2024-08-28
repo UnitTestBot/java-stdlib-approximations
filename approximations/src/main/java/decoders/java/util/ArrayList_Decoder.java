@@ -1,6 +1,5 @@
 package decoders.java.util;
 
-import decoders.Helpers;
 import org.jacodb.api.jvm.JcClassOrInterface;
 import org.jacodb.api.jvm.JcField;
 import org.jacodb.api.jvm.JcMethod;
@@ -69,8 +68,7 @@ public class ArrayList_Decoder implements ObjectDecoder {
         JcField f_storage = cached_ArrayList_storage;
         // TODO: add synchronization if needed
         if (f_storage == null) {
-            //final List<JcField> fields = approx.getDeclaredFields();
-            final List<JcField> fields = Helpers.getAllFields(approx);
+            final List<JcField> fields = getAllFields(approx);
             for (int i = 0, c = fields.size(); i < c; i++) {
                 JcField f = fields.get(i);
                 if ("storage".equals(f.getName())) {
@@ -94,5 +92,22 @@ public class ArrayList_Decoder implements ObjectDecoder {
 
             decoder.invokeMethod(cached_ArrayList_add, args);
         }
+    }
+
+    public List<JcField> getAllFields(JcClassOrInterface type) {
+        List<JcClassOrInterface> typesToCheck = new ArrayList<>();
+        typesToCheck.add(type);
+        List<JcField> allFields = new ArrayList<>();
+        while (!typesToCheck.isEmpty()) {
+            int lastIndex = typesToCheck.size() - 1;
+            JcClassOrInterface current = typesToCheck.remove(lastIndex);
+            allFields.addAll(current.getDeclaredFields());
+
+            JcClassOrInterface superClass = current.getSuperClass();
+            if (superClass != null) {
+                typesToCheck.add(superClass);
+            }
+        }
+        return allFields;
     }
 }
