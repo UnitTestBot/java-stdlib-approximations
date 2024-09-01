@@ -6,10 +6,8 @@ import java.util.*;
 
 @Test
 public class CheckForIndexOutOfBoundsExceptionTest { // instead of returning execution, original class was checking if exception message was right
-    List<String> list = new ArrayList<>(2);
-
     @Test
-    public int checkIteratorNext1(int execution) { // for whatever reason, results of 1st and 2nd versions may differ
+    public static int checkIteratorNext1(int execution) { // for whatever reason, results of 1st and 2nd versions may differ
         List<String> list = new ArrayList<>(2);
         list.add("x");
         list.add("x");
@@ -25,7 +23,7 @@ public class CheckForIndexOutOfBoundsExceptionTest { // instead of returning exe
     }
 
     @Test
-    public int checkIteratorNext2(int execution) {
+    public static int checkIteratorNext2(int execution) {
         List<String> list = new ArrayList<>(2);
         list.add("x");
         list.add("x");
@@ -45,7 +43,10 @@ public class CheckForIndexOutOfBoundsExceptionTest { // instead of returning exe
     }
 
     @Test
-    public int checkListIteratorNext(int execution) {
+    public static int checkListIteratorNext(int execution) {
+        List<String> list = new ArrayList<>(2);
+        list.add("x");
+        list.add("x");
         ListIterator<String> iterator = list.listIterator(list.size()); // position at end
         try {
             iterator.next();
@@ -56,7 +57,10 @@ public class CheckForIndexOutOfBoundsExceptionTest { // instead of returning exe
     }
 
     @Test
-    public int checkListIteratorPrevious(int execution) {
+    public static int checkListIteratorPrevious(int execution) {
+        List<String> list = new ArrayList<>(2);
+        list.add("x");
+        list.add("x");
         ListIterator<String> iterator = list.listIterator(0); // position at start
         try {
             iterator.previous();

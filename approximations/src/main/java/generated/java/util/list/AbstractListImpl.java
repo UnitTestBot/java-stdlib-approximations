@@ -491,7 +491,7 @@ public abstract class AbstractListImpl<E> extends AbstractCollectionImpl<E> impl
 
     @NotNull
     public ListIterator<E> listIterator(int index) {
-        _checkValidIndex(index);
+        _checkValidAddIndex(index);
         return new ListIteratorStubImpl<>(this, index);
     }
 
