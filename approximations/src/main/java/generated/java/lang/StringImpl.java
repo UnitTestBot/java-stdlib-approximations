@@ -17,27 +17,95 @@ public class StringImpl implements Serializable {
 
     private static final int STRING_LENGTH_MAX = 50;
 
-    public byte[] value;
+    static final byte UTF16 = 1;
 
-    public int length;
+    static final byte LATIN1 = 0;
 
-    public StringImpl(byte[] value, int length) {
+    // Enforce coder == UTF8
+    static boolean COMPACT_STRINGS;
+
+    static {
+        COMPACT_STRINGS = true;
+    }
+
+    private final byte[] value;
+
+    // TODO: everywhere add assume 'coder == LATIN1' #Approx
+    private final byte coder;
+
+    public static StringImpl _emptyString = new StringImpl(new byte[] {});
+
+    public static byte _currentCoder() {
+        return COMPACT_STRINGS ? LATIN1 : UTF16;
+    }
+
+    public static void _addCharToBytes(byte[] bytes, int index, char value) {
+        if (COMPACT_STRINGS) {
+            Engine.assume(value <= 0xFF);
+            bytes[index] = (byte) value;
+        } else {
+            bytes[index++] = (byte) value;
+            bytes[index] = (byte) (value >> 8);
+        }
+    }
+
+    public static byte[] _getBytes(char[] chars) {
+        int size = chars.length << _currentCoder();
+        byte[] bytes = new byte[size];
+        if (COMPACT_STRINGS) {
+            for (int i = 0; i < chars.length; i++) {
+                char c = chars[i];
+                Engine.assume(c <= 0xFF);
+                bytes[i] = (byte) chars[i];
+            }
+        } else {
+            int byteIndex = 0;
+            for (char c : chars) {
+                bytes[byteIndex++] = (byte) c;
+                bytes[byteIndex] = (byte) (c >> 8);
+                byteIndex++;
+            }
+        }
+
+        return bytes;
+    }
+
+    public static char[] _getChars(byte[] bytes) {
+        int size = bytes.length >> _currentCoder();
+        char[] chars = new char[size];
+        if (COMPACT_STRINGS) {
+            for (int i = 0; i < bytes.length; i++) {
+                byte c = bytes[i];
+                chars[i] = (char) bytes[i];
+            }
+        } else {
+            int byteIndex = 0;
+            for (int i = 0; i < chars.length; i++) {
+                char c = (char) (((char) bytes[byteIndex++]) | (((char) bytes[byteIndex++]) << 8));
+            }
+        }
+
+        return chars;
+    }
+
+    private StringImpl(byte[] value, byte coder) {
+        Engine.assume(coder == _currentCoder());
         this.value = value;
-        this.length = length;
+        this.coder = coder;
     }
 
     public StringImpl() {
-        this(new byte[0], 0);
+        this(new byte[0], _currentCoder());
     }
 
     public StringImpl(StringImpl original) {
-        this(original.value, original.length);
+        this(original.value, original.coder);
     }
 
     public StringImpl(byte[] bytes) {
         int len = bytes.length;
-        this.length = len;
         this.value = new byte[len];
+        this.coder = _currentCoder();
         LibSLRuntime.ArrayActions.copy(bytes, 0, this.value, 0, len);
     }
 
@@ -90,50 +158,42 @@ public class StringImpl implements Serializable {
     }
 
     @SuppressWarnings("DataFlowIssue")
-    public StringImpl concat(StringImpl str) {
+    private void _assumeInvariants() {
         Engine.assume(this.value != null);
         Engine.assume(this.value.length <= STRING_LENGTH_MAX);
-        Engine.assume(this.length == this.value.length);
+        Engine.assume(this.coder == _currentCoder());
+    }
+
+    public StringImpl concat(StringImpl str) {
+        _assumeInvariants();
+
         byte[] otherVal = str.value;
         int otherLen = otherVal.length;
         if (otherLen == 0)
             return this;
 
-        int newLength = this.length + otherLen;
+        int newLength = this.value.length + otherLen;
         byte[] newValue = new byte[newLength];
-        LibSLRuntime.ArrayActions.copy(this.value, 0, newValue, 0, this.length);
-        LibSLRuntime.ArrayActions.copy(otherVal, 0, newValue, this.length, otherLen);
-        return new StringImpl(newValue, newLength);
+        LibSLRuntime.ArrayActions.copy(this.value, 0, newValue, 0, this.value.length);
+        LibSLRuntime.ArrayActions.copy(otherVal, 0, newValue, this.value.length, otherLen);
+        return new StringImpl(newValue, _currentCoder());
     }
 
-    @SuppressWarnings("DataFlowIssue")
     public byte[] getBytes() {
-        Engine.assume(this.value != null);
-        Engine.assume(this.value.length <= STRING_LENGTH_MAX);
-        Engine.assume(this.length == this.value.length);
+        _assumeInvariants();
+
         return this.value;
     }
 
-    @SuppressWarnings("DataFlowIssue")
     public void getBytes(int srcBegin, int srcEnd, byte[] dst, int dstBegin) {
         if (srcBegin < 0)
             throw new StringIndexOutOfBoundsException(srcBegin);
-        if (this.length < srcEnd)
+        if (this.value.length < srcEnd)
             throw new StringIndexOutOfBoundsException(srcEnd);
         int count = srcEnd - srcBegin;
         if (count < 0)
             throw new StringIndexOutOfBoundsException(count);
-        Engine.assume(this.value != null);
-        Engine.assume(this.value.length <= STRING_LENGTH_MAX);
-        Engine.assume(this.length == this.value.length);
+        _assumeInvariants();
         LibSLRuntime.ArrayActions.copy(this.value, srcBegin, dst, dstBegin, count);
-    }
-
-    public boolean isEmpty() {
-        return this.length == 0;
-    }
-
-    public int length() {
-        return this.length;
     }
 }
