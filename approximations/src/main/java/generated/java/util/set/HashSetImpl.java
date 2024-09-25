@@ -6,6 +6,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.IntFunction;
@@ -16,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.usvm.api.Engine;
 
 @Approximate(java.util.HashSet.class)
-public class HashSetImpl<E> extends AbstractSetImpl<E> implements Cloneable, Serializable {
+public class HashSetImpl<E> extends AbstractSetImpl<E> implements Cloneable, Serializable, Set<E> {
 
     @Serial
     private static final long serialVersionUID = -5024744406713321676L;
@@ -47,97 +48,97 @@ public class HashSetImpl<E> extends AbstractSetImpl<E> implements Cloneable, Ser
     }
 
     public boolean add(E obj) {
-        return super.add(obj);
+        return super._add(obj);
     }
 
     public void clear() {
-        super.clear();
+        super._clear();
     }
 
     public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+        return super._clone();
     }
 
     public boolean contains(Object obj) {
-        return super.contains(obj);
+        return super._contains(obj);
     }
 
     public boolean isEmpty() {
-        return super.isEmpty();
+        return super._isEmpty();
     }
 
     @NotNull
     public Iterator<E> iterator() {
-        return super.iterator();
+        return super._iterator();
     }
 
     public boolean remove(Object elem) {
-        return super.remove(elem);
+        return super._remove(elem);
     }
 
-    public int _size() {
+    public int size() {
         return super._size();
     }
 
     public Spliterator<E> spliterator() {
-        return super.spliterator();
+        return super._spliterator();
     }
 
     public boolean equals(Object other) {
-        return Engine.typeIs(other, HashSetImpl.class) && _equals(other);
+        return Engine.typeIs(other, HashSetImpl.class) && __equals(other);
     }
 
     public int hashCode() {
-        return super.hashCode();
+        return super._hashCode();
     }
 
     public boolean removeAll(@NotNull Collection<?> c) {
-        return super.removeAll(c);
+        return super._removeAll(c);
     }
 
     @NotNull
-    public Object[] _toArray() {
+    public Object[] toArray() {
         return super._toArray();
     }
 
     @NotNull
-    public <T> T[] _toArray(@NotNull T[] a) {
+    public <T> T[] toArray(@NotNull T[] a) {
         return super._toArray(a);
     }
 
-    public <T> T[] _toArray(IntFunction<T[]> generator) {
+    public <T> T[] toArray(IntFunction<T[]> generator) {
         return super._toArray(generator);
     }
 
     public boolean containsAll(@NotNull Collection<?> c) {
-        return super.containsAll(c);
+        return super._containsAll(c);
     }
 
     public boolean addAll(@NotNull Collection<? extends E> c) {
-        return super.addAll(c);
+        return super._addAll(c);
     }
 
     public boolean retainAll(@NotNull Collection<?> c) {
-        return super.retainAll(c);
+        return super._retainAll(c);
     }
 
     public boolean removeIf(Predicate<? super E> filter) {
-        return super.removeIf(filter);
+        return super._removeIf(filter);
     }
 
     public void forEach(Consumer<? super E> userAction) {
-        super.forEach(userAction);
+        super._forEach(userAction);
     }
 
     public Stream<E> stream() {
-        return super.stream();
+        return super._stream();
     }
 
     public Stream<E> parallelStream() {
-        return super.parallelStream();
+        return super._parallelStream();
     }
 
-    public String _toString() {
+    public String toString() {
         return super._toString();
     }
 }
