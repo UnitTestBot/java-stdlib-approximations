@@ -8,7 +8,7 @@ import java.util.Map;
 @Test
 public class ToStringTest {
     @Test
-    public static int test_ToString (int execution) {
+    public static int test_ToString(int execution) {
         try {
             Map m = new HashMap();
             m.put(null, null);

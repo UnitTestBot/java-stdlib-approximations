@@ -18,7 +18,8 @@ public class ToStringTest {
             return -1;
 
         m.put("y", "2");
-        if (!m.toString().equals("{x=1, y=2}"))
+        String toStringResult = m.toString();
+        if (!toStringResult.equals("{x=1, y=2}") && !toStringResult.equals("{y=2, x=1}"))
             return -1;
         return execution;
     }

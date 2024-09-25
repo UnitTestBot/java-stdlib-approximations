@@ -36,6 +36,10 @@ public abstract class AbstractMapImpl<K, V> implements Map<K, V> {
         this.isHashMap = isHashMap;
     }
 
+    public AbstractMapImpl() {
+        this(true);
+    }
+
     public AbstractMapImpl(boolean isHashMap, Map<? extends K, ? extends V> m) {
         this(isHashMap);
         _addAllElements(m);
@@ -230,8 +234,12 @@ public abstract class AbstractMapImpl<K, V> implements Map<K, V> {
         return new Map_EntrySetImpl<>(this);
     }
 
-    @SuppressWarnings({"unchecked", "ConstantValue"})
     public boolean equals(Object other) {
+        return _equals(other);
+    }
+
+    @SuppressWarnings({"unchecked", "ConstantValue"})
+    boolean _equals(Object other) {
         if (other == this)
             return true;
 
@@ -348,7 +356,6 @@ public abstract class AbstractMapImpl<K, V> implements Map<K, V> {
     }
 
     public V put(K key, V value) {
-        this.modCount++;
         LibSLRuntime.Map<K, Map.Entry<K, V>> storage = _getStorage();
         if (storage.hasKey(key)) {
             Map.Entry<K, V> entry = storage.get(key);
@@ -359,6 +366,7 @@ public abstract class AbstractMapImpl<K, V> implements Map<K, V> {
 
         Map.Entry<K, V> entry = new AbstractMap_EntryImpl<>(key, value);
         storage.set(key, entry);
+        this.modCount++;
 
         return null;
     }

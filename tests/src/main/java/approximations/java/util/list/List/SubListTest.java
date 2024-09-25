@@ -6,17 +6,40 @@ import java.util.*;
 
 @Test
 public class SubListTest {
-    final Random rnd = new Random();
+    static final Random rnd = new Random();
 
-    @Test(executionMax = 15)
-    public int test_Add (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test//(executionMax = 1)
+    public static int test_Add(int execution) {
+        //List<Integer> list = new ArrayList<>();
+        //list.add(42);
+        /*List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;*/
+        List<Integer> c1 = new ArrayList<>();
+        c1.add(42);
+        TestCase testCase = new TestCase(new LinkedList<>(c1), 0, 1);
+        List<Integer> list = testCase.list;
+        Integer from = testCase.from;
+        Integer to = testCase.to;
+        /*if (execution == 0) {
+            list = modifiable[0].list;
+            from = modifiable[0].from;
+            to = modifiable[0].to;
+        } else {
+            list = modifiable[1].list;
+            from = modifiable[1].from;
+            to = modifiable[1].to;
+        }*/
+        //int from = 0;
+        //int to = 1;
         List<Integer> subList = list.subList(from, to);
-        Integer e = rnd.nextInt();
+        //Integer e = rnd.nextInt();
+        Integer e = 43;
         subList.add(e);
-        if (!Objects.equals(list.get(to), e)) {
+        /*if (!Objects.equals(list.get(to), e)) {
+            return -1;
+        }*/
+        if (!list.get(to).equals(e)) {
             return -1;
         }
         if (subList.size() != to - from + 1) {
@@ -25,11 +48,15 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModAdd(int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test//(executionMax = 7)
+    public static int test_ModAdd(int execution) {
+        /*List<Integer> list = (List<Integer>) modifiable[0][0];
+        Integer from = (Integer) modifiable[0][1];
+        Integer to = (Integer) modifiable[0][2];*/
+        List<Integer> list = new ArrayList<>();
+        list.add(42);
+        int from = 0;
+        int to = 1;
         try {
             List<Integer> subList = list.subList(from, to);
             list.add(42);
@@ -40,11 +67,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 21)
-    public int test_UnmodAdd (int execution) {
-        List<Integer> list = (List<Integer>) unresizable[execution][0];
-        Integer from = (Integer) unresizable[execution][1];
-        Integer to = (Integer) unresizable[execution][2];
+    @Test(executionMax = 9)
+    public static int test_UnmodAdd(int execution) {
+        List<Integer> list = unresizable[execution].list;
+        Integer from = unresizable[execution].from;
+        Integer to = unresizable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             subList.add(42);
@@ -54,11 +81,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_AddAtPos (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_AddAtPos(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         List<Integer> subList = list.subList(from, to);
         int i = rnd.nextInt(1 + to - from);
         Integer e = rnd.nextInt();
@@ -72,11 +99,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModAddAtPos(int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModAddAtPos(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             list.add(42);
@@ -88,11 +115,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 21)
-    public int test_UnmodAddAtPos (int execution) {
-        List<Integer> list = (List<Integer>) unresizable[execution][0];
-        Integer from = (Integer) unresizable[execution][1];
-        Integer to = (Integer) unresizable[execution][2];
+    @Test(executionMax = 9)
+    public static int test_UnmodAddAtPos(int execution) {
+        List<Integer> list = unresizable[execution].list;
+        Integer from = unresizable[execution].from;
+        Integer to = unresizable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             int i = rnd.nextInt(1 + to - from);
@@ -103,11 +130,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_Clear(int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_Clear(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         List<Integer> subList = list.subList(from, to);
         subList.clear();
         if (!subList.isEmpty()) {
@@ -119,11 +146,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModClear (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModClear(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             list.add(42);
@@ -134,11 +161,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 21)
-    public int test_UnmodClear (int execution) {
-        List<Integer> list = (List<Integer>) unresizable[execution][0];
-        Integer from = (Integer) unresizable[execution][1];
-        Integer to = (Integer) unresizable[execution][2];
+    @Test(executionMax = 9)
+    public static int test_UnmodClear(int execution) {
+        List<Integer> list = unresizable[execution].list;
+        Integer from = unresizable[execution].from;
+        Integer to = unresizable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             subList.clear();
@@ -148,17 +175,14 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 37)
-    public int test_Equals (int execution) {
-        List<Integer> list = (List<Integer>) all[execution][0];
-        Integer from = (Integer) all[execution][1];
-        Integer to = (Integer) all[execution][2];
+    @Test(executionMax = 17)
+    public static int test_Equals(int execution) {
+        List<Integer> list = all[execution].list;
+        Integer from = all[execution].from;
+        Integer to = all[execution].to;
         List<Integer> subList1 = list.subList(from, to);
         List<Integer> subList2 = list.subList(from, to);
         if (!subList1.equals(subList2)) {
-            return -1;
-        }
-        if (subList1.hashCode() != subList2.hashCode()) {
             return -1;
         }
         for (int i = 0; i != 16; ++i) {
@@ -183,11 +207,11 @@ public class SubListTest {
 //        subList.equals(subList);
 //    }
 
-    @Test(executionMax = 15)
-    public int test_ModHashCode (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModHashCode(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             list.add(42);
@@ -198,11 +222,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 37)
-    public int test_Get (int execution) {
-        List<Integer> list = (List<Integer>) all[execution][0];
-        Integer from = (Integer) all[execution][1];
-        Integer to = (Integer) all[execution][2];
+    @Test(executionMax = 17)
+    public static int test_Get(int execution) {
+        List<Integer> list = all[execution].list;
+        Integer from = all[execution].from;
+        Integer to = all[execution].to;
         List<Integer> subList = list.subList(from, to);
         for (int i = 0; i < to - from; ++i) {
             if (!Objects.equals(list.get(from + i), subList.get(i))) {
@@ -212,11 +236,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModGet (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModGet(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             list.add(42);
@@ -227,11 +251,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 37)
-    public int test_IndexOf (int execution) {
-        List<Integer> list = (List<Integer>) all[execution][0];
-        Integer from = (Integer) all[execution][1];
-        Integer to = (Integer) all[execution][2];
+    @Test(executionMax = 17)
+    public static int test_IndexOf(int execution) {
+        List<Integer> list = all[execution].list;
+        Integer from = all[execution].from;
+        Integer to = all[execution].to;
         List<Integer> subList = list.subList(from, to);
         if (from < to) {
             Integer e = list.get(from);
@@ -270,11 +294,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModIndexOf (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModIndexOf(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             list.add(42);
@@ -285,11 +309,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 37)
-    public int test_Iterator (int execution) {
-        List<Integer> list = (List<Integer>) all[execution][0];
-        Integer from = (Integer) all[execution][1];
-        Integer to = (Integer) all[execution][2];
+    @Test(executionMax = 17)
+    public static int test_Iterator(int execution) {
+        List<Integer> list = all[execution].list;
+        Integer from = all[execution].from;
+        Integer to = all[execution].to;
         List<Integer> subList = list.subList(from, to);
         Iterator<Integer> it = subList.iterator();
         for (int i = from; i < to; ++i) {
@@ -306,11 +330,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModIteratorNext (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModIteratorNext(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             Iterator<Integer> it = subList.iterator();
@@ -322,11 +346,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_IteratorRemove (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_IteratorRemove(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         List<Integer> subList = list.subList(from, to);
         Iterator<Integer> it = subList.iterator();
         for (int i = from; i < to; ++i) {
@@ -347,11 +371,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModIteratorRemove (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModIteratorRemove(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             Iterator<Integer> it = subList.iterator();
@@ -364,11 +388,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 21)
-    public int test_UnmodIteratorRemove (int execution) {
-        List<Integer> list = (List<Integer>) unresizable[execution][0];
-        Integer from = (Integer) unresizable[execution][1];
-        Integer to = (Integer) unresizable[execution][2];
+    @Test(executionMax = 9)
+    public static int test_UnmodIteratorRemove(int execution) {
+        List<Integer> list = unresizable[execution].list;
+        Integer from = unresizable[execution].from;
+        Integer to = unresizable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             Iterator<Integer> it = subList.iterator();
@@ -380,11 +404,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 37)
-    public int test_IteratorForEachRemaining (int execution) {
-        List<Integer> list = (List<Integer>) all[execution][0];
-        Integer from = (Integer) all[execution][1];
-        Integer to = (Integer) all[execution][2];
+    @Test(executionMax = 17)
+    public static int test_IteratorForEachRemaining(int execution) {
+        List<Integer> list = all[execution].list;
+        Integer from = all[execution].from;
+        Integer to = all[execution].to;
         List<Integer> subList = list.subList(from, to);
         for (int k = 0; k < 16; ++k) {
             int r = from + rnd.nextInt(1 + to - from);
@@ -413,11 +437,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 37)
-    public int test_LastIndexOf (int execution) {
-        List<Integer> list = (List<Integer>) all[execution][0];
-        Integer from = (Integer) all[execution][1];
-        Integer to = (Integer) all[execution][2];
+    @Test(executionMax = 17)
+    public static int test_LastIndexOf(int execution) {
+        List<Integer> list = all[execution].list;
+        Integer from = all[execution].from;
+        Integer to = all[execution].to;
         List<Integer> subList = list.subList(from, to);
         if (from < to) {
             Integer e = list.get(to - 1);
@@ -453,11 +477,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModLastIndexOf (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModLastIndexOf(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             list.add(42);
@@ -468,11 +492,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 21)
-    public int test_ListIterator (int execution) {
-        List<Integer> list = (List<Integer>) unresizable[execution][0];
-        Integer from = (Integer) unresizable[execution][1];
-        Integer to = (Integer) unresizable[execution][2];
+    @Test(executionMax = 9)
+    public static int test_ListIterator(int execution) {
+        List<Integer> list = unresizable[execution].list;
+        Integer from = unresizable[execution].from;
+        Integer to = unresizable[execution].to;
         List<Integer> subList = list.subList(from, to);
         ListIterator<Integer> it = subList.listIterator();
         for (int i = from; i < to; ++i) {
@@ -492,11 +516,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModListIteratorNext (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModListIteratorNext(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             ListIterator<Integer> it = subList.listIterator();
@@ -508,11 +532,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_ListIteratorSet (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ListIteratorSet(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         List<Integer> subList = list.subList(from, to);
         ListIterator<Integer> it = subList.listIterator();
         for (int i = from; i < to; ++i) {
@@ -537,11 +561,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModListIteratorSet (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModListIteratorSet(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             ListIterator<Integer> it = subList.listIterator();
@@ -554,11 +578,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 11)
-    public int test_UnmodListIteratorSet (int execution) {
-        List<Integer> list = (List<Integer>) unsettable[execution][0];
-        Integer from = (Integer) unsettable[execution][1];
-        Integer to = (Integer) unsettable[execution][2];
+    @Test(executionMax = 3)
+    public static int test_UnmodListIteratorSet(int execution) {
+        List<Integer> list = unsettable[execution].list;
+        Integer from = unsettable[execution].from;
+        Integer to = unsettable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             ListIterator<Integer> it = subList.listIterator();
@@ -570,11 +594,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 21)
-    public int test_ListIteratorPrevious (int execution) {
-        List<Integer> list = (List<Integer>) unresizable[execution][0];
-        Integer from = (Integer) unresizable[execution][1];
-        Integer to = (Integer) unresizable[execution][2];
+    @Test(executionMax = 9)
+    public static int test_ListIteratorPrevious(int execution) {
+        List<Integer> list = unresizable[execution].list;
+        Integer from = unresizable[execution].from;
+        Integer to = unresizable[execution].to;
         List<Integer> subList = list.subList(from, to);
         ListIterator<Integer> it = subList.listIterator(subList.size());
         for (int i = to - 1; i >= from; --i) {
@@ -594,11 +618,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModListIteratorPrevious (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModListIteratorPrevious(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             ListIterator<Integer> it = subList.listIterator(to - from);
@@ -610,11 +634,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_ListIteratorSetPrevious(int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ListIteratorSetPrevious(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         List<Integer> subList = list.subList(from, to);
         ListIterator<Integer> it = subList.listIterator(subList.size());
         for (int i = to - 1; i >= from; --i) {
@@ -639,11 +663,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 11)
-    public int test_UnmodListIteratorSetPrevious (int execution) {
-        List<Integer> list = (List<Integer>) unsettable[execution][0];
-        Integer from = (Integer) unsettable[execution][1];
-        Integer to = (Integer) unsettable[execution][2];
+    @Test(executionMax = 3)
+    public static int test_UnmodListIteratorSetPrevious(int execution) {
+        List<Integer> list = unsettable[execution].list;
+        Integer from = unsettable[execution].from;
+        Integer to = unsettable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             ListIterator<Integer> it = subList.listIterator(to - from);
@@ -655,11 +679,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_ListIteratorAdd (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ListIteratorAdd(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         List<Integer> subList = list.subList(from, to);
         for (int i = 0; i < 16; ++i) {
             int r = rnd.nextInt(1 + subList.size());
@@ -676,11 +700,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 21)
-    public int test_UnmodListIteratorAdd (int execution) {
-        List<Integer> list = (List<Integer>) unresizable[execution][0];
-        Integer from = (Integer) unresizable[execution][1];
-        Integer to = (Integer) unresizable[execution][2];
+    @Test(executionMax = 9)
+    public static int test_UnmodListIteratorAdd(int execution) {
+        List<Integer> list = unresizable[execution].list;
+        Integer from = unresizable[execution].from;
+        Integer to = unresizable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             int r = rnd.nextInt(1 + subList.size());
@@ -692,11 +716,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModListIteratorAdd (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModListIteratorAdd(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             ListIterator<Integer> it = subList.listIterator();
@@ -709,11 +733,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_ListIteratorRemoveNext (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ListIteratorRemoveNext(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         List<Integer> subList = list.subList(from, to);
         ListIterator<Integer> it = subList.listIterator();
         for (int i = from; i < to; ++i) {
@@ -737,11 +761,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 21)
-    public int test_UnmodListIteratorRemoveNext (int execution) {
-        List<Integer> list = (List<Integer>) unresizable[execution][0];
-        Integer from = (Integer) unresizable[execution][1];
-        Integer to = (Integer) unresizable[execution][2];
+    @Test(executionMax = 9)
+    public static int test_UnmodListIteratorRemoveNext(int execution) {
+        List<Integer> list = unresizable[execution].list;
+        Integer from = unresizable[execution].from;
+        Integer to = unresizable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             ListIterator<Integer> it = subList.listIterator();
@@ -753,11 +777,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModListIteratorRemove (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModListIteratorRemove(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             ListIterator<Integer> it = subList.listIterator();
@@ -770,11 +794,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_ListIteratorRemovePrevious (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ListIteratorRemovePrevious(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         List<Integer> subList = list.subList(from, to);
         ListIterator<Integer> it = subList.listIterator(subList.size());
         for (int i = to - 1; i >= from; --i) {
@@ -798,11 +822,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 21)
-    public int test_UnmodListIteratorRemovePrevious (int execution) {
-        List<Integer> list = (List<Integer>) unresizable[execution][0];
-        Integer from = (Integer) unresizable[execution][1];
-        Integer to = (Integer) unresizable[execution][2];
+    @Test(executionMax = 9)
+    public static int test_UnmodListIteratorRemovePrevious(int execution) {
+        List<Integer> list = unresizable[execution].list;
+        Integer from = unresizable[execution].from;
+        Integer to = unresizable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             ListIterator<Integer> it = subList.listIterator(subList.size());
@@ -814,11 +838,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_Remove (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_Remove(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         List<Integer> subList = list.subList(from, to);
         for (int i = 0; i < 16; ++i) {
             if (subList.isEmpty()) break;
@@ -831,11 +855,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 21)
-    public int test_UnmodRemove (int execution) {
-        List<Integer> list = (List<Integer>) unresizable[execution][0];
-        Integer from = (Integer) unresizable[execution][1];
-        Integer to = (Integer) unresizable[execution][2];
+    @Test(executionMax = 9)
+    public static int test_UnmodRemove(int execution) {
+        List<Integer> list = unresizable[execution].list;
+        Integer from = unresizable[execution].from;
+        Integer to = unresizable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             int r = rnd.nextInt(subList.size());
@@ -846,11 +870,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModRemove (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModRemove(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             list.add(42);
@@ -861,11 +885,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 15)
-    public int test_Set (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_Set(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         List<Integer> subList = list.subList(from, to);
         for (int i = 0; i < to - from; ++i) {
             Integer e0 = list.get(from + i);
@@ -880,11 +904,11 @@ public class SubListTest {
         return execution;
     }
 
-    @Test(executionMax = 15)
-    public int test_ModSet (int execution) {
-        List<Integer> list = (List<Integer>) modifiable[execution][0];
-        Integer from = (Integer) modifiable[execution][1];
-        Integer to = (Integer) modifiable[execution][2];
+    @Test(executionMax = 7)
+    public static int test_ModSet(int execution) {
+        List<Integer> list = modifiable[execution].list;
+        Integer from = modifiable[execution].from;
+        Integer to = modifiable[execution].to;
         try {
             List<Integer> subList = list.subList(from, to);
             list.add(42);
@@ -895,11 +919,11 @@ public class SubListTest {
         return -1;
     }
 
-    @Test(executionMax = 37)
-    public int test_SubList (int execution) {
-        List<Integer> list = (List<Integer>) all[execution][0];
-        Integer from = (Integer) all[execution][1];
-        Integer to = (Integer) all[execution][2];
+    @Test(executionMax = 17)
+    public static int test_SubList(int execution) {
+        List<Integer> list = all[execution].list;
+        Integer from = all[execution].from;
+        Integer to = all[execution].to;
         List<Integer> subList = list.subList(from, to);
         for (int i = 0; i < 16 && from < to; ++i) {
             int from1 = rnd.nextInt(to - from);
@@ -917,95 +941,92 @@ public class SubListTest {
     /**
      * All kinds of lists
      */
-    public static Object[][] getAll() {
-        Object[][] l1 = getModifiable();
-        Object[][] l2 = getUnresizable();
-        Object[][] res = Arrays.copyOf(l1, l1.length + l2.length);
+
+    static class TestCase {
+        List<Integer> list;
+        Integer from, to;
+        TestCase(List<Integer> _list, Integer _from, Integer _to) {
+            list = _list;
+            from = _from;
+            to = _to;
+        }
+    }
+
+    public static TestCase[] getAll() {
+        TestCase[] l1 = getModifiable();
+        TestCase[] l2 = getUnresizable();
+        TestCase[] res = Arrays.copyOf(l1, l1.length + l2.length);
         System.arraycopy(l2, 0, res, l1.length, l2.length);
         return res;
     }
-    Object[][] all = getAll();
+    static final TestCase[] all = getAll();
 
     /**
      * Lists that allow any modifications: resizing and setting values
      */
-    public static Object[][] getModifiable() {
-        final List<Integer> c1 = Arrays.asList(42);
-        final List<Integer> c9 = Arrays.asList(40, 41, 42, 43, 44, 45, -1,
-                Integer.MIN_VALUE, 1000500);
+    public static TestCase[] getModifiable() {
+        Integer[] c9_copy = new Integer[] { 40, 41, 42, 43, 44, 45, -1,
+                Integer.MIN_VALUE, 1000500 };
+        List<Integer> c1 = new ArrayList<>();
+        c1.add(42);
+        List<Integer> c9 = new ArrayList<>();
+        for (Integer it : c9_copy) {
+            c9.add(it);
+        }
 
-        return new Object[][] {
-                {new ArrayList<>(c1), 0, 1},
-                {new LinkedList<>(c1), 0, 1},
-                {new ArrayList<>(c1).subList(0, 1), 0, 1},
-                {new LinkedList<>(c1).subList(0, 1), 0, 1},
-                {Collections.checkedList(new ArrayList<>(c1), Integer.class), 0, 1},
-                {Collections.checkedList(new LinkedList<>(c1), Integer.class), 0, 1},
-                {Collections.synchronizedList(new ArrayList<>(c1)), 0, 1},
-                {Collections.synchronizedList(new LinkedList<>(c1)), 0, 1},
-                {new ArrayList<>(c9), 2, 5},
-                {new LinkedList<>(c9), 2, 5},
-                {new ArrayList<>(c9).subList(1, 8), 1, 4},
-                {new LinkedList<>(c9).subList(1, 8), 1, 4},
-                {Collections.checkedList(new ArrayList<>(c9), Integer.class), 2, 5},
-                {Collections.checkedList(new LinkedList<>(c9), Integer.class), 2, 5},
-                {Collections.synchronizedList(new ArrayList<>(c9)), 2, 5},
-                {Collections.synchronizedList(new LinkedList<>(c9)), 2, 5},
+        return new TestCase[] {
+                new TestCase(new ArrayList<>(c1), 0, 1),
+                new TestCase(new LinkedList<>(c1), 0, 1),
+                new TestCase(new ArrayList<>(c1).subList(0, 1), 0, 1),
+                new TestCase(new LinkedList<>(c1).subList(0, 1), 0, 1),
+                new TestCase(new ArrayList<>(c9), 2, 5),
+                new TestCase(new LinkedList<>(c9), 2, 5),
+                new TestCase(new ArrayList<>(c9).subList(1, 8), 1, 4),
+                new TestCase(new LinkedList<>(c9).subList(1, 8), 1, 4)
         };
     }
-    Object[][] modifiable = getModifiable();
+    static final TestCase[] modifiable = getModifiable();
 
     /**
      * Lists that don't allow resizing, but allow setting values
      */
-    public static Object[][] getUnresizable() {
-        final List<Integer> c1 = Arrays.asList(42);
-        final List<Integer> c9 = Arrays.asList(40, 41, 42, 43, 44, 45, -1,
-                Integer.MIN_VALUE, 1000500);
+    public static TestCase[] getUnresizable() {
+        Integer[] c9_copy = new Integer[] { 40, 41, 42, 43, 44, 45, -1,
+                Integer.MIN_VALUE, 1000500 };
+        List<Integer> c1 = new ArrayList<>();
+        c1.add(42);
+        List<Integer> c9 = new ArrayList<>();
+        for (Integer it : c9_copy) {
+            c9.add(it);
+        }
 
-        Object[][] l1 = getUnsettable();
-        Object[][] l2 = {
-                {c1, 0, 1},
-                {c1.subList(0, 1), 0, 1},
-                {Collections.checkedList(c1, Integer.class), 0, 1},
-                {Collections.synchronizedList(c1), 0, 1},
-                {c9, 0, 4},
-                {c9, 4, 6},
-                {c9.subList(1, 8), 1, 4},
-                {c9.subList(1, 8), 0, 7},
-                {Collections.checkedList(c9, Integer.class), 3, 6},
-                {Collections.synchronizedList(c9), 3, 5},
+        TestCase[] l1 = getUnsettable();
+        TestCase[] l2 = {
+                new TestCase(c1, 0, 1),
+                new TestCase(c1.subList(0, 1), 0, 1),
+                new TestCase(c9, 0, 4),
+                new TestCase(c9, 4, 6),
+                new TestCase(c9.subList(1, 8), 1, 4),
+                new TestCase(c9.subList(1, 8), 0, 7),
         };
-        Object[][] res = Arrays.copyOf(l1, l1.length + l2.length);
+        TestCase[] res = Arrays.copyOf(l1, l1.length + l2.length);
         System.arraycopy(l2, 0, res, l1.length, l2.length);
         return res;
     }
-    Object[][] unresizable = getUnresizable();
+    static final TestCase[] unresizable = getUnresizable();
 
     /**
      * Lists that don't allow either resizing or setting values
      */
-    public static Object[][] getUnsettable() {
-        final List<Integer> c1 = Arrays.asList(42);
-        final List<Integer> c9 = Arrays.asList(40, 41, 42, 43, 44, 45, -1,
-                Integer.MIN_VALUE, 1000500);
-
-        return new Object[][] {
-                {new MyList(1), 0, 1},
-                {new MyList(1).subList(0, 1), 0, 1},
-                {Collections.singletonList(42), 0, 1},
-                {Collections.singletonList(42).subList(0, 1), 0, 1},
-                {Collections.unmodifiableList(c1), 0, 1},
-                {Collections.unmodifiableList(new ArrayList<>(c1)), 0, 1},
-                {Collections.unmodifiableList(new LinkedList<>(c1)), 0, 1},
-                {new MyList(9), 3, 6},
-                {new MyList(9).subList(2, 8), 3, 6},
-                {Collections.unmodifiableList(c9), 3, 6},
-                {Collections.unmodifiableList(new ArrayList<>(c9)), 3, 6},
-                {Collections.unmodifiableList(new LinkedList<>(c9)), 3, 6},
+    public static TestCase[] getUnsettable() {
+        return new TestCase[] {
+                new TestCase(new MyList(1), 0, 1),
+                new TestCase(new MyList(1).subList(0, 1), 0, 1),
+                new TestCase(new MyList(9), 3, 6),
+                new TestCase(new MyList(9).subList(2, 8), 3, 6)
         };
     }
-    Object[][] unsettable = getUnsettable();
+    static final TestCase[] unsettable = getUnsettable();
 
     static class MyList extends AbstractList<Integer> {
         private final int size;

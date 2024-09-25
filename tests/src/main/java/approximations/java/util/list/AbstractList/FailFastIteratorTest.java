@@ -9,8 +9,7 @@ import java.util.ListIterator;
 
 @Test
 public class FailFastIteratorTest {
-    @Test(disabled = true)
-    // TODO: make the size of the copied list correct
+    @Test
     public static int test_failFastIteratorTest(int execution) {
         List orig = new ArrayList(5);
         for (int i=95; i<100; i++)
@@ -57,8 +56,7 @@ public class FailFastIteratorTest {
         return execution;
     }
 
-    @Test(disabled = true)
-    // TODO: fix IndexOutOfBoundsException for a copied list get()
+    @Test
     public static int test_listCopy(int execution) {
         List orig = new ArrayList(5);
         for (int i=95; i<100; i++)

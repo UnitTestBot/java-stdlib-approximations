@@ -40,7 +40,7 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
         Engine.assume(list != null);
         Engine.assume(offset >= 0);
         Engine.assume(length >= 0);
-        Engine.assume(offset + length <= list._getStorage().size());
+        Engine.assume(offset + length <= list.size());
         this.list = list;
         this.parentSubList = parent;
         this.offset = offset;
@@ -49,7 +49,7 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
     }
 
     public SubListImpl(AbstractListImpl<E> list, int fromIndex, int toIndex) {
-        this(list, null, fromIndex, toIndex - fromIndex, 0);
+        this(list, null, fromIndex, toIndex - fromIndex, list.modCount);
     }
 
     public AbstractListImpl<E> _getList() {

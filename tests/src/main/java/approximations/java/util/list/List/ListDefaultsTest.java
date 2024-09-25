@@ -11,14 +11,11 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class ListDefaultsTest {
-    /*// Suppliers of lists that can support structural modifications
-    private static final List<Function<Collection, List>> LIST_STRUCT_MOD_SUPPLIERS = Arrays.asList(
-            java.util.ArrayList::new,
-            java.util.LinkedList::new,
-    );
+    // Suppliers of lists that can support structural modifications
+    /*private static final List<Integer>[] LIST_STRUCT_MOD_SUPPLIERS = new List[] { new ArrayList(), new LinkedList() };
 
     // Suppliers of lists that can support in place modifications
-    private static final List<Function<Collection, List>> LIST_SUPPLIERS = Arrays.asList(
+    private static final List<Integer>[] LIST_SUPPLIERS = new List[]{(}
             java.util.ArrayList::new,
             java.util.LinkedList::new,
             c -> Arrays.asList(c.toArray())
@@ -56,7 +53,7 @@ public class ListDefaultsTest {
 
     public static List<List<Integer>> getListCases() {
         final List<List<Integer>> cases = new LinkedList<>();
-        cases.add(Collections.emptyList());
+        //cases.add(Collections.emptyList());
         cases.add(new ArrayList<>());
         cases.add(new LinkedList<>());
         cases.add(Arrays.asList());

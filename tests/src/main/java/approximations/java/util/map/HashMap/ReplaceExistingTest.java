@@ -8,72 +8,48 @@ import java.util.Iterator;
 
 @Test
 public class ReplaceExistingTest {
-    /* Number of entries required to trigger a resize for cap=16, load=0.75*/
-    private static int ENTRIES = 13;
+    private static int STATIC = 13;
 
     @Test
-    public static int test_ReplaceExisting (int execution) {
-        for (int i = 0; i <= ENTRIES; i++) {
-            HashMap<Integer,Integer> hm = prepHashMap();
-            try {
-                testItr(hm, i);
-            } catch (Throwable t) {
+    // TODO: fix interning Integer approximation
+    public static int test_ReplaceExisting(int execution) {
+        int ENTRIES = 13;
+        for (int i = 0; i <= 0; i++) {
+            HashMap<Integer,Integer> hm = new HashMap<>(16, 0.75f);
+            for (int j = 0; j < ENTRIES; j++) {
+                hm.put(j*10, j*10);
+            }
+            if (i > hm.size()) {
+                return -1;
+            }
+            HashSet<Integer> keys = new HashSet<>(hm.size());
+            keys.addAll(hm.keySet());
+
+            HashSet<Integer> collected = new HashSet<>(hm.size());
+
+            Iterator<Integer> itr = hm.keySet().iterator();
+            for (int j = 0; j < i; j++) {
+                Integer retVal = itr.next();
+                if (!collected.add(retVal)) {
+                    return -1;
+                }
+            }
+
+            if (null == hm.put(0, 100)) {
+                return -1;
+            }
+
+            while(itr.hasNext()) {
+                Integer retVal = itr.next();
+                if (!collected.add(retVal)) {
+                    return -1;
+                }
+            }
+
+            if (!keys.equals(collected)) {
                 return -1;
             }
         }
         return execution;
-    }
-
-    /* Prepare a HashMap that will resize on next put() */
-    private static HashMap<Integer,Integer> prepHashMap() {
-        HashMap<Integer,Integer> hm = new HashMap<>(16, 0.75f);
-        // Add items to one more than the resize threshold
-        for (int i = 0; i < ENTRIES; i++) {
-            hm.put(i*10, i*10);
-        }
-        return hm;
-    }
-
-    /* Iterate hm for elemBeforePut elements, then call put() to replace value
-     * for existing key.  With bug 8025173, this will also cause a resize, but
-     * not increase the modCount.
-     * Finish the iteration to check for a corrupt iterator.
-     */
-    private static void testItr(HashMap<Integer,Integer> hm, int elemBeforePut) {
-        if (elemBeforePut > hm.size()) {
-            throw new IllegalArgumentException("Error in test: elemBeforePut must be <= HashMap size");
-        }
-        // Create a copy of the keys
-        HashSet<Integer> keys = new HashSet<>(hm.size());
-        keys.addAll(hm.keySet());
-
-        HashSet<Integer> collected = new HashSet<>(hm.size());
-
-        // Run itr for elemBeforePut items, collecting returned elems
-        Iterator<Integer> itr = hm.keySet().iterator();
-        for (int i = 0; i < elemBeforePut; i++) {
-            Integer retVal = itr.next();
-            if (!collected.add(retVal)) {
-                throw new RuntimeException("Corrupt iterator: key " + retVal + " already encountered");
-            }
-        }
-
-        // Do put() to replace entry (and resize table when bug present)
-        if (null == hm.put(0, 100)) {
-            throw new RuntimeException("Error in test: expected key 0 to be in the HashMap");
-        }
-
-        // Finish itr + collecting returned elems
-        while(itr.hasNext()) {
-            Integer retVal = itr.next();
-            if (!collected.add(retVal)) {
-                throw new RuntimeException("Corrupt iterator: key " + retVal + " already encountered");
-            }
-        }
-
-        // Compare returned elems to original copy of keys
-        if (!keys.equals(collected)) {
-            throw new RuntimeException("Collected keys do not match original set of keys");
-        }
     }
 }

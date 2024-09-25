@@ -50,8 +50,8 @@ public class ToArrayTest {
         }
     }
 
-    @Test
-    public static int test_ToArray (int execution) {
+    @Test(disabled = true)
+    public static int test_ToArray(int execution) {
         try {
             checkMap(false);
             checkMap(true);

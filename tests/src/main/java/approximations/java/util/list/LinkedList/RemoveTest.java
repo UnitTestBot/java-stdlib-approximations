@@ -8,7 +8,7 @@ import java.util.ListIterator;
 @Test
 public class RemoveTest {
     @Test
-    public static int test_Remove (int execution) {
+    public static int test_Remove(int execution) {
         LinkedList list = new LinkedList();
         ListIterator e = list.listIterator();
         Object o = 1;

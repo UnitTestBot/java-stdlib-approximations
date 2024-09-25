@@ -7,16 +7,14 @@ import java.util.Set;
 import java.util.Iterator;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 @Test
 public class TreeBinAssertTest {
-    private static final int ITR_RM = -1; // Remove an item via Iterator
+    private static final int ITR_RM = -1;
     private static final int BIN352442_SIZE = 524288;
     private static final int BIN552165_SIZE = 1048576;
 
-    int[][] sizeAndHashes = {   // Bin 352442
+    static int[][] sizeAndHashes = {
                     new int[] {
                             2020958394,
                             631595194,
@@ -39,7 +37,7 @@ public class TreeBinAssertTest {
                             ITR_RM,
                             626352314,
                             101540026
-                    }, // Bin 552165
+                    },
                     new int[] {
                             790129893,
                             1214803173,
@@ -70,7 +68,7 @@ public class TreeBinAssertTest {
     };
 
     @Test(executionMax = 1)
-    public int test_Map (int execution) {
+    public static int test_Map(int execution) {
         if (!HashMap.class.desiredAssertionStatus()) {
             return execution;
         }
@@ -88,14 +86,19 @@ public class TreeBinAssertTest {
         Map<Key,Integer> map = new HashMap<>(size);
 
         try {
-            doTest(map, hashes,
-                    (c, k) -> {
-                        ((Map<Key, Integer>) c).put(k, 0);
-                    },
-                    (c) -> {
-                        return ((Map<Key, Integer>) c).keySet().iterator();
+            Iterator<Key> itr = null;
+            for (int h : hashes) {
+                if (h == ITR_RM) {
+                    if (itr == null) {
+                        itr = map.keySet().iterator();
                     }
-            );
+                    itr.next();
+                    itr.remove();
+                } else {
+                    itr = null;
+                    map.put(new Key(h), 0);
+                }
+            }
         } catch (Throwable t) {
             return -1;
         }
@@ -104,7 +107,7 @@ public class TreeBinAssertTest {
     }
 
     @Test(executionMax = 1)
-    public int test_Set(int execution) {
+    public static int test_Set(int execution) {
         if (!HashMap.class.desiredAssertionStatus()) {
             return execution;
         }
@@ -122,46 +125,29 @@ public class TreeBinAssertTest {
         Set<Key> set = new LinkedHashSet<>(size);
 
         try {
-            doTest(set, hashes,
-                    (c, k) -> {
-                        ((Set<Key>) c).add(k);
-                    },
-                    (c) -> {
-                        return ((Set<Key>) c).iterator();
+            Iterator<Key> itr = null;
+            for (int h : hashes) {
+                if (h == ITR_RM) {
+                    if (itr == null) {
+                        itr = set.iterator();
                     }
-            );
+                    itr.next();
+                    itr.remove();
+                } else {
+                    itr = null;
+                    set.add(new Key(h));
+                }
+            }
         } catch (Throwable t) {
             return -1;
         }
         return execution;
     }
 
-    private void doTest(Object collection, int[] hashes,
-                        BiConsumer<Object,Key> addKey,
-                        Function<Object,Iterator<Key>> mkItr) {
-        Iterator<Key> itr = null; // saved iterator, used for removals
-        for (int h : hashes) {
-            if (h == ITR_RM) {
-                if (itr == null) {
-                    itr = mkItr.apply(collection);
-                }
-                itr.next();
-                itr.remove();
-            } else {
-                itr = null;
-                addKey.accept(collection, new Key(h));
-            }
-        }
-    }
-
-    /**
-     * Class that will have specified hash code in a HashMap.
-     */
     static class Key implements Comparable<Key> {
         final int hash;
 
         public Key(int desiredHash) {
-            // Account for processing done by HashMap
             this.hash = desiredHash ^ (desiredHash >>> 16);
         }
 

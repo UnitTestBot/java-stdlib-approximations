@@ -30,6 +30,14 @@ public class AbstractMapCloneTest extends AbstractMap implements Cloneable {
         return clone;
     }
 
+    public int size() {
+        return map.size();
+    }
+
+    public Set<?> keySet() {
+        return map.keySet();
+    }
+
     @Test
     public static int test_abstractMapClone(int execution) {
         AbstractMapCloneTest m1 = new AbstractMapCloneTest();
@@ -38,6 +46,23 @@ public class AbstractMapCloneTest extends AbstractMap implements Cloneable {
         AbstractMapCloneTest m2 = (AbstractMapCloneTest)m1.clone();
         Set k2 = m2.keySet();
         m2.put("2","2");
+        if (k1.equals(k2)) {
+            return -1;
+        }
+        if (m2.size() != 2) {
+            return -1;
+        }
+        return execution;
+    }
+
+    @Test
+    public static int test_hashMapClone(int execution) {
+        Map<Integer, Integer> m1 = new HashMap<>();
+        m1.put(1, 1);
+        Set<Integer> k1 = m1.keySet();
+        Map<Integer, Integer> m2 = (Map<Integer, Integer>) ((HashMap<Integer, Integer>) m1).clone();
+        Set<Integer> k2 = m2.keySet();
+        m2.put(2, 2);
         if (k1.equals(k2)) {
             return -1;
         } else {

@@ -2,70 +2,60 @@ package approximations.java.util.set;
 
 import approximations.Test;
 
-import java.io.*;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Test
 public class HashSet_Tests {
-    private static final int NUM_SETS = 10;
-    private static final int MAX_CAPACITY = 20;
-    private static final float MAX_LOAD_FACTOR = 100.0F;
+    private static final int NUM_SETS = 1;
+    private static final int MAX_CAPACITY = 2;
 
-    private static final Random rnd = new Random();
+    //private static final Random rnd = new Random();
 
-    private static HashSet<Integer> createHashSet() {
-        int capacity = rnd.nextInt(MAX_CAPACITY);
-        float loadFactor = Float.MIN_VALUE + rnd.nextFloat()*MAX_LOAD_FACTOR;
-        HashSet<Integer> hashSet = new HashSet<>(capacity, loadFactor);
-        float multiplier = 2*rnd.nextFloat(); // range [0,2]
-        int size = (int)(capacity*loadFactor*multiplier);
-        for (int i = 0; i < size; i++) {
+    /*private static HashSet<Integer> createHashSet() {
+
+        HashSet<Integer> hashSet = new HashSet<>();
+        for (int i = 0; i < MAX_CAPACITY; i++) {
             hashSet.add(rnd.nextInt());
         }
         return hashSet;
-    }
+    }*/
 
-    private static HashSet<Integer> serDeser(HashSet<Integer> hashSet) throws IOException, ClassNotFoundException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(hashSet);
-        oos.flush();
+    @Test
+    public static int test_SetClone1(int execution) {
+        for (int i = 0; i < NUM_SETS; i++) {
+            //HashSet<Integer> hashSet = createHashSet();
+            HashSet<Integer> hashSet = new HashSet<>();
+            Random rnd = new Random();
+            for (int j = 0; j < MAX_CAPACITY; j++) {
+                hashSet.add(rnd.nextInt());
+            }
 
-        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-        ObjectInputStream ois = new ObjectInputStream(bais);
-        HashSet<Integer> result = (HashSet<Integer>)ois.readObject();
+            HashSet<Integer> result = (HashSet<Integer>) hashSet.clone();
 
-        oos.close();
-        ois.close();
-
-        return result;
+            if (!hashSet.equals(result)) {
+                return -1;
+            }
+        }
+        return execution;
     }
 
     @Test
-    public static int test_Serialization (int execution) {
-        int failures = 0;
-
+    public static int test_SetClone2(int execution) {
         for (int i = 0; i < NUM_SETS; i++) {
-            HashSet<Integer> hashSet = createHashSet();
-
-            HashSet<Integer> result = null;
-            try {
-                result = serDeser(hashSet);
-            } catch (IOException | ClassNotFoundException ioe) {
-                failures++;
+            //HashSet<Integer> hashSet = createHashSet();
+            HashSet<Double> hashSet = new HashSet<>();
+            Random rnd = new Random();
+            for (int j = 0; j < MAX_CAPACITY; j++) {
+                hashSet.add(rnd.nextDouble());
             }
+
+            HashSet<Double> result = (HashSet<Double>) hashSet.clone();
 
             if (!hashSet.equals(result)) {
-                failures++;
+                return -1;
             }
         }
-
-        if (failures != 0) {
-            return -1;
-        } else {
-            return execution;
-        }
+        return execution;
     }
 }

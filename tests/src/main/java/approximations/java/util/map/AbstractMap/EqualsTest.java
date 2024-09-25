@@ -7,7 +7,7 @@ import java.util.*;
 @Test
 public class EqualsTest {
     @Test
-    public static int test_equalsTest(int execution) {
+        public static int test_equalsTest(int execution) {
         Map m = new HashMap();
         m.put(null, "");
         Map h = new Hashtable();

@@ -6,9 +6,8 @@ import java.util.LinkedList;
 
 @Test
 public class CloneTest {
-    @Test(disabled = true)
-    // TODO: size of a cloned list is 0
-    public static int test_Clone (int execution) {
+    @Test
+    public static int test_Clone(int execution) {
         LinkedList2 l = new LinkedList2();
         LinkedList2 lClone = (LinkedList2) l.clone();
         if (!(l.equals(lClone) && lClone.equals(l)))

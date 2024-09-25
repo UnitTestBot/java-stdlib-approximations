@@ -197,8 +197,12 @@ public abstract class AbstractSetImpl<E> extends AbstractCollectionImpl<E> imple
         return new Set_SpliteratorImpl<>(this);
     }
 
-    @SuppressWarnings("unchecked")
     public boolean equals(Object other) {
+        return _equals(other);
+    }
+
+    @SuppressWarnings("unchecked")
+    boolean _equals(Object other) {
         if (other == this)
             return true;
 

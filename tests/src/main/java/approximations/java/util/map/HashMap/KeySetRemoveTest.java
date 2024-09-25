@@ -9,7 +9,7 @@ import java.util.TreeMap;
 @Test
 public class KeySetRemoveTest {
     @Test
-    public static int test_KeySetRemove (int execution) {
+    public static int test_KeySetRemove(int execution) {
         Map[] m = {new HashMap()};
         for (int i=0; i<m.length; i++) {
             m[i].put("bananas", null);

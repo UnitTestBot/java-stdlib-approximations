@@ -5,13 +5,15 @@ import approximations.Test;
 import java.util.*;
 
 @Test
-public class CheckForIndexOutOfBoundsExceptionTest { // instead of returning execution, original class was checking if exception message was right
+public class CheckForIndexOutOfBoundsExceptionTest {
+    List<String> list = new ArrayList<>(2);
+
     @Test
-    public static int checkIteratorNext1(int execution) { // for whatever reason, results of 1st and 2nd versions may differ
+    public int checkIteratorNext1(int execution) {
         List<String> list = new ArrayList<>(2);
         list.add("x");
         list.add("x");
-        Iterator<String> iterator = list.iterator(); // position at start
+        Iterator<String> iterator = list.iterator();
         try {
             for (int i = 0; i <= list.size(); i++) {
                 iterator.next();
@@ -23,11 +25,11 @@ public class CheckForIndexOutOfBoundsExceptionTest { // instead of returning exe
     }
 
     @Test
-    public static int checkIteratorNext2(int execution) {
+    public int checkIteratorNext2(int execution) {
         List<String> list = new ArrayList<>(2);
         list.add("x");
         list.add("x");
-        Iterator<String> iterator = list.iterator(); // position at start
+        Iterator<String> iterator = list.iterator();
         for (int i = 0; i <= list.size(); i++) {
             try {
                 iterator.next();
@@ -43,11 +45,8 @@ public class CheckForIndexOutOfBoundsExceptionTest { // instead of returning exe
     }
 
     @Test
-    public static int checkListIteratorNext(int execution) {
-        List<String> list = new ArrayList<>(2);
-        list.add("x");
-        list.add("x");
-        ListIterator<String> iterator = list.listIterator(list.size()); // position at end
+    public int checkListIteratorNext(int execution) {
+        ListIterator<String> iterator = list.listIterator(list.size());
         try {
             iterator.next();
             return -1;
@@ -57,11 +56,8 @@ public class CheckForIndexOutOfBoundsExceptionTest { // instead of returning exe
     }
 
     @Test
-    public static int checkListIteratorPrevious(int execution) {
-        List<String> list = new ArrayList<>(2);
-        list.add("x");
-        list.add("x");
-        ListIterator<String> iterator = list.listIterator(0); // position at start
+    public int checkListIteratorPrevious(int execution) {
+        ListIterator<String> iterator = list.listIterator(0);
         try {
             iterator.previous();
             return -1;

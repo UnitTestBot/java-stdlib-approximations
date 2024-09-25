@@ -34,8 +34,16 @@ public final class IntegerImpl implements Comparable<IntegerImpl>, Serializable 
 
     public static final int[] sizeTable = { 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999, 999999999, 2147483647 };
 
+    private static final IntegerImpl[] cache;
+    private static final int cacheLow = -128;
+    private static final int cacheHigh = 127;
+
     static {
-        Engine.assume(true);
+        int cacheSize = cacheHigh - cacheLow + 1;
+        cache = new IntegerImpl[cacheSize];
+        for (int i = 0; i < cacheSize; i++) {
+            cache[i] = new IntegerImpl(cacheLow + i);
+        }
     }
 
     private final int value;
@@ -215,8 +223,10 @@ public final class IntegerImpl implements Comparable<IntegerImpl>, Serializable 
         return ((long) x) & 4294967295L;
     }
 
-    // TODO: intern values from -128 to 128
     public static IntegerImpl valueOf(int i) {
+        if (i >= cacheLow && i <= cacheHigh) {
+            return cache[i - cacheLow];
+        }
         return new IntegerImpl(i);
     }
 

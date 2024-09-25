@@ -1,7 +1,5 @@
 package generated.java.util.list;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.lang.Comparable;
 import java.lang.IllegalArgumentException;
 import java.lang.IndexOutOfBoundsException;
@@ -24,7 +22,7 @@ import org.usvm.api.SymbolicList;
 import runtime.LibSLRuntime;
 
 @Approximate(java.util.AbstractList.class)
-public abstract class AbstractListImpl<E> extends AbstractCollectionImpl<E> implements List<E> {
+public abstract class AbstractListImpl<E> extends AbstractCollectionImpl<E> {
 
     public SymbolicList<E> storage;
 
@@ -77,7 +75,7 @@ public abstract class AbstractListImpl<E> extends AbstractCollectionImpl<E> impl
     }
 
     public void _checkValidIndex(int index) {
-        _checkValidIndex(index, _getStorage().size());
+        _checkValidIndex(index, size());
     }
 
     public boolean _isValidAddIndex(int index) {
@@ -491,7 +489,7 @@ public abstract class AbstractListImpl<E> extends AbstractCollectionImpl<E> impl
 
     @NotNull
     public ListIterator<E> listIterator(int index) {
-        _checkValidAddIndex(index);
+        _checkValidIndex(index);
         return new ListIteratorStubImpl<>(this, index);
     }
 
@@ -555,7 +553,8 @@ public abstract class AbstractListImpl<E> extends AbstractCollectionImpl<E> impl
 
     @NotNull
     public List<E> subList(int fromIndex, int toIndex) {
-        _subListRangeCheck(fromIndex, toIndex, _getStorage().size());
+        int size = size();
+        _subListRangeCheck(fromIndex, toIndex, size);
         return new SubListImpl<>(this, fromIndex, toIndex);
     }
 

@@ -7,12 +7,12 @@ import java.util.HashMap;
 
 @Test
 public class SetValueTest {
-    static final String key      = "key";
+    static final String key = "key";
     static final String oldValue = "old";
     static final String newValue = "new";
 
     @Test
-    public static int test_SetValue (int execution) throws Exception {
+    public static int test_SetValue(int execution) {
         Map m = new HashMap();
         m.put(key, oldValue);
         Map.Entry e = (Map.Entry) m.entrySet().iterator().next();

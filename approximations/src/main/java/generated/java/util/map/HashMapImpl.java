@@ -78,7 +78,7 @@ public class HashMapImpl<K, V> extends AbstractMapImpl<K, V> implements Cloneabl
     }
 
     public boolean equals(Object other) {
-        return Engine.typeIs(other, HashMapImpl.class) && super.equals(other);
+        return Engine.typeIs(other, HashMapImpl.class) && _equals(other);
     }
 
     public void forEach(BiConsumer<? super K, ? super V> userAction) {

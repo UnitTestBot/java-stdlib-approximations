@@ -22,13 +22,6 @@ public class AddAllTest {
             new LinkedList().addAll(m.keySet());
         }
 
-        /*for (int j = 0; j < 1; j++) {
-            Map m = new WeakHashMap(100000);
-            for (int i = 0; i < 100000; i++)
-                m.put(new Object(), Boolean.TRUE);
-            new Vector().addAll(m.keySet());
-        }*/
-
         for (int j = 0; j < 1; j++) {
             Map m = new HashMap(100);
             for (int i = 0; i < 100; i++)
