@@ -6,12 +6,11 @@ import org.usvm.api.Engine;
 import runtime.LibSLRuntime;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.function.IntFunction;
 
 @Approximate(java.util.AbstractCollection.class)
-public abstract class AbstractCollectionImpl<E> implements Collection<E> {
+public abstract class AbstractCollectionImpl {
 
     public transient int modCount;
 
@@ -26,10 +25,10 @@ public abstract class AbstractCollectionImpl<E> implements Collection<E> {
             throw new ConcurrentModificationException();
     }
 
-    abstract public int size();
+    abstract public int _size();
 
     @NotNull
-    public Object[] toArray() {
+    public Object[] _toArray() {
         return _mapToArray();
     }
 
@@ -45,18 +44,18 @@ public abstract class AbstractCollectionImpl<E> implements Collection<E> {
         return array;
     }
 
-    public <T> T[] toArray(IntFunction<T[]> generator) {
-        int size = size();
+    public <T> T[] _toArray(IntFunction<T[]> generator) {
+        int size = _size();
         T[] array = generator.apply(size);
 
         return _toArray(array, size);
     }
 
     @NotNull
-    public <T> T[] toArray(@NotNull T[] array) {
-        int size = size();
+    public <T> T[] _toArray(@NotNull T[] array) {
+        int size = _size();
         return _toArray(array, size);
     }
 
-    abstract public String toString();
+    abstract public String _toString();
 }

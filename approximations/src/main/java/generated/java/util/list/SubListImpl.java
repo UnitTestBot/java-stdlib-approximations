@@ -20,7 +20,7 @@ import runtime.LibSLRuntime;
 import stub.java.util.list.SubList;
 
 @Approximate(SubList.class)
-public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomAccess, Cloneable, Serializable {
+public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomAccess, Cloneable, Serializable, List<E> {
 
     @Serial
     private static final long serialVersionUID = 8683452581122892189L;
@@ -40,7 +40,7 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
         Engine.assume(list != null);
         Engine.assume(offset >= 0);
         Engine.assume(length >= 0);
-        Engine.assume(offset + length <= list.size());
+        Engine.assume(offset + length <= list._size());
         this.list = list;
         this.parentSubList = parent;
         this.offset = offset;
@@ -127,7 +127,7 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
     private boolean _batchRemove(Collection<?> c, boolean complement) {
         AbstractListImpl<E> list = _getList();
         list._checkForModification(this.modCount);
-        if (isEmpty())
+        if (_isEmpty())
             return false;
 
         SymbolicList<E> storage = list._getStorage();
@@ -150,7 +150,7 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
     }
 
     public boolean add(E e) {
-        add(this.length, e);
+        _add(this.length, e);
         return true;
     }
 
@@ -182,9 +182,9 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
 
     @SuppressWarnings("unchecked")
     public Object clone() throws CloneNotSupportedException {
-        SubListImpl<E> cloned = (SubListImpl<E>) super.clone();
-        cloned.list = (AbstractListImpl<E>) this.list.clone();
-        cloned.parentSubList = (SubListImpl<E>) this.parentSubList.clone();
+        SubListImpl<E> cloned = (SubListImpl<E>) super._clone();
+        cloned.list = (AbstractListImpl<E>) this.list._clone();
+        cloned.parentSubList = (SubListImpl<E>) this.parentSubList._clone();
         cloned.modCount = 0;
         return cloned;
     }
@@ -249,7 +249,7 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
     }
 
     public void forEach(Consumer<? super E> _action) {
-        if (isEmpty())
+        if (_isEmpty())
             return;
 
         Engine.assume(this.length > 0);
@@ -275,7 +275,7 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
 
     public int hashCode() {
         int result = 1;
-        if (isEmpty())
+        if (_isEmpty())
             return result;
 
         Engine.assume(this.length > 0);
@@ -303,7 +303,7 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
     public int lastIndexOf(Object o) {
         AbstractListImpl<E> list = _getList();
         list._checkForModification(this.modCount);
-        if (isEmpty())
+        if (_isEmpty())
             return -1;
 
         Engine.assume(this.length > 0);
@@ -362,7 +362,7 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
     public boolean removeIf(Predicate<? super E> filter) {
         AbstractListImpl<E> list = _getList();
         list._checkForModification(this.modCount);
-        if (isEmpty())
+        if (_isEmpty())
             return false;
 
         SymbolicList<E> storage = list._getStorage();
@@ -428,16 +428,16 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
 
     @NotNull
     public Object[] toArray() {
-        return super.toArray();
+        return super._toArray();
     }
 
     public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super.toArray(generator);
+        return super._toArray(generator);
     }
 
     @NotNull
     public <T> T[] toArray(@NotNull T[] array) {
-        return super.toArray(array);
+        return super._toArray(array);
     }
 
     public String toString() {

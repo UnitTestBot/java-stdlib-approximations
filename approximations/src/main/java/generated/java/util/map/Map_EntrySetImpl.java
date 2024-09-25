@@ -114,8 +114,8 @@ public final class Map_EntrySetImpl<K, V> extends Map_ContentsSetImpl<K, V, Map.
         return super.retainAll(c);
     }
 
-    public int size() {
-        return super.size();
+    public int _size() {
+        return super._size();
     }
 
     public Spliterator<Map.Entry<K, V>> spliterator() {
@@ -127,20 +127,20 @@ public final class Map_EntrySetImpl<K, V> extends Map_ContentsSetImpl<K, V, Map.
     }
 
     @NotNull
-    public Object[] toArray() {
-        return super.toArray();
+    public Object[] _toArray() {
+        return super._toArray();
     }
 
-    public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super.toArray(generator);
+    public <T> T[] _toArray(IntFunction<T[]> generator) {
+        return super._toArray(generator);
     }
 
     @NotNull
-    public <T> T[] toArray(@NotNull T[] array) {
-        return super.toArray(array);
+    public <T> T[] _toArray(@NotNull T[] array) {
+        return super._toArray(array);
     }
 
-    public String toString() {
-        return super.toString();
+    public String _toString() {
+        return super._toString();
     }
 }

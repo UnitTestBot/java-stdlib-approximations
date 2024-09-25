@@ -75,8 +75,8 @@ public class HashSetImpl<E> extends AbstractSetImpl<E> implements Cloneable, Ser
         return super.remove(elem);
     }
 
-    public int size() {
-        return super.size();
+    public int _size() {
+        return super._size();
     }
 
     public Spliterator<E> spliterator() {
@@ -96,17 +96,17 @@ public class HashSetImpl<E> extends AbstractSetImpl<E> implements Cloneable, Ser
     }
 
     @NotNull
-    public Object[] toArray() {
-        return super.toArray();
+    public Object[] _toArray() {
+        return super._toArray();
     }
 
     @NotNull
-    public <T> T[] toArray(@NotNull T[] a) {
-        return super.toArray(a);
+    public <T> T[] _toArray(@NotNull T[] a) {
+        return super._toArray(a);
     }
 
-    public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super.toArray(generator);
+    public <T> T[] _toArray(IntFunction<T[]> generator) {
+        return super._toArray(generator);
     }
 
     public boolean containsAll(@NotNull Collection<?> c) {
@@ -137,7 +137,7 @@ public class HashSetImpl<E> extends AbstractSetImpl<E> implements Cloneable, Ser
         return super.parallelStream();
     }
 
-    public String toString() {
-        return super.toString();
+    public String _toString() {
+        return super._toString();
     }
 }

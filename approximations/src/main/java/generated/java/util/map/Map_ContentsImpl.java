@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 @Approximate(Map_Contents.class)
-public abstract class Map_ContentsImpl<K, V, Content> extends AbstractCollectionImpl<Content> {
+public abstract class Map_ContentsImpl<K, V, Content> extends AbstractCollectionImpl {
 
     public AbstractMapImpl<K, V> map;
 
@@ -224,7 +224,7 @@ public abstract class Map_ContentsImpl<K, V, Content> extends AbstractCollection
         return startStorageSize != storage.size();
     }
 
-    public int size() {
+    public int _size() {
         return this.map.size();
     }
 
@@ -239,20 +239,20 @@ public abstract class Map_ContentsImpl<K, V, Content> extends AbstractCollection
     }
 
     @NotNull
-    public Object[] toArray() {
-        return super.toArray();
+    public Object[] _toArray() {
+        return super._toArray();
     }
 
-    public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super.toArray(generator);
+    public <T> T[] _toArray(IntFunction<T[]> generator) {
+        return super._toArray(generator);
     }
 
     @NotNull
-    public <T> T[] toArray(@NotNull T[] array) {
-        return super.toArray(array);
+    public <T> T[] _toArray(@NotNull T[] array) {
+        return super._toArray(array);
     }
 
-    public String toString() {
+    public String _toString() {
         LibSLRuntime.Map<K, Map.Entry<K, V>> storage = getStorage();
         int size = storage.size();
         if (size == 0)
