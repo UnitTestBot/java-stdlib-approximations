@@ -25,15 +25,15 @@ public final class Map_KeySetImpl<K, V> extends Map_ContentsSetImpl<K, V, K> {
     }
 
     public boolean add(K e) {
-        return super.add(e);
+        return super._add(e);
     }
 
     public boolean addAll(@NotNull Collection<? extends K> c) {
-        return super.addAll(c);
+        return super._addAll(c);
     }
 
     public void clear() {
-        super.clear();
+        super._clear();
     }
 
     @SuppressWarnings("unchecked")
@@ -42,36 +42,36 @@ public final class Map_KeySetImpl<K, V> extends Map_ContentsSetImpl<K, V, K> {
     }
 
     public boolean contains(Object key) {
-        return super.contains(key);
+        return super._contains(key);
     }
 
     public boolean containsAll(@NotNull Collection<?> c) {
-        return super.containsAll(c);
+        return super._containsAll(c);
     }
 
     public boolean equals(Object other) {
-        return super.equals(other);
+        return super._equals(other);
     }
 
     public void forEach(Consumer<? super K> userAction) {
-        super.forEach(userAction);
+        super._forEach(userAction);
     }
 
     public int hashCode() {
-        return super.hashCode();
+        return super._hashCode();
     }
 
     public boolean isEmpty() {
-        return super.isEmpty();
+        return super._isEmpty();
     }
 
     @NotNull
     public Iterator<K> iterator() {
-        return super.iterator();
+        return super._iterator();
     }
 
     public Stream<K> parallelStream() {
-        return super.parallelStream();
+        return super._parallelStream();
     }
 
     @SuppressWarnings("unchecked")
@@ -88,44 +88,44 @@ public final class Map_KeySetImpl<K, V> extends Map_ContentsSetImpl<K, V, K> {
     }
 
     public boolean removeAll(@NotNull Collection<?> c) {
-        return super.removeAll(c);
+        return super._removeAll(c);
     }
 
     public boolean removeIf(Predicate<? super K> filter) {
-        return super.removeIf(filter);
+        return super._removeIf(filter);
     }
 
     public boolean retainAll(@NotNull Collection<?> c) {
-        return super.retainAll(c);
+        return super._retainAll(c);
     }
 
-    public int _size() {
+    public int size() {
         return super._size();
     }
 
     public Spliterator<K> spliterator() {
-        return super.spliterator();
+        return super._spliterator();
     }
 
     public Stream<K> stream() {
-        return super.stream();
+        return super._stream();
     }
 
     @NotNull
-    public Object[] _toArray() {
+    public Object[] toArray() {
         return super._toArray();
     }
 
-    public <T> T[] _toArray(IntFunction<T[]> generator) {
+    public <T> T[] toArray(IntFunction<T[]> generator) {
         return super._toArray(generator);
     }
 
     @NotNull
-    public <T> T[] _toArray(@NotNull T[] array) {
+    public <T> T[] toArray(@NotNull T[] array) {
         return super._toArray(array);
     }
 
-    public String _toString() {
+    public String toString() {
         return super._toString();
     }
 }

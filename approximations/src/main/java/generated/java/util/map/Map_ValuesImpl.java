@@ -15,7 +15,7 @@ import runtime.LibSLRuntime;
 import stub.java.util.map.Map_Values;
 
 @Approximate(Map_Values.class)
-public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> {
+public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> implements Collection<V> {
 
     public Map_ValuesImpl(AbstractMapImpl<K, V> parent) {
         super(parent);
@@ -113,7 +113,7 @@ public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> {
         return super.retainAll(c);
     }
 
-    public int _size() {
+    public int size() {
         return super._size();
     }
 
@@ -126,20 +126,20 @@ public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> {
     }
 
     @NotNull
-    public Object[] _toArray() {
+    public Object[] toArray() {
         return super._toArray();
     }
 
-    public <T> T[] _toArray(IntFunction<T[]> generator) {
+    public <T> T[] toArray(IntFunction<T[]> generator) {
         return super._toArray(generator);
     }
 
     @NotNull
-    public <T> T[] _toArray(@NotNull T[] array) {
+    public <T> T[] toArray(@NotNull T[] array) {
         return super._toArray(array);
     }
 
-    public String _toString() {
+    public String toString() {
         return super._toString();
     }
 }

@@ -15,7 +15,7 @@ import org.usvm.api.Engine;
 
 @SuppressWarnings("unused")
 @Approximate(java.util.LinkedHashSet.class)
-public class LinkedHashSetImpl<E> extends HashSetImpl<E> implements Cloneable, Serializable, Set<E> {
+public class LinkedHashSetImpl<E> extends HashSetImpl<E> implements Cloneable, Serializable {
 
     @Serial
     private static final long serialVersionUID = -2851667679971038690L;

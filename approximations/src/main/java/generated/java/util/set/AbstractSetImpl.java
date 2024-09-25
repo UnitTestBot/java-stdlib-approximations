@@ -19,7 +19,7 @@ import org.usvm.api.Engine;
 import runtime.LibSLRuntime;
 
 @Approximate(java.util.AbstractSet.class)
-public abstract class AbstractSetImpl<E> extends AbstractCollectionImpl {
+public abstract class AbstractSetImpl<E> extends AbstractCollectionImpl<E> implements Set<E>{
 
     public LibSLRuntime.Map<E, Object> storage;
 

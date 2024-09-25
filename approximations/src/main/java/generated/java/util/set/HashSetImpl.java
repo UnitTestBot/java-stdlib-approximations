@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.usvm.api.Engine;
 
 @Approximate(java.util.HashSet.class)
-public class HashSetImpl<E> extends AbstractSetImpl<E> implements Cloneable, Serializable, Set<E> {
+public class HashSetImpl<E> extends AbstractSetImpl<E> implements Cloneable, Serializable {
 
     @Serial
     private static final long serialVersionUID = -5024744406713321676L;

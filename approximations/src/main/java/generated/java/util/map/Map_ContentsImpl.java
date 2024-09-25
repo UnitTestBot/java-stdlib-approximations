@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 @Approximate(Map_Contents.class)
-public abstract class Map_ContentsImpl<K, V, Content> extends AbstractCollectionImpl {
+public abstract class Map_ContentsImpl<K, V, Content> extends AbstractCollectionImpl<Content> {
 
     public AbstractMapImpl<K, V> map;
 
@@ -59,7 +59,7 @@ public abstract class Map_ContentsImpl<K, V, Content> extends AbstractCollection
     }
 
     public void clear() {
-        this.map.clear();
+        this.map._clear();
     }
 
     abstract boolean _containsInStorage(LibSLRuntime.Map<K, Map.Entry<K, V>> storage, Object o);
@@ -225,7 +225,7 @@ public abstract class Map_ContentsImpl<K, V, Content> extends AbstractCollection
     }
 
     public int _size() {
-        return this.map.size();
+        return this.map._size();
     }
 
     public Spliterator<Content> spliterator() {

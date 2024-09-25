@@ -22,7 +22,7 @@ import org.usvm.api.SymbolicList;
 import runtime.LibSLRuntime;
 
 @Approximate(java.util.AbstractList.class)
-public abstract class AbstractListImpl<E> extends AbstractCollectionImpl {
+public abstract class AbstractListImpl<E> extends AbstractCollectionImpl<E> implements List<E> {
 
     public SymbolicList<E> storage;
 

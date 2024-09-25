@@ -6,11 +6,12 @@ import org.usvm.api.Engine;
 import runtime.LibSLRuntime;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.function.IntFunction;
 
 @Approximate(java.util.AbstractCollection.class)
-public abstract class AbstractCollectionImpl {
+public abstract class AbstractCollectionImpl<E> implements Collection<E> {
 
     public transient int modCount;
 
