@@ -59,7 +59,7 @@ public abstract class Map_ContentsImpl<K, V, Content> extends AbstractCollection
     }
 
     public void clear() {
-        this.map._clear();
+        this.map.clear();
     }
 
     abstract boolean _containsInStorage(LibSLRuntime.Map<K, Map.Entry<K, V>> storage, Object o);
@@ -224,8 +224,8 @@ public abstract class Map_ContentsImpl<K, V, Content> extends AbstractCollection
         return startStorageSize != storage.size();
     }
 
-    public int _size() {
-        return this.map._size();
+    public int size() {
+        return this.map.size();
     }
 
     public Spliterator<Content> spliterator() {
@@ -239,20 +239,20 @@ public abstract class Map_ContentsImpl<K, V, Content> extends AbstractCollection
     }
 
     @NotNull
-    public Object[] _toArray() {
-        return super._toArray();
+    public Object[] toArray() {
+        return super.toArray();
     }
 
-    public <T> T[] _toArray(IntFunction<T[]> generator) {
-        return super._toArray(generator);
+    public <T> T[] toArray(IntFunction<T[]> generator) {
+        return super.toArray(generator);
     }
 
     @NotNull
-    public <T> T[] _toArray(@NotNull T[] array) {
-        return super._toArray(array);
+    public <T> T[] toArray(@NotNull T[] array) {
+        return super.toArray(array);
     }
 
-    public String _toString() {
+    public String toString() {
         LibSLRuntime.Map<K, Map.Entry<K, V>> storage = getStorage();
         int size = storage.size();
         if (size == 0)

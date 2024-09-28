@@ -26,10 +26,10 @@ public abstract class AbstractCollectionImpl<E> implements Collection<E> {
             throw new ConcurrentModificationException();
     }
 
-    abstract public int _size();
+    abstract public int size();
 
     @NotNull
-    public Object[] _toArray() {
+    public Object[] toArray() {
         return _mapToArray();
     }
 
@@ -45,18 +45,18 @@ public abstract class AbstractCollectionImpl<E> implements Collection<E> {
         return array;
     }
 
-    public <T> T[] _toArray(IntFunction<T[]> generator) {
-        int size = _size();
+    public <T> T[] toArray(IntFunction<T[]> generator) {
+        int size = size();
         T[] array = generator.apply(size);
 
         return _toArray(array, size);
     }
 
     @NotNull
-    public <T> T[] _toArray(@NotNull T[] array) {
-        int size = _size();
+    public <T> T[] toArray(@NotNull T[] array) {
+        int size = size();
         return _toArray(array, size);
     }
 
-    abstract public String _toString();
+    abstract public String toString();
 }

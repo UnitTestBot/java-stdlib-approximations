@@ -15,7 +15,7 @@ import runtime.LibSLRuntime;
 import stub.java.util.map.Map_Values;
 
 @Approximate(Map_Values.class)
-public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> implements Collection<V> {
+public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> {
 
     public Map_ValuesImpl(AbstractMapImpl<K, V> parent) {
         super(parent);
@@ -114,7 +114,7 @@ public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> implements C
     }
 
     public int size() {
-        return super._size();
+        return super.size();
     }
 
     public Spliterator<V> spliterator() {
@@ -127,19 +127,19 @@ public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> implements C
 
     @NotNull
     public Object[] toArray() {
-        return super._toArray();
+        return super.toArray();
     }
 
     public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super._toArray(generator);
+        return super.toArray(generator);
     }
 
     @NotNull
     public <T> T[] toArray(@NotNull T[] array) {
-        return super._toArray(array);
+        return super.toArray(array);
     }
 
     public String toString() {
-        return super._toString();
+        return super.toString();
     }
 }

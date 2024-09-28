@@ -43,113 +43,113 @@ public class ConcurrentHashMapImpl<K, V> extends AbstractMapImpl<K, V> implement
     }
 
     public void clear() {
-        super._clear();
+        super.clear();
     }
 
     public Object clone() throws CloneNotSupportedException {
-        return super._clone();
+        return super.clone();
     }
 
     public V compute(K key, @NotNull BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
-        return super._compute(key, remappingFunction);
+        return super.compute(key, remappingFunction);
     }
 
     public V computeIfAbsent(K key, @NotNull Function<? super K, ? extends V> mappingFunction) {
-        return super._computeIfAbsent(key, mappingFunction);
+        return super.computeIfAbsent(key, mappingFunction);
     }
 
     public V computeIfPresent(K key, @NotNull BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
-        return super._computeIfPresent(key, remappingFunction);
+        return super.computeIfPresent(key, remappingFunction);
     }
 
     public boolean containsKey(Object key) {
-        return super._containsKey(key);
+        return super.containsKey(key);
     }
 
     public boolean containsValue(Object value) {
-        return super._containsValue(value);
+        return super.containsValue(value);
     }
 
     @NotNull
     public Set<Map.Entry<K, V>> entrySet() {
-        return super._entrySet();
+        return super.entrySet();
     }
 
     public boolean equals(Object other) {
-        return Engine.typeIs(other, ConcurrentHashMapImpl.class) && super._equals(other);
+        return Engine.typeIs(other, ConcurrentHashMapImpl.class) && super.equals(other);
     }
 
     public void forEach(BiConsumer<? super K, ? super V> userAction) {
-        super._forEach(userAction);
+        super.forEach(userAction);
     }
 
     public V get(Object key) {
-        return super._get(key);
+        return super.get(key);
     }
 
     public V getOrDefault(Object key, V defaultValue) {
-        return super._getOrDefault(key, defaultValue);
+        return super.getOrDefault(key, defaultValue);
     }
 
     public int hashCode() {
-        return super._hashCode();
+        return super.hashCode();
     }
 
     public boolean isEmpty() {
-        return super._isEmpty();
+        return super.isEmpty();
     }
 
     @NotNull
     public Set<K> keySet() {
-        return super._keySet();
+        return super.keySet();
     }
 
     public V merge(K key, @NotNull V value, @NotNull BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
-        return super._merge(key, value, remappingFunction);
+        return super.merge(key, value, remappingFunction);
     }
 
     public V put(K key, V value) {
-        return super._put(key, value);
+        return super.put(key, value);
     }
 
     public void putAll(@NotNull Map<? extends K, ? extends V> m) {
-        super._putAll(m);
+        super.putAll(m);
     }
 
     public V putIfAbsent(@NotNull K key, V value) {
-        return super._putIfAbsent(key, value);
+        return super.putIfAbsent(key, value);
     }
 
     public V remove(Object key) {
-        return super._remove(key);
+        return super.remove(key);
     }
 
     public boolean remove(@NotNull Object key, Object value) {
-        return super._remove(key, value);
+        return super.remove(key, value);
     }
 
     public V replace(@NotNull K key, @NotNull V value) {
-        return super._replace(key, value);
+        return super.replace(key, value);
     }
 
     public boolean replace(@NotNull K key, @NotNull V oldValue, @NotNull V newValue) {
-        return super._replace(key, oldValue, newValue);
+        return super.replace(key, oldValue, newValue);
     }
 
     public void replaceAll(BiFunction<? super K, ? super V, ? extends V> function) {
-        super._replaceAll(function);
+        super.replaceAll(function);
     }
 
     public int size() {
-        return super._size();
+        return super.size();
     }
 
     public String toString() {
-        return super._toString();
+        return super.toString();
     }
 
     @NotNull
     public Collection<V> values() {
-        return super._values();
+        return super.values();
     }
 }

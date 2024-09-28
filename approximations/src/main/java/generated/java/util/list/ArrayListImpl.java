@@ -19,7 +19,7 @@ import org.usvm.api.SymbolicList;
 
 @SuppressWarnings("unused")
 @Approximate(java.util.ArrayList.class)
-public class ArrayListImpl<E> extends AbstractListImpl<E> implements RandomAccess, Cloneable, Serializable, List<E> {
+public class ArrayListImpl<E> extends AbstractListImpl<E> implements RandomAccess, Cloneable, Serializable {
 
     @Serial
     private static final long serialVersionUID = 8683452581122892189L;
@@ -49,91 +49,91 @@ public class ArrayListImpl<E> extends AbstractListImpl<E> implements RandomAcces
     }
 
     public boolean add(E e) {
-        return super._add(e);
+        return super.add(e);
     }
 
     public void add(int index, E element) {
-        super._add(index, element);
+        super.add(index, element);
     }
 
     public boolean addAll(@NotNull Collection<? extends E> c) {
-        return super._addAll(c);
+        return super.addAll(c);
     }
 
     public boolean addAll(int index, @NotNull Collection<? extends E> c) {
-        return super._addAll(index, c);
+        return super.addAll(index, c);
     }
 
     public void clear() {
-        super._clear();
+        super.clear();
     }
 
     public Object clone() throws CloneNotSupportedException {
-        return super._clone();
+        return super.clone();
     }
 
     public boolean contains(Object o) {
-        return super._contains(o);
+        return super.contains(o);
     }
 
     @SuppressWarnings("SlowListContainsAll")
     public boolean containsAll(@NotNull Collection<?> c) {
-        return super._containsAll(c);
+        return super.containsAll(c);
     }
 
     public void ensureCapacity(int minCapacity) {
-        super._ensureCapacity(minCapacity);
+        super.ensureCapacity(minCapacity);
     }
 
     public boolean equals(Object other) {
-        return Engine.typeIs(other, ArrayListImpl.class) && super._equals(other);
+        return Engine.typeIs(other, ArrayListImpl.class) && super.equals(other);
     }
 
     public void forEach(Consumer<? super E> _action) {
-        super._forEach(_action);
+        super.forEach(_action);
     }
 
     public E get(int index) {
-        return super._get(index);
+        return super.get(index);
     }
 
     public int hashCode() {
-        return super._hashCode();
+        return super.hashCode();
     }
 
     public int indexOf(Object o) {
-        return super._indexOf(o);
+        return super.indexOf(o);
     }
 
     public boolean isEmpty() {
-        return super._isEmpty();
+        return super.isEmpty();
     }
 
     @NotNull
     public Iterator<E> iterator() {
-        return super._iterator();
+        return super.iterator();
     }
 
     public int lastIndexOf(Object o) {
-        return super._lastIndexOf(o);
+        return super.lastIndexOf(o);
     }
 
     @NotNull
     public ListIterator<E> listIterator() {
-        return super._listIterator();
+        return super.listIterator();
     }
 
     @NotNull
     public ListIterator<E> listIterator(int index) {
-        return super._listIterator(index);
+        return super.listIterator(index);
     }
 
     public Stream<E> parallelStream() {
-        return super._parallelStream();
+        return super.parallelStream();
     }
 
     public boolean remove(Object o) {
-        return super._remove(o);
+        return super.remove(o);
     }
 
     public E remove(int index) {
@@ -141,61 +141,61 @@ public class ArrayListImpl<E> extends AbstractListImpl<E> implements RandomAcces
     }
 
     public boolean removeAll(@NotNull Collection<?> c) {
-        return super._removeAll(c);
+        return super.removeAll(c);
     }
 
     public boolean removeIf(Predicate<? super E> filter) {
-        return super._removeIf(filter);
+        return super.removeIf(filter);
     }
 
     public void replaceAll(UnaryOperator<E> op) {
-        super._replaceAll(op);
+        super.replaceAll(op);
     }
 
     public boolean retainAll(@NotNull Collection<?> c) {
-        return super._retainAll(c);
+        return super.retainAll(c);
     }
 
     public E set(int index, E element) {
-        return super._set(index, element);
+        return super.set(index, element);
     }
 
     public int size() {
-        return super._size();
+        return super.size();
     }
 
     public void sort(Comparator<? super E> c) {
-        super._sort(c);
+        super.sort(c);
     }
 
     public Spliterator<E> spliterator() {
-        return super._spliterator();
+        return super.spliterator();
     }
 
     public Stream<E> stream() {
-        return super._stream();
+        return super.stream();
     }
 
     @NotNull
     public List<E> subList(int fromIndex, int toIndex) {
-        return super._subList(fromIndex, toIndex);
+        return super.subList(fromIndex, toIndex);
     }
 
     @NotNull
     public Object[] toArray() {
-        return super._toArray();
+        return super.toArray();
     }
 
     public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super._toArray(generator);
+        return super.toArray(generator);
     }
 
     @NotNull
     public <T> T[] toArray(@NotNull T[] array) {
-        return super._toArray(array);
+        return super.toArray(array);
     }
 
     public String toString() {
-        return super._toString();
+        return super.toString();
     }
 }

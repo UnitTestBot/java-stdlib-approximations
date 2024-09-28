@@ -41,97 +41,97 @@ public class LinkedHashSetImpl<E> extends HashSetImpl<E> implements Cloneable, S
     }
 
     public boolean add(E obj) {
-        return super._add(obj);
+        return super.add(obj);
     }
 
     public void clear() {
-        super._clear();
+        super.clear();
     }
 
     public Object clone() throws CloneNotSupportedException {
-        return super._clone();
+        return super.clone();
     }
 
     public boolean contains(Object obj) {
-        return super._contains(obj);
+        return super.contains(obj);
     }
 
     public boolean isEmpty() {
-        return super._isEmpty();
+        return super.isEmpty();
     }
 
     @NotNull
     public Iterator<E> iterator() {
-        return super._iterator();
+        return super.iterator();
     }
 
     public boolean remove(Object elem) {
-        return super._remove(elem);
+        return super.remove(elem);
     }
 
     public int size() {
-        return super._size();
+        return super.size();
     }
 
     public Spliterator<E> spliterator() {
-        return super._spliterator();
+        return super.spliterator();
     }
 
     public boolean equals(Object other) {
-        return Engine.typeIs(other, LinkedHashSetImpl.class) && __equals(other);
+        return Engine.typeIs(other, LinkedHashSetImpl.class) && _equals(other);
     }
 
     public int hashCode() {
-        return super._hashCode();
+        return super.hashCode();
     }
 
     public boolean removeAll(@NotNull Collection<?> c) {
-        return super._removeAll(c);
+        return super.removeAll(c);
     }
 
     @NotNull
     public Object[] toArray() {
-        return super._toArray();
+        return super.toArray();
     }
 
     @NotNull
     public <T> T[] toArray(@NotNull T[] a) {
-        return super._toArray(a);
+        return super.toArray(a);
     }
 
     public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super._toArray(generator);
+        return super.toArray(generator);
     }
 
     public boolean containsAll(@NotNull Collection<?> c) {
-        return super._containsAll(c);
+        return super.containsAll(c);
     }
 
     public boolean addAll(@NotNull Collection<? extends E> c) {
-        return super._addAll(c);
+        return super.addAll(c);
     }
 
     public boolean retainAll(@NotNull Collection<?> c) {
-        return super._retainAll(c);
+        return super.retainAll(c);
     }
 
     public boolean removeIf(Predicate<? super E> filter) {
-        return super._removeIf(filter);
+        return super.removeIf(filter);
     }
 
     public void forEach(Consumer<? super E> userAction) {
-        super._forEach(userAction);
+        super.forEach(userAction);
     }
 
     public Stream<E> stream() {
-        return super._stream();
+        return super.stream();
     }
 
     public Stream<E> parallelStream() {
-        return super._parallelStream();
+        return super.parallelStream();
     }
 
     public String toString() {
-        return super._toString();
+        return super.toString();
     }
 }
