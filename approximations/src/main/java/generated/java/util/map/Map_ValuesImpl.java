@@ -27,19 +27,19 @@ public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> {
     }
 
     public boolean add(V e) {
-        return super.add(e);
+        return super._add(e);
     }
 
     public boolean addAll(@NotNull Collection<? extends V> c) {
-        return super.addAll(c);
+        return super._addAll(c);
     }
 
     public void clear() {
-        super.clear();
+        super._clear();
     }
 
     boolean _containsInStorage(LibSLRuntime.Map<K, Map.Entry<K, V>> storage, Object value) {
-        LibSLRuntime.Map<K, Map.Entry<K, V>> unseen = getStorage().duplicate();
+        LibSLRuntime.Map<K, Map.Entry<K, V>> unseen = _getStorage().duplicate();
         int size = unseen.size();
         Engine.assume(size > 0);
         for (int i = 0; i < size; i++) {
@@ -56,32 +56,32 @@ public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> {
     }
 
     public boolean contains(Object value) {
-        return super.contains(value);
+        return super._contains(value);
     }
 
     public boolean containsAll(@NotNull Collection<?> c) {
-        return super.containsAll(c);
+        return super._containsAll(c);
     }
 
     public void forEach(Consumer<? super V> userAction) {
-        super.forEach(userAction);
+        super._forEach(userAction);
     }
 
     public boolean isEmpty() {
-        return super.isEmpty();
+        return super._isEmpty();
     }
 
     @NotNull
     public Iterator<V> iterator() {
-        return super.iterator();
+        return super._iterator();
     }
 
     public Stream<V> parallelStream() {
-        return super.parallelStream();
+        return super._parallelStream();
     }
 
     public boolean remove(Object value) {
-        LibSLRuntime.Map<K, Map.Entry<K, V>> storage = getStorage();
+        LibSLRuntime.Map<K, Map.Entry<K, V>> storage = _getStorage();
         LibSLRuntime.Map<K, Map.Entry<K, V>> unseen = storage.duplicate();
         int size = unseen.size();
         Engine.assume(size >= 0);
@@ -102,15 +102,15 @@ public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> {
     }
 
     public boolean removeAll(@NotNull Collection<?> c) {
-        return super.removeAll(c);
+        return super._removeAll(c);
     }
 
     public boolean removeIf(Predicate<? super V> filter) {
-        return super.removeIf(filter);
+        return super._removeIf(filter);
     }
 
     public boolean retainAll(@NotNull Collection<?> c) {
-        return super.retainAll(c);
+        return super._retainAll(c);
     }
 
     public int size() {
@@ -118,11 +118,11 @@ public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> {
     }
 
     public Spliterator<V> spliterator() {
-        return super.spliterator();
+        return super._spliterator();
     }
 
     public Stream<V> stream() {
-        return super.stream();
+        return super._stream();
     }
 
     @NotNull
@@ -136,10 +136,10 @@ public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> {
 
     @NotNull
     public <T> T[] toArray(@NotNull T[] array) {
-        return super.toArray(array);
+        return super._toArray(array);
     }
 
     public String toString() {
-        return super.toString();
+        return super._toString();
     }
 }

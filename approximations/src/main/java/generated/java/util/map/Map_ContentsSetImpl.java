@@ -17,24 +17,24 @@ public abstract class Map_ContentsSetImpl<K, V, Content> extends Map_ContentsImp
         super(map);
     }
 
-    public boolean add(Content e) {
-        return super.add(e);
+    public boolean _add(Content e) {
+        return super._add(e);
     }
 
-    public boolean addAll(@NotNull Collection<? extends Content> c) {
-        return super.addAll(c);
+    public boolean _addAll(@NotNull Collection<? extends Content> c) {
+        return super._addAll(c);
     }
 
-    public void clear() {
-        super.clear();
+    public void _clear() {
+        super._clear();
     }
 
-    public boolean contains(Object obj) {
-        return super.contains(obj);
+    public boolean _contains(Object obj) {
+        return super._contains(obj);
     }
 
-    public boolean containsAll(@NotNull Collection<?> c) {
-        return super.containsAll(c);
+    public boolean _containsAll(@NotNull Collection<?> c) {
+        return super._containsAll(c);
     }
 
     Set<?> _equalsTypeCheck(Object other) {
@@ -44,53 +44,53 @@ public abstract class Map_ContentsSetImpl<K, V, Content> extends Map_ContentsImp
         return null;
     }
 
-    public boolean equals(Object other) {
-        return super.equals(other);
+    public boolean _equals(Object other) {
+        return super._equals(other);
     }
 
-    public void forEach(Consumer<? super Content> userAction) {
-        super.forEach(userAction);
+    public void _forEach(Consumer<? super Content> userAction) {
+        super._forEach(userAction);
     }
 
-    public int hashCode() {
-        return super.hashCode();
+    public int _hashCode() {
+        return super._hashCode();
     }
 
-    public boolean isEmpty() {
-        return super.isEmpty();
+    public boolean _isEmpty() {
+        return super._isEmpty();
     }
 
     @NotNull
-    public Iterator<Content> iterator() {
-        return super.iterator();
+    public Iterator<Content> _iterator() {
+        return super._iterator();
     }
 
-    public Stream<Content> parallelStream() {
-        return super.parallelStream();
+    public Stream<Content> _parallelStream() {
+        return super._parallelStream();
     }
 
-    public boolean removeAll(@NotNull Collection<?> c) {
-        return super.removeAll(c);
+    public boolean _removeAll(@NotNull Collection<?> c) {
+        return super._removeAll(c);
     }
 
-    public boolean removeIf(Predicate<? super Content> filter) {
-        return super.removeIf(filter);
+    public boolean _removeIf(Predicate<? super Content> filter) {
+        return super._removeIf(filter);
     }
 
-    public boolean retainAll(@NotNull Collection<?> c) {
-        return super.retainAll(c);
+    public boolean _retainAll(@NotNull Collection<?> c) {
+        return super._retainAll(c);
     }
 
     public int _size() {
         return super._size();
     }
 
-    public Spliterator<Content> spliterator() {
+    public Spliterator<Content> _spliterator() {
         return new Map_ContentsSet_SpliteratorImpl<>(this);
     }
 
-    public Stream<Content> stream() {
-        return super.stream();
+    public Stream<Content> _stream() {
+        return super._stream();
     }
 
     @NotNull
@@ -103,11 +103,11 @@ public abstract class Map_ContentsSetImpl<K, V, Content> extends Map_ContentsImp
     }
 
     @NotNull
-    public <T> T[] toArray(@NotNull T[] array) {
-        return super.toArray(array);
+    public <T> T[] _toArray(@NotNull T[] array) {
+        return super._toArray(array);
     }
 
-    public String toString() {
-        return super.toString();
+    public String _toString() {
+        return super._toString();
     }
 }

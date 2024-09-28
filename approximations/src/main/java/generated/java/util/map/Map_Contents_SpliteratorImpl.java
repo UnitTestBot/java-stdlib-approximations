@@ -71,7 +71,7 @@ public class Map_Contents_SpliteratorImpl<K, V, Content> extends AbstractSpliter
     }
 
     protected int _storageSize() {
-        return _getContents().getStorage().size();
+        return _getContents()._getStorage().size();
     }
 
     protected int _defaultCharacteristics() {
@@ -106,7 +106,7 @@ public class Map_Contents_SpliteratorImpl<K, V, Content> extends AbstractSpliter
     }
 
     private LibSLRuntime.Map<K, Map.Entry<K, V>> _removeSeenKeys() {
-        LibSLRuntime.Map<K, Map.Entry<K, V>> storage = _getContents().getStorage().duplicate();
+        LibSLRuntime.Map<K, Map.Entry<K, V>> storage = _getContents()._getStorage().duplicate();
         int size = _checkSizeOfSeenKeys();
         for (int i = 0; i < size; i++) {
             K key = seenKeys.get(i);
@@ -125,7 +125,7 @@ public class Map_Contents_SpliteratorImpl<K, V, Content> extends AbstractSpliter
         if (unseenKeys != null) {
             _checkSizeOfSeenKeys();
             int size = _checkSizeOfUnseenKeys();
-            LibSLRuntime.Map<K, Map.Entry<K, V>> storage = contents.getStorage();
+            LibSLRuntime.Map<K, Map.Entry<K, V>> storage = contents._getStorage();
             for (int i = 0; i < size; i++) {
                 K key = unseenKeys.get(i);
                 userAction.accept(contents._contentByKey(storage, key));
@@ -162,7 +162,7 @@ public class Map_Contents_SpliteratorImpl<K, V, Content> extends AbstractSpliter
             _checkSizeOfSeenKeys();
             _checkSizeOfUnseenKeys();
             K key = unseenKeys.get(0);
-            LibSLRuntime.Map<K, Map.Entry<K, V>> storage = contents.getStorage();
+            LibSLRuntime.Map<K, Map.Entry<K, V>> storage = contents._getStorage();
             userAction.accept(contents._contentByKey(storage, key));
             unseenKeys.remove(0);
             seenKeys.insert(this.index, key);
