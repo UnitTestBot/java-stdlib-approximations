@@ -40,7 +40,7 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
         Engine.assume(list != null);
         Engine.assume(offset >= 0);
         Engine.assume(length >= 0);
-        Engine.assume(offset + length <= list.size());
+        Engine.assume(offset + length <= list._getStorage().size());
         this.list = list;
         this.parentSubList = parent;
         this.offset = offset;
@@ -182,8 +182,8 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
 
     @SuppressWarnings("unchecked")
     public Object clone() throws CloneNotSupportedException {
-        SubListImpl<E> cloned = (SubListImpl<E>) super.clone();
-        cloned.list = (AbstractListImpl<E>) this.list.clone();
+        SubListImpl<E> cloned = (SubListImpl<E>) super._clone();
+        cloned.list = (AbstractListImpl<E>) this.list._clone();
         cloned.parentSubList = (SubListImpl<E>) this.parentSubList.clone();
         cloned.modCount = 0;
         return cloned;
@@ -428,16 +428,16 @@ public final class SubListImpl<E> extends AbstractListImpl<E> implements RandomA
 
     @NotNull
     public Object[] toArray() {
-        return super.toArray();
+        return super._toArray();
     }
 
     public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super.toArray(generator);
+        return super._toArray(generator);
     }
 
     @NotNull
     public <T> T[] toArray(@NotNull T[] array) {
-        return super.toArray(array);
+        return super._toArray(array);
     }
 
     public String toString() {

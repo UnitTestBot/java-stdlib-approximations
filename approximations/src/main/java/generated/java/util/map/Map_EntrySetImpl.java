@@ -115,7 +115,7 @@ public final class Map_EntrySetImpl<K, V> extends Map_ContentsSetImpl<K, V, Map.
     }
 
     public int size() {
-        return super.size();
+        return super._size();
     }
 
     public Spliterator<Map.Entry<K, V>> spliterator() {
@@ -128,11 +128,11 @@ public final class Map_EntrySetImpl<K, V> extends Map_ContentsSetImpl<K, V, Map.
 
     @NotNull
     public Object[] toArray() {
-        return super.toArray();
+        return super._toArray();
     }
 
     public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super.toArray(generator);
+        return super._toArray(generator);
     }
 
     @NotNull

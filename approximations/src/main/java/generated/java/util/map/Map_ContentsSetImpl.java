@@ -81,8 +81,8 @@ public abstract class Map_ContentsSetImpl<K, V, Content> extends Map_ContentsImp
         return super.retainAll(c);
     }
 
-    public int size() {
-        return super.size();
+    public int _size() {
+        return super._size();
     }
 
     public Spliterator<Content> spliterator() {
@@ -94,12 +94,12 @@ public abstract class Map_ContentsSetImpl<K, V, Content> extends Map_ContentsImp
     }
 
     @NotNull
-    public Object[] toArray() {
-        return super.toArray();
+    public Object[] _toArray() {
+        return super._toArray();
     }
 
-    public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super.toArray(generator);
+    public <T> T[] _toArray(IntFunction<T[]> generator) {
+        return super._toArray(generator);
     }
 
     @NotNull

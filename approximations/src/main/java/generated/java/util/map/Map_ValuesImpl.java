@@ -114,7 +114,7 @@ public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> {
     }
 
     public int size() {
-        return super.size();
+        return super._size();
     }
 
     public Spliterator<V> spliterator() {
@@ -127,11 +127,11 @@ public class Map_ValuesImpl<K, V> extends Map_ContentsImpl<K, V, V> {
 
     @NotNull
     public Object[] toArray() {
-        return super.toArray();
+        return super._toArray();
     }
 
     public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super.toArray(generator);
+        return super._toArray(generator);
     }
 
     @NotNull

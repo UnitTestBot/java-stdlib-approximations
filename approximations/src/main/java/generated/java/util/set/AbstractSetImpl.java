@@ -189,7 +189,7 @@ public abstract class AbstractSetImpl<E> extends AbstractCollectionImpl<E> imple
         return false;
     }
 
-    public int size() {
+    public int _size() {
         return _getStorage().size();
     }
 
@@ -263,8 +263,8 @@ public abstract class AbstractSetImpl<E> extends AbstractCollectionImpl<E> imple
     }
 
     @NotNull
-    public Object[] toArray() {
-        return super.toArray();
+    public Object[] _toArray() {
+        return super._toArray();
     }
 
     @NotNull
@@ -272,8 +272,8 @@ public abstract class AbstractSetImpl<E> extends AbstractCollectionImpl<E> imple
         return super.toArray(array);
     }
 
-    public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super.toArray(generator);
+    public <T> T[] _toArray(IntFunction<T[]> generator) {
+        return super._toArray(generator);
     }
 
     @SuppressWarnings("unchecked")

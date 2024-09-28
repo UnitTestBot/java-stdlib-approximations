@@ -100,7 +100,7 @@ public final class Map_KeySetImpl<K, V> extends Map_ContentsSetImpl<K, V, K> {
     }
 
     public int size() {
-        return super.size();
+        return super._size();
     }
 
     public Spliterator<K> spliterator() {
@@ -113,11 +113,11 @@ public final class Map_KeySetImpl<K, V> extends Map_ContentsSetImpl<K, V, K> {
 
     @NotNull
     public Object[] toArray() {
-        return super.toArray();
+        return super._toArray();
     }
 
     public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super.toArray(generator);
+        return super._toArray(generator);
     }
 
     @NotNull
