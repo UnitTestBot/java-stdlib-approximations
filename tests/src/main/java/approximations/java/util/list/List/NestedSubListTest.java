@@ -8,20 +8,20 @@ import java.util.*;
 public class NestedSubListTest {
     static final int NEST_LIMIT = 5;
 
-    @Test
+    @Test(executionMax = 2)
     public static int test_AccessToSublists(int execution) {
-        List<Integer> list = new ArrayList<>();
-        list.add(42);
+        List<Integer> list;
         boolean modifiable = true;
-        /*if (execution < 2) {
-            modifiable = true;
-        } else {
+        if (execution == 0) {
+            list = lists.get(0);
+        } else if (execution == 1) {
+            list = lists.get(1);
+        } else if (execution == 2) {
+            list = lists.get(2);
             modifiable = false;
-        }
-        int size = list.size();
-        if (size != 1) {
+        } else {
             return execution;
-        }*/
+        }
         for (int i = 0; i < NEST_LIMIT; ++i) {
             list = list.subList(0, 1);
         }
@@ -39,11 +39,11 @@ public class NestedSubListTest {
     }
 
     public static List<List<Integer>> getLists() {
-        List<Integer> c = Arrays.asList(42);
+        List<Integer> c = new ArrayList<>();
+        c.add(42);
         List<List<Integer>> lists = new LinkedList();
         lists.add(new ArrayList<>(c));
         lists.add(new LinkedList<>(c));
-        lists.add(c);
         lists.add(new MyList());
         return lists;
     }
@@ -52,12 +52,5 @@ public class NestedSubListTest {
     static class MyList extends AbstractList<Integer> {
         public Integer get(int index) { return 42; }
         public int size() { return 1; }
-    }
-
-    static class TestList extends ArrayList<Integer> {
-        @Override
-        public boolean add(Integer e) {
-            return super.add(e);
-        }
     }
 }

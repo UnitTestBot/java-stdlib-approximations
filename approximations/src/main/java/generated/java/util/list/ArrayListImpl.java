@@ -86,7 +86,7 @@ public class ArrayListImpl<E> extends AbstractListImpl<E> implements RandomAcces
     }
 
     public boolean equals(Object other) {
-        return Engine.typeIs(other, ArrayListImpl.class) && super._equals(other);
+        return super._equals(other);
     }
 
     public void forEach(Consumer<? super E> _action) {

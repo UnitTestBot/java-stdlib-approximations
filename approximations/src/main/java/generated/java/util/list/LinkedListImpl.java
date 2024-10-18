@@ -114,7 +114,7 @@ public class LinkedListImpl<E> extends AbstractListImpl<E> implements Deque<E>, 
     }
 
     public boolean equals(Object o) {
-        return Engine.typeIs(o, LinkedListImpl.class) && super._equals(o);
+        return super._equals(o);
     }
 
     public void forEach(Consumer<? super E> _action) {

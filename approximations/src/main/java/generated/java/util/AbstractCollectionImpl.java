@@ -42,6 +42,9 @@ public abstract class AbstractCollectionImpl<E> implements Collection<E> {
             return (T[]) Arrays.copyOf(contents, size, array.getClass());
 
         LibSLRuntime.ArrayActions.copy(contents, 0, array, 0, size);
+        if (array.length > size) {
+            array[size] = null;
+        }
         return array;
     }
 

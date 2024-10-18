@@ -7,11 +7,10 @@ plugins {
 repositories {
     mavenCentral()
     maven("https://jitpack.io")
-    mavenLocal()
 }
 
 private val jacodbPackage = "org.jacodb"
-private val jacodbVersion = "1.4-SNAPSHOT" // jacodb neo branch
+private val jacodbVersion = "00164e304b" // jacodb neo branch
 
 dependencies {
     compileOnly("$jacodbPackage:jacodb-api-jvm:$jacodbVersion")

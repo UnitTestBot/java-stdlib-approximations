@@ -55,11 +55,11 @@ public final class SubListIteratorStubImpl<E> extends ListIteratorStubImpl<E> {
     }
 
     public int nextIndex() {
-        return super.nextIndex();
+        return cursor - startIndex;
     }
 
     public int previousIndex() {
-        return super.previousIndex();
+        return cursor - 1 - startIndex;
     }
 
     public boolean hasNext() {
@@ -77,6 +77,7 @@ public final class SubListIteratorStubImpl<E> extends ListIteratorStubImpl<E> {
     public void remove() {
         super.remove();
         _getSubList()._updateSizeAndModCount(-1);
+        this.endIndex--;
     }
 
     public void set(E e) {

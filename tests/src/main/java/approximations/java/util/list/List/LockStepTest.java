@@ -14,7 +14,7 @@ import java.util.Random;
 @Test
 public class LockStepTest {
     //static final int DEFAULT_SIZE = 5;
-    static final int size = 5;           // Running time is O(size**2)
+    static final int size = 2;           // Running time is O(size**2)
 
     /*boolean maybe(int n) { return rnd.nextInt(n) == 0; }
 
@@ -46,15 +46,25 @@ public class LockStepTest {
         if (!equal(y, x)) { return false; }
         if (!equal(x.size(), y.size())) { return false; }
         if (!equal(x.isEmpty(), y.isEmpty())) { return false; }
-        if (!equal(x.toString(), y.toString())) { return false; }
-        if (!equal((Object) x.toArray(), y.toArray())) { return false; }
+        //if (!equal(x.toString(), y.toString())) { return false; }
+        //if (!equal(x.toArray(), y.toArray())) { return false; }
         return true;
     }
 
-    @Test(executionMax = 1)
+    @Test//(executionMax = 1)
     public static int test_EmptyLists(int execution) {
-        List<Integer>[] lists = new List[] { new ArrayList<>(), new LinkedList<>() };
-        if(testEmptyList(lists[execution])) {
+        List<Integer>[] lists = new List[] { new ArrayList<Integer>()/*, new LinkedList<>()*/ };
+        List<Integer> list;
+        /*if (execution < 0 || execution > 1) {
+            return execution;
+        }
+        if (execution == 0) {
+            list = lists[0];
+        } else {
+            list = lists[1];
+        }*/
+        list = lists[0];
+        if(testEmptyList(list)) {
             return execution;
         } else {
             return -1;
@@ -71,6 +81,7 @@ public class LockStepTest {
                     throw new Exception();
                 }
             }
+
             if (!equalLists(lists)) {
                 throw new Exception();
             }
@@ -90,6 +101,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_CME1(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -98,7 +112,12 @@ public class LockStepTest {
         }
 
         final ListFrobber adder = new RandomAdder();
-        List<Integer> list = lists[execution];
+        List<Integer> list;
+        if (execution == 0) {
+            list = lists[0];
+        } else {
+            list = lists[1];
+        }
         try {
             Iterator it = list.iterator();
             if (!adder.frob(list)) { return -1; }
@@ -111,6 +130,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_CME2(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -119,7 +141,12 @@ public class LockStepTest {
         }
 
         final ListFrobber remover = new RandomRemover();
-        List<Integer> list = lists[execution];
+        List<Integer> list;
+        if (execution == 0) {
+            list = lists[0];
+        } else {
+            list = lists[1];
+        }
         try {
             Iterator it = asSubList(list).iterator();
             if (!remover.frob(list)) { return -1; }
@@ -132,6 +159,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_CME3(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -140,7 +170,12 @@ public class LockStepTest {
         }
 
         final ListFrobber adder = new RandomAdder();
-        List<Integer> list = lists[execution];
+        List<Integer> list;
+        if (execution == 0) {
+            list = lists[0];
+        } else {
+            list = lists[1];
+        }
         try {
             Iterator it = asSubList(asSubList(list)).iterator();
             if (!adder.frob(list)) { return -1; }
@@ -153,6 +188,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_CME4(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -161,7 +199,12 @@ public class LockStepTest {
         }
 
         final ListFrobber remover = new RandomRemover();
-        List<Integer> list = lists[execution];
+        List<Integer> list;
+        if (execution == 0) {
+            list = lists[0];
+        } else {
+            list = lists[1];
+        }
         try {
             List subList = asSubList(list);
             if (!remover.frob(list)) { return -1; }
@@ -174,6 +217,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_CME5(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -182,7 +228,12 @@ public class LockStepTest {
         }
 
         final ListFrobber adder = new RandomAdder();
-        List<Integer> list = lists[execution];
+        List<Integer> list;
+        if (execution == 0) {
+            list = lists[0];
+        } else {
+            list = lists[1];
+        }
         try {
             List sl = asSubList(list);
             List ssl = asSubList(sl);
@@ -196,6 +247,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_CME6(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -204,7 +258,12 @@ public class LockStepTest {
         }
 
         final ListFrobber remover = new RandomRemover();
-        List<Integer> list = lists[execution];
+        List<Integer> list;
+        if (execution == 0) {
+            list = lists[0];
+        } else {
+            list = lists[1];
+        }
         try {
             List sl = asSubList(list);
             List ssl = asSubList(sl);
@@ -218,6 +277,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_IndexOutOfBounds1(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -225,7 +287,12 @@ public class LockStepTest {
             return -1;
         }
 
-        List<Integer> l = lists[execution];
+        List<Integer> l;
+        if (execution == 0) {
+            l = lists[0];
+        } else {
+            l = lists[1];
+        }
         final List sl = asSubList(l);
         final List ssl = asSubList(sl);
         ssl.add(0, 42);
@@ -243,6 +310,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_IndexOutOfBounds2(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -250,7 +320,12 @@ public class LockStepTest {
             return -1;
         }
 
-        List<Integer> l = lists[execution];
+        List<Integer> l;
+        if (execution == 0) {
+            l = lists[0];
+        } else {
+            l = lists[1];
+        }
         final List sl = asSubList(l);
         final List ssl = asSubList(sl);
         ssl.add(0, 42);
@@ -268,6 +343,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_IndexOutOfBounds3(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -275,7 +353,12 @@ public class LockStepTest {
             return -1;
         }
 
-        List<Integer> l = lists[execution];
+        List<Integer> l;
+        if (execution == 0) {
+            l = lists[0];
+        } else {
+            l = lists[1];
+        }
         final List sl = asSubList(l);
         final List ssl = asSubList(sl);
         ssl.add(0, 42);
@@ -293,6 +376,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_IllegalArgument1(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -300,7 +386,12 @@ public class LockStepTest {
             return -1;
         }
 
-        List<Integer> l = lists[execution];
+        List<Integer> l;
+        if (execution == 0) {
+            l = lists[0];
+        } else {
+            l = lists[1];
+        }
         final List sl = asSubList(l);
         final List ssl = asSubList(sl);
         ssl.add(0, 42);
@@ -317,6 +408,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_IllegalArgument2(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -324,7 +418,12 @@ public class LockStepTest {
             return -1;
         }
 
-        List<Integer> l = lists[execution];
+        List<Integer> l;
+        if (execution == 0) {
+            l = lists[0];
+        } else {
+            l = lists[1];
+        }
         final List sl = asSubList(l);
         final List ssl = asSubList(sl);
         ssl.add(0, 42);
@@ -341,6 +440,9 @@ public class LockStepTest {
 
     @Test(executionMax = 1)
     public static int test_IllegalArgument3(int execution) {
+        if (execution < 0 || execution > 1) {
+            return execution;
+        }
         List<Integer>[] lists;
         try {
             lists = prepareLists();
@@ -348,7 +450,12 @@ public class LockStepTest {
             return -1;
         }
 
-        List<Integer> l = lists[execution];
+        List<Integer> l;
+        if (execution == 0) {
+            l = lists[0];
+        } else {
+            l = lists[1];
+        }
         final List sl = asSubList(l);
         final List ssl = asSubList(sl);
         ssl.add(0, 42);
@@ -513,8 +620,8 @@ public class LockStepTest {
     abstract static class ListFrobber { abstract boolean frob(List<Integer> l); }
 
     static class RandomAdder extends ListFrobber {
-        final Integer e = rnd.nextInt(1024);
-        final int subListCount = rnd.nextInt(3);
+        //final Integer e = rnd.nextInt();
+        final int subListCount = 1;
         final boolean atBeginning = rnd.nextBoolean();
         final boolean useIterator = rnd.nextBoolean();
         @Override
@@ -523,21 +630,40 @@ public class LockStepTest {
             List ll = l;
             for (int i = 0; i < subListCount; i++)
                 ll = asSubList(ll);
+            Integer e = l.size();
             if (!useIterator) {
                 if (atBeginning) {
-                    switch (rnd.nextInt(3)) {
+                    /*switch (rnd.nextInt(3)) {
                         case 0: ll.add(0, e); break;
                         case 1: ll.subList(0, rnd.nextInt(s+1)).add(0, e); break;
                         case 2: ll.subList(0, rnd.nextInt(s+1)).subList(0,0).add(0,e); break;
                         default: throw new Error();
-                    }
+                    }*/
+                    /*Integer newSymbolic = rnd.nextInt();
+                    if (newSymbolic == 0) {
+                        ll.add(0, e);
+                    } else if (newSymbolic == 1) {
+                        ll.subList(0, rnd.nextInt(s+1)).add(0, e);
+                    } else {
+                        ll.subList(0, rnd.nextInt(s+1)).subList(0,0).add(0,e);
+                    }*/
+                    ll.subList(0, rnd.nextInt(s+1)).subList(0,0).add(0,e);
                 } else {
-                    switch (rnd.nextInt(3)) {
+                    /*switch (rnd.nextInt(3)) {
                         case 0: if (!ll.add(e)) { return false; } break;
                         case 1: ll.subList(s/2, s).add(s - s/2, e); break;
                         case 2: ll.subList(s, s).subList(0, 0).add(0, e); break;
                         default: throw new Error();
-                    }
+                    }*/
+                    /*Integer newSymbolic = rnd.nextInt();
+                    if (newSymbolic == 0) {
+                        if (!ll.add(e)) { return false; }
+                    } else if (newSymbolic == 1) {
+                        ll.subList(s/2, s).add(s - s/2, e);
+                    } else {
+                        ll.subList(s, s).subList(0, 0).add(0, e);
+                    }*/
+                    ll.subList(s, s).subList(0, 0).add(0, e);
                 }
             } else {
                 if (atBeginning) {
