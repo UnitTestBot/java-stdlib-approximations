@@ -11,8 +11,11 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import static org.usvm.api.decoder.DecoderUtils.findStorageField;
+
 @DecoderFor(LinkedHashSet.class)
 public class LinkedHashSet_Decoder implements ObjectDecoder {
+    // TODO: unify with HashSet_Decoder
     private volatile JcMethod[] cachedMethods = null;
     private volatile JcMethod cached_LinkedHashSet_ctor = null;
     private volatile JcMethod cached_LinkedHashSet_add = null;
@@ -38,10 +41,8 @@ public class LinkedHashSet_Decoder implements ObjectDecoder {
                 if (m.isConstructor()) {
                     List<JcParameter> params = m.getParameters();
 
-                    // example: looking for java.util.LinkedHashSet.LinkedHashSet(int, float)
-                    if (params.size() != 2) continue;
-                    if (!"int".equals(params.get(0).getType().getTypeName())) continue;
-                    if (!"float".equals(params.get(1).getType().getTypeName())) continue;
+                    // example: looking for java.util.LinkedHashSet.LinkedHashSet()
+                    if (!params.isEmpty()) continue;
 
                     // update global "cache" and stop the search
                     cached_LinkedHashSet_ctor = m_ctor = m;
@@ -52,8 +53,6 @@ public class LinkedHashSet_Decoder implements ObjectDecoder {
 
         // prepare parameters "in-place" and construct a new call
         final ArrayList<T> args = new ArrayList<>();
-        args.add(decoder.createIntConst(123));
-        args.add(decoder.createFloatConst(0.75f));
         return decoder.invokeMethod(m_ctor, args);
     }
 
@@ -65,17 +64,7 @@ public class LinkedHashSet_Decoder implements ObjectDecoder {
         JcField f_hs_storage = cached_LinkedHashSet_storage;
         // TODO: add synchronization if needed
         if (f_hs_storage == null) {
-            final List<JcField> fields = approximation.getDeclaredFields();
-            for (int i = 0, c = fields.size(); i != c; i++) {
-                JcField field = fields.get(i);
-                String fieldName = field.getName();
-
-                if ("storage".equals(fieldName)) continue;
-
-                // early termination
-                cached_LinkedHashSet_storage = f_hs_storage = field;
-                break;
-            }
+            cached_LinkedHashSet_storage = f_hs_storage = findStorageField(approximation);
         }
 
         // skip empty or erroneous objects
