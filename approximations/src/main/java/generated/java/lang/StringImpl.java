@@ -16,7 +16,7 @@ public class StringImpl implements Serializable {
     @java.io.Serial
     private static final long serialVersionUID = -6849794470754667710L;
 
-    private static final int STRING_LENGTH_MAX = 50;
+    private static final int STRING_LENGTH_MAX = 256;
 
     static final byte UTF16 = 1;
 
