@@ -47,6 +47,11 @@ public class ConcurrentHashMapImpl<K, V> extends AbstractMapImpl<K, V> implement
         super(true, initialCapacity, loadFactor);
     }
 
+    @SuppressWarnings("unused")
+    public ConcurrentHashMapImpl(int initialCapacity, float loadFactor, int concurrencyLevel) {
+        super(true, initialCapacity, loadFactor);
+    }
+
     public LibSLRuntime.Map<K, Map.Entry<K, V>> _getStorage() {
         LibSLRuntime.Map<K, Map.Entry<K, V>> result = this.storage;
         Engine.assume(result != null);
