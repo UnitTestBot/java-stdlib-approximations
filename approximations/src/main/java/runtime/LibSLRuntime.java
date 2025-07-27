@@ -609,6 +609,7 @@ public final class LibSLRuntime {
         // TODO: use less complex approach
         String res = "{";
 
+        // TODO: use unseen.remove instead of size
         final Map.Container<K, V> unseen = v.map.duplicate();
         while (count != 0) {
             final K key = unseen.anyKey();
@@ -721,6 +722,7 @@ public final class LibSLRuntime {
         // TODO: use less complex approach
         int res = 1;
 
+        // TODO: use unseen.remove instead of size
         final Map.Container<K, V> unseen = v.map.duplicate();
         while (count != 0) {
             final K key = unseen.anyKey();
@@ -823,6 +825,7 @@ public final class LibSLRuntime {
             return true;
         Engine.assume(length >= 0);
 
+        // TODO: use unseen.remove instead of size
         final Map.Container<K, ?> unseen = a.map.duplicate();
         while (length != 0) {
             final K key = unseen.anyKey();
