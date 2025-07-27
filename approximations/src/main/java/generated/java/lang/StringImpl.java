@@ -16,7 +16,7 @@ public class StringImpl implements Serializable {
     @java.io.Serial
     private static final long serialVersionUID = -6849794470754667710L;
 
-    private static final int STRING_LENGTH_MAX = 256;
+    private static final int STRING_LENGTH_MAX = 50;
 
     static final byte UTF16 = 1;
 
@@ -219,8 +219,7 @@ public class StringImpl implements Serializable {
         Engine.assume(obj.value != null);
         int len = obj.value.length >> obj.coder;
         Engine.assume(len >= 0);
-        // TODO: add Engine.assumeSymbolic(instance, bool) #ASAP
-        Engine.assume(len <= STRING_LENGTH_MAX);
+        Engine.assumeSymbolic(obj, len <= STRING_LENGTH_MAX);
     }
 
     private void _assumeInvariants() {
